@@ -9,6 +9,14 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
+    <nav>
+        <h1><a href="{{ url_for('index') }}">SoilTrace</a></h1>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('report') }}">Report</a></li>
+            <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+        </ul>
+    </nav>
     {% block content %}{% endblock %}
 </body>
 </html>
