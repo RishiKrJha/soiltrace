@@ -1,6 +1,100 @@
 {% extends "base.html" %}
-{% block title %}Report{% endblock %}
+{% block title %}Report an Observation{% endblock %}
 {% block content %}
-    <h1>Welcome to SoilTrace</h1>
-    <p>This is the report page of the SoilTrace application.</p>
+<main class="report-page">
+    <section class="report-intro" aria-labelledby="report-title">
+        <p class="eyebrow">SoilTrace field notes</p>
+        <h1 id="report-title">Report a Soil Pollution Observation</h1>
+        <p>Help document potential soil pollution in your area.</p>
+    </section>
+
+    <div class="report-layout">
+        <aside class="report-aside" aria-label="Observation form guidance">
+            <span class="aside-mark">01</span>
+            <h2>Every detail helps build a clearer picture.</h2>
+            <p>Share what you noticed, where you noticed it, and any context that may help researchers understand the site.</p>
+            <p class="aside-note">Your observation is collected for academic research.</p>
+        </aside>
+
+        <section class="observation-panel" aria-label="Observation details">
+            <form id="observation-form" class="observation-form" method="post" action="{{ url_for('report') }}" enctype="multipart/form-data">
+                <fieldset>
+                    <legend><span>01</span> Location</legend>
+                    <div class="field-group">
+                        <label for="location">Location or area name <span class="required">*</span></label>
+                        <input type="text" id="location" name="location" placeholder="e.g. Riverside market, East Ward" required>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend><span>02</span> Date of observation</legend>
+                    <div class="field-group compact-field">
+                        <label for="observation-date">When did you observe this? <span class="required">*</span></label>
+                        <input type="date" id="observation-date" name="observation_date" required>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend><span>03</span> What did you observe?</legend>
+                    <div class="field-group">
+                        <span class="field-label">Select all that apply <span class="required">*</span></span>
+                        <div class="type-grid">
+                            <label class="choice-card"><input type="checkbox" name="observation_type" value="plastic-waste"><span>Plastic waste</span></label>
+                            <label class="choice-card"><input type="checkbox" name="observation_type" value="industrial-waste"><span>Industrial waste</span></label>
+                            <label class="choice-card"><input type="checkbox" name="observation_type" value="agricultural-waste"><span>Agricultural waste</span></label>
+                            <label class="choice-card"><input type="checkbox" name="observation_type" value="e-waste"><span>E-waste</span></label>
+                            <label class="choice-card"><input type="checkbox" name="observation_type" value="chemical-waste"><span>Chemical waste</span></label>
+                            <label class="choice-card"><input type="checkbox" name="observation_type" value="construction-waste"><span>Construction waste</span></label>
+                            <label class="choice-card"><input type="checkbox" name="observation_type" value="other"><span>Other</span></label>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend><span>04</span> Description</legend>
+                    <div class="field-group">
+                        <label for="description">Tell us what you observed <span class="required">*</span></label>
+                        <textarea id="description" name="description" rows="6" placeholder="Describe what you observed..." required></textarea>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend><span>05</span><span class="legend-title">Photograph <span class="required">*</span></span></legend>
+                    <div class="upload-wrap">
+                        <label class="upload-box" for="photograph">
+                            <span class="upload-icon" aria-hidden="true">+</span>
+                            <span><strong>Add a photograph</strong><small>JPG, PNG or WEBP up to 10 MB</small></span>
+                        </label>
+                        <input type="file" id="photograph" name="photograph" accept="image/jpeg,image/png,image/webp" required>
+                        <p id="file-name" class="file-name" aria-live="polite"></p>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend><span>06</span><span class="legend-title">Additional information <span class="required">*</span></span></legend>
+                    <div class="field-group">
+                        <label for="source">Nearby source of pollution <span class="required">*</span></label>
+                        <input type="text" id="source" name="nearby_source" placeholder="e.g. Drain, factory, building site" required>
+                    </div>
+                    <div class="field-group">
+                        <label for="comments">Comments <span class="required">*</span></label>
+                        <textarea id="comments" name="comments" rows="4" placeholder="Anything else you would like to add..." required></textarea>
+                    </div>
+                </fieldset>
+
+                <button class="submit-button" type="submit">Submit Observation <span aria-hidden="true">&#8594;</span></button>
+            </form>
+
+            <div id="success-message" class="success-message" role="status" hidden>
+                <span class="success-icon" aria-hidden="true">&#10003;</span>
+                <div>
+                    <h2>Observation recorded successfully.</h2>
+                    <p>Your observation has been added to the SoilTrace dataset.</p>
+                </div>
+                <button class="new-observation" type="button" id="new-observation">Record another observation</button>
+            </div>
+        </section>
+    </div>
+</main>
+<script src="{{ url_for('static', filename='js/report.js') }}"></script>
 {% endblock %}
