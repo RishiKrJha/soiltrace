@@ -204,20 +204,6 @@ body {
     color: #315b4f;
 }
 
-.aside-mark {
-    display: inline-flex;
-    width: 2.5rem;
-    height: 2.5rem;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1.5rem;
-    border: 1px solid #b4532f;
-    border-radius: 50%;
-    color: #b4532f;
-    font-size: 0.75rem;
-    font-weight: 800;
-}
-
 .report-aside h2 {
     max-width: 230px;
     font-family: Georgia, 'Times New Roman', serif;
