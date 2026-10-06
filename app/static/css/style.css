@@ -66,6 +66,41 @@ body {
     transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
+/* Home Page Header Adaptation */
+body:has(.home-page-master) .site-header {
+    background: rgba(7, 21, 17, 0.88);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+}
+
+body:has(.home-page-master) .brand-name {
+    color: #ffffff;
+}
+
+body:has(.home-page-master) .brand-sub {
+    color: #34d399;
+}
+
+body:has(.home-page-master) .nav-link {
+    color: #b5ccc1;
+}
+
+body:has(.home-page-master) .nav-link:hover,
+body:has(.home-page-master) .nav-link.active {
+    color: #34d399;
+    background: rgba(52, 211, 153, 0.12);
+}
+
+body:has(.home-page-master) .nav-pill-badge {
+    background: rgba(52, 211, 153, 0.2);
+    color: #34d399;
+    border: 1px solid rgba(52, 211, 153, 0.35);
+}
+
+body:has(.home-page-master) .navbar-toggler span {
+    background-color: #ffffff;
+}
+
 .navbar {
     width: 100%;
     padding: 0.8rem 2rem;
@@ -399,145 +434,1410 @@ body {
     color: #1a425c;
 }
 
-/* Home Page Presentation */
-.home-page {
+/* ==========================================================================
+   MASTER HOME PAGE & AWARENESS ENGINE PRESENTATION
+   Product-Page Style: Deep Ecological Slate, Glassmorphism, Kinetic Dynamics
+   ========================================================================== */
+
+.home-page-master {
     min-height: calc(100vh - 78px);
-    padding: 4.5rem 2rem 6rem;
-    background: linear-gradient(135deg, #f6f2e9 0%, #fbfaf6 48%, #e8f0e9 100%);
+    background: radial-gradient(circle at 50% 0%, #15392e 0%, #0c201a 45%, #071511 100%);
+    color: #e5ede8;
+    overflow-x: hidden;
 }
 
-.home-hero,
-.home-pillars {
-    max-width: 1120px;
-    margin: 0 auto;
+/* Glassmorphic Panel Primitive */
+.glass-panel {
+    background: rgba(18, 48, 38, 0.65);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 16px;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.28);
+    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.home-hero {
-    margin-bottom: 4.5rem;
+.glass-panel:hover {
+    border-color: rgba(74, 222, 128, 0.25);
+    box-shadow: 0 20px 44px rgba(0, 0, 0, 0.35);
 }
 
-.home-hero h1 {
-    max-width: 820px;
-    color: var(--primary-color);
-    font-family: var(--font-heading);
-    font-size: clamp(2.6rem, 5.2vw, 4.8rem);
-    font-weight: 500;
-    letter-spacing: -0.03em;
-    line-height: 0.98;
-    margin-bottom: 1.5rem;
-}
-
-.hero-description {
-    max-width: 680px;
-    color: #566a61;
-    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
-    line-height: 1.6;
-    margin-bottom: 2.25rem;
-}
-
-.hero-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    align-items: center;
-}
-
+/* Shared Buttons & Enhancements */
 .btn {
     display: inline-flex;
     align-items: center;
     gap: 0.65rem;
-    min-height: 50px;
+    min-height: 48px;
     padding: 0.75rem 1.45rem;
-    border-radius: 6px;
+    border-radius: 8px;
     font-family: var(--font-sans);
     font-size: 0.95rem;
     font-weight: 700;
     text-decoration: none;
     cursor: pointer;
-    transition: transform 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease;
+    transition: transform 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.btn-lg {
+    min-height: 54px;
+    padding: 0.85rem 1.75rem;
+    font-size: 1rem;
 }
 
 .btn-primary {
-    background: var(--accent-color);
+    background: #b4532f;
     color: #ffffff;
-    box-shadow: 0 4px 14px rgba(180, 83, 47, 0.25);
+    border: 1px solid #cf5b32;
+    box-shadow: 0 6px 20px rgba(180, 83, 47, 0.35);
 }
 
 .btn-primary:hover {
-    background: var(--accent-hover);
-    transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgba(180, 83, 47, 0.35);
+    background: #cf5b32;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 26px rgba(180, 83, 47, 0.45);
 }
 
 .btn-secondary {
-    background: #ffffff;
-    color: var(--primary-color);
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-sm);
+    background: rgba(255, 255, 255, 0.08);
+    color: #e5ede8;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    backdrop-filter: blur(8px);
 }
 
 .btn-secondary:hover {
-    background: #f7f9f6;
-    border-color: #cbd5cb;
-    transform: translateY(-1px);
-    box-shadow: var(--shadow);
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.28);
+    transform: translateY(-2px);
+    color: #ffffff;
 }
 
-.home-pillars {
+.btn-accent-ghost {
+    background: transparent;
+    color: #34d399;
+    border: 1px solid rgba(52, 211, 153, 0.35);
+}
+
+.btn-accent-ghost:hover {
+    background: rgba(52, 211, 153, 0.12);
+    border-color: #34d399;
+    transform: translateY(-2px);
+    color: #6ee7b7;
+}
+
+/* 1. Hero Section */
+.hero-section {
+    position: relative;
+    padding: 6.5rem 2rem 5rem;
+    text-align: center;
+    background: radial-gradient(ellipse at 50% 20%, rgba(52, 211, 153, 0.12) 0%, transparent 70%);
+}
+
+.hero-container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.45rem 1.15rem;
+    background: rgba(20, 56, 44, 0.85);
+    border: 1px solid rgba(52, 211, 153, 0.28);
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #a7f3d0;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.badge-pulse {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #34d399;
+    box-shadow: 0 0 10px #34d399;
+    animation: pulseGlow 2s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+.hero-headline {
+    font-family: var(--font-heading);
+    font-size: clamp(2.8rem, 6.2vw, 5.2rem);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: #f7faf8;
+    margin-bottom: 1.6rem;
+}
+
+.hero-headline-accent {
+    background: linear-gradient(135deg, #a7f3d0 0%, #34d399 45%, #e07a5f 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-lead {
+    max-width: 840px;
+    margin: 0 auto 2.75rem;
+    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+    line-height: 1.7;
+    color: #a3bfb2;
+}
+
+.hero-lead strong {
+    color: #f1f7f3;
+}
+
+.hero-actions-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.1rem;
+    margin-bottom: 4rem;
+}
+
+.hero-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    margin-top: 2rem;
+}
+
+.stat-pill-card {
+    padding: 1.6rem 1.2rem;
+    background: rgba(14, 38, 30, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    text-align: left;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.stat-pill-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(52, 211, 153, 0.3);
+}
+
+.stat-pill-number {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 600;
+    line-height: 1;
+    color: #ffffff;
+    margin-bottom: 0.45rem;
+}
+
+.stat-unit {
+    font-size: 1.35rem;
+    color: #34d399;
+    margin-left: 0.15rem;
+}
+
+.stat-pill-label {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #e5ede8;
+    margin-bottom: 0.25rem;
+}
+
+.stat-pill-sub {
+    font-size: 0.75rem;
+    color: #7d968b;
+    line-height: 1.35;
+}
+
+/* 2. Infinite Continuous Research Ticker */
+.research-ticker-bar {
+    width: 100%;
+    overflow: hidden;
+    background: #06120e;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0.85rem 0;
+    white-space: nowrap;
+}
+
+.ticker-track {
+    display: flex;
+    width: max-content;
+    animation: tickerLoop 42s linear infinite;
+}
+
+.research-ticker-bar:hover .ticker-track {
+    animation-play-state: paused;
+}
+
+.ticker-content {
+    display: flex;
+    align-items: center;
+}
+
+.ticker-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-size: 0.86rem;
+    color: #b5ccc1;
+    margin-right: 3.5rem;
+}
+
+.ticker-tag {
+    padding: 0.2rem 0.55rem;
+    background: rgba(52, 211, 153, 0.15);
+    border: 1px solid rgba(52, 211, 153, 0.35);
+    border-radius: 4px;
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: #34d399;
+    letter-spacing: 0.04em;
+}
+
+@keyframes tickerLoop {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* Common Section Container */
+.section-container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 6rem 2rem;
+}
+
+.section-header {
+    text-align: center;
+    max-width: 780px;
+    margin: 0 auto 3.5rem;
+}
+
+.section-kicker {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #34d399;
+    margin-bottom: 0.85rem;
+}
+
+.section-header h2 {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 3.8vw, 3.1rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: #f7faf8;
+    margin-bottom: 1.1rem;
+}
+
+.section-lead {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: #9ab4a7;
+}
+
+/* 3. Pedosphere Stratigraphy Visualizer */
+.stratigraphy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.25rem;
+    align-items: center;
+}
+
+.stratigraphy-visual-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.stratigraphy-image-wrapper {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+}
+
+.stratigraphy-img {
+    width: 100%;
+    height: 380px;
+    object-fit: cover;
+    display: block;
+}
+
+.stratigraphy-overlay-zones {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    pointer-events: none;
+}
+
+.stratum-layer {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 0 1.25rem;
+    background: rgba(7, 21, 17, 0.45);
+    border-left: 4px solid transparent;
+    transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.stratum-layer.stratum-highlighted {
+    background: rgba(52, 211, 153, 0.2);
+    border-left-color: #34d399;
+}
+
+.stratum-label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+.horizon-toggle-bar {
+    display: flex;
+    gap: 0.65rem;
+}
+
+.horizon-btn {
+    flex: 1;
+    padding: 0.75rem 0.5rem;
+    background: rgba(18, 48, 38, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #9ab4a7;
+    font-family: var(--font-sans);
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.horizon-btn:hover {
+    background: rgba(26, 68, 54, 0.8);
+    color: #ffffff;
+}
+
+.horizon-btn.active {
+    background: #174b3a;
+    border-color: #34d399;
+    color: #34d399;
+    box-shadow: 0 4px 12px rgba(52, 211, 153, 0.2);
+}
+
+.stratigraphy-card {
+    padding: 2.5rem;
+}
+
+.card-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.tag-badge {
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(52, 211, 153, 0.15);
+    border: 1px solid rgba(52, 211, 153, 0.35);
+    font-size: 0.74rem;
+    font-weight: 800;
+    color: #34d399;
+    text-transform: uppercase;
+}
+
+.depth-indicator {
+    font-size: 0.82rem;
+    color: #7d968b;
+}
+
+.horizon-heading {
+    font-family: var(--font-heading);
+    font-size: 1.85rem;
+    font-weight: 500;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+}
+
+.horizon-spec-block {
+    margin-bottom: 1.4rem;
+}
+
+.horizon-spec-block h4 {
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #34d399;
+    margin-bottom: 0.4rem;
+}
+
+.horizon-spec-block p {
+    font-size: 0.94rem;
+    line-height: 1.6;
+    color: #b5ccc1;
+}
+
+.horizon-alert-box {
+    padding: 1rem 1.25rem;
+    background: rgba(180, 83, 47, 0.15);
+    border-left: 3px solid #b4532f;
+    border-radius: 0 8px 8px 0;
+    margin-top: 1.6rem;
+    margin-bottom: 0;
+}
+
+.horizon-alert-box h4 {
+    color: #e07a5f;
+}
+
+.horizon-alert-box p {
+    color: #f0c2b3;
+}
+
+/* 4. Live Soil Risk & Threshold Analyzer */
+.analyzer-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 2.25rem;
+    align-items: start;
+}
+
+.analyzer-controls {
+    padding: 2.25rem;
+}
+
+.control-group {
+    margin-bottom: 1.75rem;
+}
+
+.control-label {
+    display: block;
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: #d1e2da;
+    margin-bottom: 0.65rem;
+}
+
+.custom-select {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    background: #0d2820;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 8px;
+    color: #f1f7f3;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+.custom-select:focus {
+    border-color: #34d399;
+}
+
+.landuse-pills {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.radio-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 1rem;
+    background: rgba(13, 40, 32, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.88rem;
+    color: #b5ccc1;
+    transition: all 0.2s ease;
+}
+
+.radio-pill:hover {
+    background: rgba(22, 64, 51, 0.8);
+    color: #ffffff;
+}
+
+.radio-pill input[type="radio"] {
+    accent-color: #34d399;
+}
+
+.radio-pill:has(input[type="radio"]:checked) {
+    background: rgba(52, 211, 153, 0.12);
+    border-color: #34d399;
+    color: #34d399;
+    font-weight: 700;
+}
+
+.slider-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.value-readout {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: #0d2820;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 0.35rem 0.65rem;
+    border-radius: 6px;
+}
+
+.numeric-input {
+    width: 70px;
+    background: transparent;
+    border: none;
+    color: #34d399;
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-align: right;
+    outline: none;
+}
+
+.unit-tag {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #7d968b;
+}
+
+.custom-slider {
+    width: 100%;
+    height: 7px;
+    border-radius: 5px;
+    background: #091a15;
+    outline: none;
+    accent-color: #34d399;
+    cursor: pointer;
+}
+
+.slider-scale-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.72rem;
+    color: #6a8277;
+    margin-top: 0.45rem;
+}
+
+.analyzer-footnote {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.76rem;
+    color: #7d968b;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 1.25rem;
+    margin-top: 1rem;
+}
+
+.analyzer-results {
+    padding: 2.5rem;
+}
+
+.results-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 0.45rem 1rem;
+    border-radius: 999px;
+    font-size: 0.86rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+}
+
+.status-safe {
+    background: rgba(52, 211, 153, 0.2);
+    border: 1px solid #34d399;
+    color: #34d399;
+}
+
+.status-caution {
+    background: rgba(245, 158, 11, 0.2);
+    border: 1px solid #f59e0b;
+    color: #fbbf24;
+}
+
+.status-warning {
+    background: rgba(249, 115, 22, 0.2);
+    border: 1px solid #f97316;
+    color: #fb923c;
+}
+
+.status-danger {
+    background: rgba(239, 68, 68, 0.2);
+    border: 1px solid #ef4444;
+    color: #f87171;
+}
+
+.statutory-cutoff {
+    text-align: right;
+}
+
+.cutoff-label {
+    display: block;
+    font-size: 0.75rem;
+    color: #7d968b;
+}
+
+.cutoff-value {
+    font-size: 1.15rem;
+    color: #ffffff;
+}
+
+.gauge-container {
+    margin-bottom: 2rem;
+}
+
+.gauge-bar-bg {
+    width: 100%;
+    height: 10px;
+    background: #091a15;
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 0.85rem;
+}
+
+.gauge-progress {
+    height: 100%;
+    border-radius: inherit;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.gauge-progress.status-safe { background: #34d399; }
+.gauge-progress.status-caution { background: #f59e0b; }
+.gauge-progress.status-warning { background: #f97316; }
+.gauge-progress.status-danger { background: #ef4444; }
+
+.status-summary-text {
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: #d1e2da;
+}
+
+.benchmark-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 1.75rem;
+}
+
+.benchmark-label {
+    display: block;
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    color: #7d968b;
+    margin-bottom: 0.25rem;
+}
+
+.benchmark-text {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #e5ede8;
+}
+
+.impact-cards-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.impact-card {
+    padding: 1.15rem;
+    border-radius: 10px;
+    background: rgba(14, 38, 30, 0.5);
+    border-left: 3px solid #34d399;
+}
+
+.impact-card h5 {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: #34d399;
+    margin-bottom: 0.45rem;
+}
+
+.impact-card p {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: #b5ccc1;
+}
+
+.impact-card.health-impact { border-left-color: #ef4444; }
+.impact-card.health-impact h5 { color: #f87171; }
+.impact-card.agri-impact { border-left-color: #f59e0b; }
+.impact-card.agri-impact h5 { color: #fbbf24; }
+.impact-card.remedy-impact { border-left-color: #34d399; }
+
+/* 5. Food-Chain Bioaccumulation Stepper */
+.bioaccum-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 2.75rem;
+    align-items: center;
+}
+
+.bioaccum-visual-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.bioaccum-feature-img {
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+}
+
+.case-callout-glass {
+    padding: 1.5rem;
+    background: rgba(180, 83, 47, 0.15);
+    border: 1px solid rgba(207, 91, 50, 0.35);
+    border-radius: 12px;
+}
+
+.callout-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #e07a5f;
+    margin-bottom: 0.35rem;
+}
+
+.case-callout-glass h4 {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+}
+
+.case-callout-glass p {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: #f0c2b3;
+}
+
+.stepper-timeline-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.step-card {
+    display: flex;
+    gap: 1.25rem;
+    padding: 1.35rem 1.5rem;
+    background: rgba(18, 48, 38, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.step-card:hover {
+    transform: translateX(4px);
+    border-color: rgba(52, 211, 153, 0.3);
+}
+
+.step-marker {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    background: rgba(52, 211, 153, 0.15);
+    border: 1px solid #34d399;
+    border-radius: 50%;
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #34d399;
+}
+
+.step-content h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.35rem;
+}
+
+.step-content p {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: #b5ccc1;
+}
+
+/* 6. Verified Contamination Hotspots Dossier */
+.hotspots-explorer {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+}
+
+.hotspots-nav {
+    display: flex;
+    gap: 0.75rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+}
+
+.hotspot-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem 1.35rem;
+    background: rgba(18, 48, 38, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: left;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+.hotspot-tab:hover {
+    background: rgba(26, 68, 54, 0.8);
+}
+
+.hotspot-tab.active {
+    background: #174b3a;
+    border-color: #34d399;
+    box-shadow: 0 4px 16px rgba(52, 211, 153, 0.2);
+}
+
+.hotspot-tab-title {
+    font-size: 0.94rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.2rem;
+}
+
+.hotspot-tab.active .hotspot-tab-title {
+    color: #34d399;
+}
+
+.hotspot-tab-contam {
+    font-size: 0.75rem;
+    color: #7d968b;
+}
+
+.hotspot-dossier-card {
+    padding: 3rem;
+}
+
+.dossier-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.dossier-location-tag {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #34d399;
+    margin-bottom: 0.4rem;
+}
+
+.dossier-title {
+    font-family: var(--font-heading);
+    font-size: 2.1rem;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.dossier-status-pill {
+    padding: 0.45rem 1rem;
+    background: rgba(180, 83, 47, 0.2);
+    border: 1px solid #b4532f;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: #e07a5f;
+}
+
+.dossier-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    padding: 1.75rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 2rem;
+}
+
+.metric-caption {
+    display: block;
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    color: #7d968b;
+    margin-bottom: 0.4rem;
+}
+
+.metric-val {
+    font-size: 1.15rem;
+    color: #ffffff;
+}
+
+.text-danger { color: #f87171 !important; }
+.text-warning { color: #fbbf24 !important; }
+
+.dossier-narrative-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.narrative-block h4 {
+    font-size: 0.84rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #34d399;
+    margin-bottom: 0.5rem;
+}
+
+.narrative-block p {
+    font-size: 0.94rem;
+    line-height: 1.65;
+    color: #b5ccc1;
+}
+
+/* 7. Contaminant Periodic Registry */
+.registry-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.element-card {
+    padding: 1.75rem;
+}
+
+.element-header {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    margin-bottom: 1.25rem;
+}
+
+.element-symbol-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    background: #092019;
+    border: 2px solid #34d399;
+    box-shadow: 0 4px 14px rgba(52, 211, 153, 0.25);
+}
+
+.elem-atomic {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #7d968b;
+    line-height: 1;
+}
+
+.elem-sym {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #34d399;
+    line-height: 1.1;
+}
+
+.elem-symbol-plastic {
+    border-color: #38bdf8;
+    box-shadow: 0 4px 14px rgba(56, 189, 248, 0.25);
+}
+.elem-symbol-plastic .elem-sym { color: #38bdf8; }
+
+.elem-symbol-agro {
+    border-color: #fbbf24;
+    box-shadow: 0 4px 14px rgba(251, 191, 36, 0.25);
+}
+.elem-symbol-agro .elem-sym { color: #fbbf24; }
+
+.element-title-wrap h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.2rem;
+}
+
+.elem-class {
+    font-size: 0.74rem;
+    color: #7d968b;
+    text-transform: uppercase;
+}
+
+.element-specs {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    font-size: 0.85rem;
+    color: #b5ccc1;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 1rem;
+}
+
+.element-specs strong {
+    color: #f1f7f3;
+}
+
+/* 8. Scientific Hierarchy of Evidence */
+.hierarchy-cards-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1.75rem;
 }
 
-.pillar-card {
-    padding: 2rem;
-    background: rgba(255, 255, 255, 0.85);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    box-shadow: 0 10px 25px rgba(23, 63, 53, 0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+.hierarchy-card {
+    padding: 2.25rem 2rem;
+    display: flex;
+    flex-direction: column;
 }
 
-.pillar-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 14px 32px rgba(23, 63, 53, 0.08);
+.hierarchy-card.highlight-border {
+    border-color: #34d399;
+    box-shadow: 0 16px 36px rgba(52, 211, 153, 0.15);
 }
 
-.pillar-icon {
+.hierarchy-level-tag {
+    font-size: 0.74rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #7d968b;
+    margin-bottom: 0.85rem;
+}
+
+.level-certified {
+    color: #34d399;
+}
+
+.hierarchy-card h3 {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: #ffffff;
+    margin-bottom: 1rem;
+}
+
+.hierarchy-desc {
+    font-size: 0.92rem;
+    line-height: 1.65;
+    color: #b5ccc1;
+    margin-bottom: 1.75rem;
+    flex-grow: 1;
+}
+
+.hierarchy-meta {
+    font-size: 0.78rem;
+    line-height: 1.55;
+    color: #7d968b;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 1rem;
+}
+
+.hierarchy-meta strong {
+    color: #d1e2da;
+}
+
+/* 9. Remediation & Regenerative Solutions Matrix */
+.remediation-feature-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.25fr;
+    gap: 2.5rem;
+    align-items: center;
+}
+
+.remediation-image-column {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.remediation-img {
+    width: 100%;
+    height: 480px;
+    object-fit: cover;
+    display: block;
+}
+
+.remediation-stat-box {
+    position: absolute;
+    bottom: 1.25rem;
+    left: 1.25rem;
+    right: 1.25rem;
+    padding: 1.4rem;
+    background: rgba(7, 21, 17, 0.85);
+    border: 1px solid rgba(52, 211, 153, 0.3);
+}
+
+.remedy-stat-num {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #34d399;
+    line-height: 1;
+    margin-bottom: 0.35rem;
+}
+
+.remedy-stat-txt {
+    font-size: 0.84rem;
+    color: #e5ede8;
+    line-height: 1.4;
+}
+
+.remediation-methods-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+}
+
+.remedy-method-card {
+    display: flex;
+    gap: 1.25rem;
+    padding: 1.5rem;
+}
+
+.remedy-icon-box {
     display: grid;
     place-items: center;
-    width: 44px;
-    height: 44px;
-    border-radius: 8px;
-    background: #e8f0e9;
-    color: var(--primary-color);
-    margin-bottom: 1.25rem;
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: rgba(52, 211, 153, 0.12);
+    border: 1px solid rgba(52, 211, 153, 0.3);
+    color: #34d399;
 }
 
-.pillar-card h2 {
-    color: var(--primary-color);
-    font-family: var(--font-heading);
-    font-size: 1.35rem;
-    font-weight: 600;
-    margin-bottom: 0.65rem;
+.remedy-method-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.35rem;
 }
 
-.pillar-card p {
-    color: #63716b;
-    font-size: 0.92rem;
+.remedy-method-card p {
+    font-size: 0.88rem;
     line-height: 1.55;
+    color: #b5ccc1;
 }
 
-@media (max-width: 860px) {
-    .home-pillars {
+/* 10. Community Radar Call to Action */
+.community-cta-box {
+    padding: 4.5rem 3rem;
+    text-align: center;
+    background: radial-gradient(circle at 50% 0%, rgba(52, 211, 153, 0.15) 0%, rgba(14, 38, 30, 0.8) 70%);
+    border: 1px solid rgba(52, 211, 153, 0.3);
+}
+
+.cta-kicker {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #34d399;
+    margin-bottom: 0.85rem;
+}
+
+.community-cta-box h2 {
+    font-family: var(--font-heading);
+    font-size: clamp(2.2rem, 4.2vw, 3.4rem);
+    font-weight: 500;
+    color: #ffffff;
+    max-width: 820px;
+    margin: 0 auto 1.25rem;
+}
+
+.cta-body {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #b5ccc1;
+    max-width: 720px;
+    margin: 0 auto 2.5rem;
+}
+
+.cta-buttons-wrap {
+    display: flex;
+    justify-content: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+}
+
+/* 11. Citations & Evidence Digest Footer */
+.citations-box {
+    padding: 2.5rem;
+}
+
+.citations-box h3 {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+}
+
+.citations-intro {
+    font-size: 0.9rem;
+    color: #7d968b;
+    margin-bottom: 1.75rem;
+}
+
+.citations-links-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+}
+
+.citation-entry {
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: #9ab4a7;
+    padding: 0.85rem 1rem;
+    background: rgba(7, 21, 17, 0.5);
+    border-radius: 8px;
+    border-left: 3px solid #34d399;
+}
+
+.citation-entry strong {
+    color: #e5ede8;
+}
+
+/* Scroll-Triggered Reveal Classes */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Responsive Media Queries */
+@media (max-width: 1024px) {
+    .hero-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stratigraphy-grid,
+    .analyzer-layout,
+    .bioaccum-layout,
+    .remediation-feature-layout {
         grid-template-columns: 1fr;
-        gap: 1.25rem;
+    }
+
+    .dossier-narrative-group,
+    .citations-links-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .registry-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hierarchy-cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dossier-metrics-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .section-container {
+        padding: 4rem 1.25rem;
+    }
+
+    .hero-section {
+        padding: 4.5rem 1.25rem 3.5rem;
+    }
+
+    .hero-stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-actions-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .registry-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .benchmark-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .results-top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .statutory-cutoff {
+        text-align: left;
+    }
+
+    .stratigraphy-card,
+    .analyzer-controls,
+    .analyzer-results,
+    .hotspot-dossier-card,
+    .community-cta-box {
+        padding: 1.5rem;
     }
 }
 
 /* Observation form */
 .report-page {
     min-height: calc(100vh - 78px);
+
     padding: 4.5rem 2rem 6rem;
     background: linear-gradient(135deg, #f6f2e9 0%, #fbfaf6 48%, #e8f0e9 100%);
 }
