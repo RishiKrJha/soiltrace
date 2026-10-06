@@ -1,24 +1,11 @@
-const observationForm = document.querySelector('#observation-form');
-const successMessage = document.querySelector('#success-message');
-const photographInput = document.querySelector('#photograph');
-const fileName = document.querySelector('#file-name');
-const newObservationButton = document.querySelector('#new-observation');
+const description = document.querySelector('#description');
+const descriptionCount = document.querySelector('#description-count');
 
-photographInput?.addEventListener('change', () => {
-    const [file] = photographInput.files;
-    fileName.textContent = file ? file.name : '';
-});
+function updateDescriptionCount() {
+    if (description && descriptionCount) {
+        descriptionCount.textContent = `${description.value.length} / ${description.maxLength} characters`;
+    }
+}
 
-observationForm?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    observationForm.hidden = true;
-    successMessage.hidden = false;
-});
-
-newObservationButton?.addEventListener('click', () => {
-    observationForm.reset();
-    fileName.textContent = '';
-    observationForm.hidden = false;
-    successMessage.hidden = true;
-    observationForm.querySelector('input')?.focus();
-});
+description?.addEventListener('input', updateDescriptionCount);
+updateDescriptionCount();

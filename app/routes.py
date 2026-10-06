@@ -12,7 +12,7 @@ CATEGORIES = (
     ("chemical-waste", "Chemical waste"),
     ("e-waste", "E-waste"),
     ("construction-waste", "Construction waste"),
-    ("other", "Other"),
+    ("other", "Other or not sure"),
 )
 CATEGORY_LABELS = dict(CATEGORIES)
 
@@ -29,6 +29,9 @@ def init_routes(app):
     @app.route('/report', methods=('GET', 'POST'))
     def report():
         if request.method == 'POST':
+            if request.form.get('website', ''):
+                return '', 204
+
             name = clean_field('name', 100)
             location = clean_field('location', 200)
             observation_date = clean_field('observation_date', 10)
@@ -42,6 +45,8 @@ def init_routes(app):
                 errors.append('Describe what you observed.')
             if category not in CATEGORY_LABELS:
                 errors.append('Choose a pollution category.')
+            if request.form.get('consent') != 'yes':
+                errors.append('Confirm that you understand this is a public observation.')
             try:
                 parsed_date = date.fromisoformat(observation_date)
                 if parsed_date > date.today():
