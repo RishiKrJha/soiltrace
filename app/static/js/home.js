@@ -283,7 +283,6 @@
 
     // --- DOM INITIALIZATION ---
     document.addEventListener('DOMContentLoaded', function () {
-        initHeroTypingAnimation();
         initScrollProgress();
         initNumberCounters();
         initRiskAnalyzer();
@@ -295,109 +294,6 @@
         initSmoothAnchors();
         initSideScrollRail();
     });
-
-    // 0. HERO TYPING & AWARENESS TELEMETRY ANIMATION
-    function initHeroTypingAnimation() {
-        // A. Headline Dynamic Typewriter Loop
-        const headlineElem = document.getElementById('typing-headline');
-        if (headlineElem) {
-            let phrases = [];
-            try {
-                phrases = JSON.parse(headlineElem.getAttribute('data-phrases'));
-            } catch (e) {
-                phrases = [
-                    "Silently Beneath Our Feet.",
-                    "Inside Our Food Chain.",
-                    "Across 33% of Global Soils.",
-                    "In The Ground We Walk On.",
-                    "In Complete Silence."
-                ];
-            }
-
-            let phraseIdx = 0;
-            let currentStr = headlineElem.textContent.trim();
-            let isDeleting = true;
-            let charIdx = currentStr.length;
-
-            function runHeadlineTyping() {
-                const targetPhrase = phrases[phraseIdx];
-
-                if (isDeleting) {
-                    charIdx--;
-                    headlineElem.textContent = targetPhrase.slice(0, charIdx);
-
-                    if (charIdx <= 0) {
-                        isDeleting = false;
-                        phraseIdx = (phraseIdx + 1) % phrases.length;
-                        setTimeout(runHeadlineTyping, 450);
-                        return;
-                    }
-                    setTimeout(runHeadlineTyping, 32);
-                } else {
-                    charIdx++;
-                    headlineElem.textContent = targetPhrase.slice(0, charIdx);
-
-                    if (charIdx >= targetPhrase.length) {
-                        isDeleting = true;
-                        setTimeout(runHeadlineTyping, 3200);
-                        return;
-                    }
-                    setTimeout(runHeadlineTyping, 65);
-                }
-            }
-
-            setTimeout(runHeadlineTyping, 2400);
-        }
-
-        // B. Live Awareness Telemetry Typing Loop
-        const feedElem = document.getElementById('feed-typed-text');
-        if (feedElem) {
-            let feedPhrases = [];
-            try {
-                feedPhrases = JSON.parse(feedElem.getAttribute('data-phrases'));
-            } catch (e) {
-                feedPhrases = [
-                    "Tracking heavy metal bioaccumulation in winter vegetables.",
-                    "Monitoring 128 confirmed contaminated sites across India.",
-                    "Auditing soil organic carbon depletion and nutrient imbalance.",
-                    "Empowering citizens to spot and report toxic industrial dumping."
-                ];
-            }
-
-            let feedIdx = 0;
-            let feedDeleting = true;
-            let feedCharIdx = feedElem.textContent.trim().length;
-
-            function runFeedTyping() {
-                const targetFeed = feedPhrases[feedIdx];
-
-                if (feedDeleting) {
-                    feedCharIdx--;
-                    feedElem.textContent = targetFeed.slice(0, feedCharIdx);
-
-                    if (feedCharIdx <= 0) {
-                        feedDeleting = false;
-                        feedIdx = (feedIdx + 1) % feedPhrases.length;
-                        setTimeout(runFeedTyping, 500);
-                        return;
-                    }
-                    setTimeout(runFeedTyping, 22);
-                } else {
-                    feedCharIdx++;
-                    feedElem.textContent = targetFeed.slice(0, feedCharIdx);
-
-                    if (feedCharIdx >= targetFeed.length) {
-                        feedDeleting = true;
-                        setTimeout(runFeedTyping, 4000);
-                        return;
-                    }
-                    setTimeout(runFeedTyping, 45);
-                }
-            }
-
-            setTimeout(runFeedTyping, 3800);
-        }
-    }
 
     // 1. SCROLL PROGRESS BAR
     function initScrollProgress() {
