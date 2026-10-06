@@ -292,7 +292,7 @@
         initFaqAccordion();
         initScrollAnimations();
         initSmoothAnchors();
-        initFloatingJumpNav();
+        initSideScrollRail();
     });
 
     // 1. SCROLL PROGRESS BAR
@@ -654,33 +654,67 @@
         });
     }
 
-    // 10. FLOATING QUICK-JUMP NAV HIGHLIGHT
-    function initFloatingJumpNav() {
-        const jumpLinks = document.querySelectorAll('.jump-link');
-        if (!jumpLinks.length) return;
+    // 10. RIGHT-SIDE VERTICAL SCROLL TRACKER RAIL
+    function initSideScrollRail() {
+        const railSteps = document.querySelectorAll('.rail-step, .jump-link');
+        if (!railSteps.length) return;
 
-        const sections = Array.from(jumpLinks).map(link => {
-            const id = link.getAttribute('href').slice(1);
-            return document.getElementById(id);
-        }).filter(Boolean);
+        const targetSections = Array.from(railSteps).map(step => {
+            const targetId = step.getAttribute('data-target') || (step.getAttribute('href') ? step.getAttribute('href').slice(1) : '');
+            const elem = targetId ? document.getElementById(targetId) : null;
+            return {
+                id: targetId,
+                elem: elem,
+                step: step
+            };
+        }).filter(item => item.elem !== null);
+
+        if (!targetSections.length) return;
+
+        let isTicking = false;
+
+        function updateActiveSection() {
+            const scrollY = window.scrollY || document.documentElement.scrollTop;
+            const viewportHeight = window.innerHeight;
+            const scrollBottom = scrollY + viewportHeight;
+            const docHeight = document.documentElement.scrollHeight;
+
+            // When scrolled near the very bottom, activate the final section
+            if (scrollBottom >= docHeight - 120) {
+                railSteps.forEach(s => s.classList.remove('active'));
+                const lastItem = targetSections[targetSections.length - 1];
+                if (lastItem) lastItem.step.classList.add('active');
+                isTicking = false;
+                return;
+            }
+
+            // Mid-viewport trigger line (42% down the viewport)
+            const triggerLine = scrollY + (viewportHeight * 0.42);
+            let activeItem = null;
+
+            for (let i = 0; i < targetSections.length; i++) {
+                const item = targetSections[i];
+                if (item.elem.offsetTop <= triggerLine) {
+                    activeItem = item;
+                }
+            }
+
+            railSteps.forEach(s => s.classList.remove('active'));
+            if (activeItem) {
+                activeItem.step.classList.add('active');
+            }
+
+            isTicking = false;
+        }
 
         window.addEventListener('scroll', function () {
-            const scrollPos = window.scrollY + 200;
-            let currentId = '';
-
-            sections.forEach(sec => {
-                if (sec.offsetTop <= scrollPos) {
-                    currentId = sec.id;
-                }
-            });
-
-            jumpLinks.forEach(link => {
-                if (link.getAttribute('href') === `#${currentId}`) {
-                    link.classList.add('active');
-                } else {
-                    link.classList.remove('active');
-                }
-            });
+            if (!isTicking) {
+                window.requestAnimationFrame(updateActiveSection);
+                isTicking = true;
+            }
         }, { passive: true });
+
+        // Initial check on load
+        updateActiveSection();
     }
 })();

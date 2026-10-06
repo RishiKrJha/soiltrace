@@ -1295,50 +1295,168 @@ body:has(.home-page-master) .navbar-toggler span {
     color: #b5ccc1;
 }
 
-/* Floating Quick-Jump Pill */
-.floating-jump-nav {
+/* Right-Side Vertical Scroll Tracker Rail */
+.side-scroll-rail {
     position: fixed;
-    bottom: 1.75rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 999;
+    right: 1.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 995;
     display: flex;
-    align-items: center;
-    gap: 0.35rem;
-    padding: 0.45rem 0.65rem;
-    background: rgba(7, 21, 17, 0.88);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.85rem;
+    padding: 1.1rem 0.65rem;
+    background: rgba(7, 21, 17, 0.65);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 999px;
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+    user-select: none;
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.jump-link {
-    padding: 0.4rem 0.85rem;
-    border-radius: 999px;
-    color: #9ab4a7;
+/* Vertical track spine running behind the steps */
+.rail-track-line {
+    position: absolute;
+    right: calc(0.65rem + 7px);
+    top: 1.25rem;
+    bottom: 1.25rem;
+    width: 1px;
+    background: linear-gradient(180deg, 
+        rgba(52, 211, 153, 0.06) 0%, 
+        rgba(52, 211, 153, 0.3) 50%, 
+        rgba(52, 211, 153, 0.06) 100%
+    );
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Individual Rail Step Anchor */
+.rail-step {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0.2rem 0;
     text-decoration: none;
-    font-size: 0.78rem;
-    font-weight: 700;
-    transition: all 0.18s ease;
-    white-space: nowrap;
+    cursor: pointer;
+    z-index: 1;
 }
 
-.jump-link:hover {
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.1);
+/* The Horizontal Line / Dash */
+.rail-bar {
+    display: block;
+    width: 16px;
+    height: 3px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.28);
+    transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+                background-color 0.25s ease, 
+                box-shadow 0.25s ease, 
+                transform 0.25s ease;
 }
 
-.jump-link.active {
-    color: #071511;
+/* Hover: Line elongates slightly & glows */
+.rail-step:hover .rail-bar {
+    width: 26px;
+    background: rgba(52, 211, 153, 0.85);
+    box-shadow: 0 0 10px rgba(52, 211, 153, 0.5);
+}
+
+/* Active State: The Line Elongates to 38px with full Radiant Emerald Glow */
+.rail-step.active .rail-bar {
+    width: 38px;
     background: #34d399;
+    box-shadow: 0 0 12px rgba(52, 211, 153, 0.85), 0 0 24px rgba(52, 211, 153, 0.4);
 }
 
-@media (max-width: 860px) {
-    .floating-jump-nav {
-        display: none;
+/* Active Lead Indicator Dot */
+.rail-step.active::before {
+    content: '';
+    position: absolute;
+    right: 43px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #34d399;
+    box-shadow: 0 0 6px #34d399;
+    animation: railPulse 2s ease-in-out infinite;
+}
+
+@keyframes railPulse {
+    0%, 100% { transform: scale(1); opacity: 0.9; }
+    50% { transform: scale(1.4); opacity: 1; }
+}
+
+/* Floating Tooltip Label (Reveals on Hover / Focus) */
+.rail-tooltip {
+    position: absolute;
+    right: calc(100% + 14px);
+    top: 50%;
+    transform: translateY(-50%) translateX(8px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.35rem 0.75rem;
+    background: rgba(10, 28, 22, 0.95);
+    border: 1px solid rgba(52, 211, 153, 0.35);
+    border-radius: 8px;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    white-space: nowrap;
+    transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), 
+                visibility 0.22s;
+}
+
+/* Tooltip Caret pointing towards the rail bar */
+.rail-tooltip::after {
+    content: '';
+    position: absolute;
+    right: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-width: 5px 0 5px 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent rgba(52, 211, 153, 0.35);
+}
+
+.rail-step:hover .rail-tooltip,
+.rail-step:focus-visible .rail-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-50%) translateX(0);
+}
+
+.rail-step-num {
+    font-family: monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #34d399;
+    background: rgba(52, 211, 153, 0.12);
+    padding: 0.12rem 0.4rem;
+    border-radius: 4px;
+    border: 1px solid rgba(52, 211, 153, 0.25);
+    line-height: 1;
+}
+
+.rail-step-title {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #f0fdf4;
+    letter-spacing: 0.02em;
+    line-height: 1;
+}
+
+@media (max-width: 900px) {
+    .side-scroll-rail {
+        display: none !important;
     }
 
     .myths-grid {

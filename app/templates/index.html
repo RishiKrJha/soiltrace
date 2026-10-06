@@ -1485,16 +1485,79 @@
 
 </main>
 
-<!-- FLOATING QUICK-JUMP NAVIGATOR PILL -->
-<nav class="floating-jump-nav" aria-label="Page quick navigation">
-    <a href="#why-soil-matters" class="jump-link">Living Soil</a>
-    <a href="#myths-facts" class="jump-link">Myths</a>
-    <a href="#stratigraphy" class="jump-link">Horizons</a>
-    <a href="#risk-analyzer" class="jump-link">Risk Engine</a>
-    <a href="#area-simulator" class="jump-link">Simulator</a>
-    <a href="#spot-pollution" class="jump-link">Spot Signs</a>
-    <a href="#citizen-faq" class="jump-link">FAQ</a>
-    <a href="#citations-footer" class="jump-link">Authorities</a>
+<!-- RIGHT-SIDE VERTICAL SCROLL TRACKER RAIL -->
+<nav class="side-scroll-rail" id="side-scroll-rail" aria-label="Page section navigator">
+    <div class="rail-track-line" aria-hidden="true"></div>
+    <a href="#why-soil-matters" class="rail-step" data-target="why-soil-matters" aria-label="Section 1: Living Soil">
+        <span class="rail-tooltip">
+            <span class="rail-step-num">01</span>
+            <span class="rail-step-title">Living Soil</span>
+        </span>
+        <span class="rail-bar"></span>
+    </a>
+    <a href="#myths-facts" class="rail-step" data-target="myths-facts" aria-label="Section 2: Myths vs. Facts">
+        <span class="rail-tooltip">
+            <span class="rail-step-num">02</span>
+            <span class="rail-step-title">Myths vs. Facts</span>
+        </span>
+        <span class="rail-bar"></span>
+    </a>
+    <a href="#stratigraphy" class="rail-step" data-target="stratigraphy" aria-label="Section 3: Pedosphere Horizons">
+        <span class="rail-tooltip">
+            <span class="rail-step-num">03</span>
+            <span class="rail-step-title">Soil Horizons</span>
+        </span>
+        <span class="rail-bar"></span>
+    </a>
+    <a href="#daily-culprits" class="rail-step" data-target="daily-culprits" aria-label="Section 4: The 4 Daily Culprits">
+        <span class="rail-tooltip">
+            <span class="rail-step-num">04</span>
+            <span class="rail-step-title">4 Daily Culprits</span>
+        </span>
+        <span class="rail-bar"></span>
+    </a>
+    <a href="#bioaccumulation" class="rail-step" data-target="bioaccumulation" aria-label="Section 5: Food-Chain Pathway">
+        <span class="rail-tooltip">
+            <span class="rail-step-num">05</span>
+            <span class="rail-step-title">Food Chain</span>
+        </span>
+        <span class="rail-bar"></span>
+    </a>
+    <a href="#risk-analyzer" class="rail-step" data-target="risk-analyzer" aria-label="Section 6: Risk & Threshold Engine">
+        <span class="rail-tooltip">
+            <span class="rail-step-num">06</span>
+            <span class="rail-step-title">Risk Engine</span>
+        </span>
+        <span class="rail-bar"></span>
+    </a>
+    <a href="#area-simulator" class="rail-step" data-target="area-simulator" aria-label="Section 7: Citizen Scenario Simulator">
+        <span class="rail-tooltip">
+            <span class="rail-step-num">07</span>
+            <span class="rail-step-title">Area Simulator</span>
+        </span>
+        <span class="rail-bar"></span>
+    </a>
+    <a href="#hotspots-dossier" class="rail-step" data-target="hotspots-dossier" aria-label="Section 8: National Hotspots Dossier">
+        <span class="rail-tooltip">
+            <span class="rail-step-num">08</span>
+            <span class="rail-step-title">Hotspots Dossier</span>
+        </span>
+        <span class="rail-bar"></span>
+    </a>
+    <a href="#spot-pollution" class="rail-step" data-target="spot-pollution" aria-label="Section 9: Sensory Warning Signs">
+        <span class="rail-tooltip">
+            <span class="rail-step-num">09</span>
+            <span class="rail-step-title">Spot Signs</span>
+        </span>
+        <span class="rail-bar"></span>
+    </a>
+    <a href="#citations-footer" class="rail-step" data-target="citations-footer" aria-label="Section 10: Statutory Authorities">
+        <span class="rail-tooltip">
+            <span class="rail-step-num">10</span>
+            <span class="rail-step-title">Authorities Registry</span>
+        </span>
+        <span class="rail-bar"></span>
+    </a>
 </nav>
 
 <script src="{{ url_for('static', filename='js/home.js') }}" defer></script>
