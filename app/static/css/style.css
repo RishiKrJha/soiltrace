@@ -562,6 +562,7 @@ body {
 .metric-grid,
 .dashboard-grid,
 .location-filter,
+.trend-card,
 .recent-card {
     max-width: 1180px;
     margin-right: auto;
@@ -757,6 +758,7 @@ body {
     display: grid;
     grid-template-rows: 1.3rem 1fr 2rem;
     flex: 1;
+    max-width: 80px;
     align-items: end;
     min-width: 25px;
     height: 100%;
