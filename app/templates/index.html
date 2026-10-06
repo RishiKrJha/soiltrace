@@ -3,6 +3,63 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-    <h1>Welcome to SoilTrace</h1>
-    <p>This is the home page of the SoilTrace application.</p>
+<main class="home-page" id="main-content">
+    <section class="home-hero" aria-labelledby="hero-title">
+        <p class="eyebrow">Community soil intelligence</p>
+        <h1 id="hero-title">Every layer of earth tells an environmental story.</h1>
+        <p class="hero-description">
+            SoilTrace is an open community platform to record observations of potential soil pollution, surface emerging environmental signals, and track local soil health patterns worldwide.
+        </p>
+        <div class="hero-actions">
+            <a href="{{ url_for('report') }}" class="btn btn-primary">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                    <path d="M8 2a.75.75 0 0 1 .75.75v4.5h4.5a.75.75 0 0 1 0 1.5h-4.5v4.5a.75.75 0 0 1-1.5 0v-4.5h-4.5a.75.75 0 0 1 0-1.5h4.5v-4.5A.75.75 0 0 1 8 2z"/>
+                </svg>
+                <span>Report an Observation</span>
+            </a>
+            <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                    <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-4zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z"/>
+                </svg>
+                <span>View Live Dashboard</span>
+            </a>
+        </div>
+    </section>
+
+    <section class="home-pillars" aria-label="Key features">
+        <article class="pillar-card">
+            <div class="pillar-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+            </div>
+            <h2>Anonymous & Private</h2>
+            <p>Observations protect community contributor privacy while documenting potential pollution signals without requiring user accounts.</p>
+        </article>
+
+        <article class="pillar-card">
+            <div class="pillar-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/>
+                    <line x1="9" y1="3" x2="9" y2="18"/>
+                    <line x1="15" y1="6" x2="15" y2="21"/>
+                </svg>
+            </div>
+            <h2>Structured Geodata</h2>
+            <p>Controlled country and regional taxonomies prevent duplicate location variants and ensure consistent community aggregates.</p>
+        </article>
+
+        <article class="pillar-card">
+            <div class="pillar-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="20" x2="18" y2="10"/>
+                    <line x1="12" y1="20" x2="12" y2="4"/>
+                    <line x1="6" y1="20" x2="6" y2="14"/>
+                </svg>
+            </div>
+            <h2>Pattern Intelligence</h2>
+            <p>Explore monthly observation trends, waste category breakdowns, and geographic signal distributions in real time.</p>
+        </article>
+    </section>
+</main>
 {% endblock %}

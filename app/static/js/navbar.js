@@ -36,6 +36,18 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && navbarCollapse.classList.contains('active')) {
+                setMenuState(false);
+                const spans = navbarToggler.querySelectorAll('span');
+                spans.forEach(span => {
+                    span.style.transform = 'none';
+                    span.style.opacity = '1';
+                });
+                navbarToggler.focus();
+            }
+        });
+        
         const navLinks = document.querySelectorAll('.nav-link');
         navLinks.forEach(link => {
             link.addEventListener('click', function() {
