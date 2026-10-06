@@ -561,11 +561,73 @@ body {
 .dashboard-heading,
 .metric-grid,
 .dashboard-grid,
+.location-filter,
 .recent-card {
     max-width: 1180px;
     margin-right: auto;
     margin-left: auto;
 }
+
+.location-filter {
+    margin-bottom: 1.5rem;
+    padding: 0.85rem 1.2rem;
+    background: #eef1eb;
+    border: 1px solid #d8dfd4;
+    border-radius: 8px;
+}
+
+.location-filter-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.55rem 1rem;
+}
+
+.location-filter-controls label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #486158;
+    white-space: nowrap;
+}
+
+.location-filter-controls select {
+    padding: 0.35rem 0.6rem;
+    border: 1px solid #b8c4b4;
+    border-radius: 5px;
+    background: #fff;
+    color: #1f2937;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.location-filter-controls select:focus {
+    outline: 2px solid #668878;
+    outline-offset: 1px;
+}
+
+.filter-no-regions {
+    font-size: 0.8rem;
+    color: #63716b;
+    font-style: italic;
+}
+
+.filter-clear {
+    margin-left: auto;
+    font-size: 0.8rem;
+    color: #668878;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.filter-clear:hover { color: #344f45; text-decoration: underline; }
+
+.filter-active-label {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: #486158;
+}
+
+.filter-active-label strong { color: #173f35; }
 
 .dashboard-heading {
     display: grid;

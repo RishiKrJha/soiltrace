@@ -10,6 +10,41 @@
         <p>Anonymous observations of potential soil pollution, collected to reveal broad patterns. They are not laboratory-confirmed findings.</p>
     </section>
 
+    {% if filter_countries %}
+    <form class="location-filter" method="get" action="{{ url_for('dashboard') }}" aria-label="Filter by location">
+        <div class="location-filter-controls">
+            <label for="country-filter">Country</label>
+            <select id="country-filter" name="country_code" onchange="this.form.submit()">
+                <option value="">All countries</option>
+                {% for row in filter_countries %}
+                    <option value="{{ row['country_code'] }}"{% if row['country_code'] == filter_country_code %} selected{% endif %}>{{ row['country'] }}</option>
+                {% endfor %}
+            </select>
+
+            {% if filter_regions %}
+            <label for="region-filter">Region</label>
+            <select id="region-filter" name="region_code" onchange="this.form.submit()">
+                <option value="">All regions</option>
+                {% for row in filter_regions %}
+                    <option value="{{ row['region_code'] }}"{% if row['region_code'] == filter_region_code %} selected{% endif %}>{{ row['region'] }}</option>
+                {% endfor %}
+            </select>
+            {% elif filter_country_code %}
+            <span class="filter-no-regions">No sub-regions recorded for this country</span>
+            {% endif %}
+
+            {% if filter_country_code %}
+            <a class="filter-clear" href="{{ url_for('dashboard') }}" aria-label="Clear location filter">✕ Clear filter</a>
+            {% endif %}
+        </div>
+        {% if active_country_name %}
+        <p class="filter-active-label">
+            Showing data for <strong>{{ (active_region_name + ', ' + active_country_name) if active_region_name else active_country_name }}</strong>
+        </p>
+        {% endif %}
+    </form>
+    {% endif %}
+
     <section class="metric-grid" aria-label="Observation summary">
         <article class="metric-card"><span class="metric-label">All observations</span><strong>{{ total }}</strong><small>Community reports on record</small></article>
         <article class="metric-card"><span class="metric-label">Last 30 days</span><strong>{{ recent_total }}</strong><small>Observed in the past month</small></article>

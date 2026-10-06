@@ -15,7 +15,9 @@ const regionStatus = document.querySelector('#region-status');
 
 let countries = [];
 let selectedCountry = null;
-const countriesWithoutRegions = new Set(['SG']);
+// Populated after the API loads — countries whose `states` array is empty.
+// We derive this from the API rather than maintaining a hardcoded allowlist.
+const countriesWithoutRegions = new Set();
 
 function updateDescriptionCount() {
     if (description && descriptionCount) {
@@ -106,6 +108,13 @@ async function loadLocationOptions() {
             throw new Error('Location data was unavailable.');
         }
         countries = result.data;
+        // Derive the set of countries that report no states/regions from the API response.
+        countriesWithoutRegions.clear();
+        for (const country of countries) {
+            if (!country.states || !country.states.length) {
+                countriesWithoutRegions.add(country.iso2);
+            }
+        }
         countryOptions.replaceChildren(
             ...countries.map((country) => new Option(country.name, country.name))
         );

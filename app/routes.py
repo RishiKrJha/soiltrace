@@ -88,34 +88,97 @@ def init_routes(app):
     @app.route('/dashboard')
     def dashboard():
         db = get_db()
-        total = db.execute('SELECT COUNT(*) FROM observations').fetchone()[0]
+
+        # --- Location filter parameters ---
+        filter_country_code = request.args.get('country_code', '').strip().upper()[:2]
+        filter_region_code = request.args.get('region_code', '').strip()[:20]
+
+        # Build WHERE clause fragments used across queries
+        where_parts = []
+        where_args = []
+        if filter_country_code:
+            where_parts.append("country_code = ?")
+            where_args.append(filter_country_code)
+            if filter_region_code:
+                where_parts.append("region_code = ?")
+                where_args.append(filter_region_code)
+        where_clause = ("WHERE " + " AND ".join(where_parts)) if where_parts else ""
+
+        total = db.execute(
+            f'SELECT COUNT(*) FROM observations {where_clause}', where_args
+        ).fetchone()[0]
         recent_total = db.execute(
-            'SELECT COUNT(*) FROM observations WHERE observation_date >= ?',
-            ((date.today() - timedelta(days=30)).isoformat(),),
+            f'SELECT COUNT(*) FROM observations {where_clause}'
+            + (' AND ' if where_clause else ' WHERE ')
+            + 'observation_date >= ?',
+            where_args + [(date.today() - timedelta(days=30)).isoformat()],
         ).fetchone()[0]
         country_total = db.execute(
-            "SELECT COUNT(DISTINCT country_code) FROM observations WHERE country_code <> ''"
+            f"SELECT COUNT(DISTINCT country_code) FROM observations {where_clause}"
+            + (' AND ' if where_clause else ' WHERE ')
+            + "country_code <> ''",
+            where_args,
         ).fetchone()[0]
         category_counts = db.execute(
-            '''SELECT category, COUNT(*) AS total
-               FROM observations GROUP BY category ORDER BY total DESC, category ASC'''
+            f'''SELECT category, COUNT(*) AS total
+               FROM observations {where_clause}
+               GROUP BY category ORDER BY total DESC, category ASC''',
+            where_args,
         ).fetchall()
         regional_counts = db.execute(
-            '''SELECT CASE WHEN region <> '' THEN region || ', ' || country ELSE country END AS label,
+            f'''SELECT CASE WHEN region <> '' THEN region || ', ' || country ELSE country END AS label,
                       COUNT(*) AS total
                FROM observations
-               WHERE country_code <> ''
+               {where_clause}
+               {('AND' if where_clause else 'WHERE')} country_code <> ''
                GROUP BY country_code, country, region
-               ORDER BY total DESC, label ASC LIMIT 5'''
+               ORDER BY total DESC, label ASC LIMIT 5''',
+            where_args,
         ).fetchall()
         recent_observations = db.execute(
-            '''SELECT country, region, observation_date, category, description, created_at
-               FROM observations ORDER BY created_at DESC, id DESC LIMIT 10'''
+            f'''SELECT country, region, observation_date, category, description, created_at
+               FROM observations {where_clause}
+               ORDER BY created_at DESC, id DESC LIMIT 10''',
+            where_args,
         ).fetchall()
         trend_rows = db.execute(
-            '''SELECT substr(observation_date, 1, 7) AS month, COUNT(*) AS total
-               FROM observations GROUP BY month ORDER BY month DESC LIMIT 12'''
+            f'''SELECT substr(observation_date, 1, 7) AS month, COUNT(*) AS total
+               FROM observations {where_clause}
+               GROUP BY month ORDER BY month DESC LIMIT 12''',
+            where_args,
         ).fetchall()
+
+        # Distinct countries for filter dropdown (always unfiltered)
+        filter_countries = db.execute(
+            """SELECT DISTINCT country, country_code FROM observations
+               WHERE country_code <> '' ORDER BY country ASC"""
+        ).fetchall()
+
+        # Distinct regions for the selected country (for the region sub-filter)
+        filter_regions = []
+        if filter_country_code:
+            filter_regions = db.execute(
+                """SELECT DISTINCT region, region_code FROM observations
+                   WHERE country_code = ? AND region <> ''
+                   ORDER BY region ASC""",
+                (filter_country_code,),
+            ).fetchall()
+
+        # Active filter labels for display
+        active_country_name = ''
+        active_region_name = ''
+        if filter_country_code:
+            row = db.execute(
+                'SELECT country FROM observations WHERE country_code = ? LIMIT 1',
+                (filter_country_code,),
+            ).fetchone()
+            active_country_name = row['country'] if row else filter_country_code
+        if filter_region_code and filter_country_code:
+            row = db.execute(
+                'SELECT region FROM observations WHERE country_code = ? AND region_code = ? LIMIT 1',
+                (filter_country_code, filter_region_code),
+            ).fetchone()
+            active_region_name = row['region'] if row else filter_region_code
 
         category_colors = {
             'plastic-waste': '#d66f45',
@@ -143,11 +206,12 @@ def init_routes(app):
             })
             running_total = segment_end
 
+        regional_top = regional_counts[0]['total'] if regional_counts else 1
         regional_data = [
             {
                 'label': item['label'],
                 'total': item['total'],
-                'percentage': round((item['total'] / total) * 100) if total else 0,
+                'percentage': round((item['total'] / regional_top) * 100),
             }
             for item in regional_counts
         ]
@@ -194,4 +258,11 @@ def init_routes(app):
             trend_summary=trend_summary,
             donut_background=donut_background,
             category_labels=CATEGORY_LABELS,
+            filter_countries=filter_countries,
+            filter_regions=filter_regions,
+            filter_country_code=filter_country_code,
+            filter_region_code=filter_region_code,
+            active_country_name=active_country_name,
+            active_region_name=active_region_name,
         )
+
