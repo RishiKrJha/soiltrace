@@ -310,6 +310,11 @@ body {
     text-align: right;
 }
 
+.location-status {
+    color: #63716b;
+    font-size: 0.75rem;
+}
+
 .honeypot {
     position: absolute;
     width: 1px;
@@ -790,6 +795,13 @@ body {
 .legend-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--category-color); }
 
 .ranking-list { margin-top: 1.35rem; }
+
+.ranking-empty {
+    margin-top: 1.35rem;
+    color: #63716b;
+    font-size: 0.85rem;
+    line-height: 1.55;
+}
 
 .ranking-list li {
     display: grid;
