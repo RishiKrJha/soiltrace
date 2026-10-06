@@ -2332,42 +2332,558 @@ body:has(.home-page-master) .navbar-toggler span {
     flex-wrap: wrap;
 }
 
-/* 11. Citations & Evidence Digest Footer */
-.citations-box {
-    padding: 2.5rem;
+/* 11. Statutory & Research Authorities Referenced Registry */
+.authorities-registry-section {
+    padding-top: 5rem;
+    padding-bottom: 2.5rem;
+    position: relative;
 }
 
-.citations-box h3 {
-    font-family: var(--font-heading);
-    font-size: 1.5rem;
-    color: #ffffff;
-    margin-bottom: 0.5rem;
-}
-
-.citations-intro {
-    font-size: 0.9rem;
-    color: #7d968b;
-    margin-bottom: 1.75rem;
-}
-
-.citations-links-grid {
+.authorities-metrics-ribbon {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    padding: 1.75rem 2.25rem;
+    margin: 2.75rem 0 3.5rem;
+    background: linear-gradient(135deg, rgba(14, 38, 30, 0.75) 0%, rgba(7, 21, 17, 0.85) 100%);
+    border: 1px solid rgba(52, 211, 153, 0.22);
+    border-radius: 16px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.auth-metric-item {
+    text-align: center;
+    position: relative;
+}
+
+.auth-metric-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: -0.75rem;
+    top: 15%;
+    height: 70%;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.auth-metric-num {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #34d399;
+    line-height: 1.1;
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.02em;
+}
+
+.auth-metric-lbl {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #9ab4a7;
+    line-height: 1.35;
+}
+
+/* Authorities 6-Card Deck */
+.authorities-card-deck {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75rem;
+    margin-bottom: 3.5rem;
+}
+
+.auth-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.85rem;
+    border-radius: 16px;
+    background: linear-gradient(145deg, rgba(13, 34, 27, 0.78) 0%, rgba(7, 21, 17, 0.88) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.35s ease;
+}
+
+.auth-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    opacity: 0.85;
+    transition: opacity 0.3s ease, height 0.3s ease;
+}
+
+.auth-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 38px rgba(0, 0, 0, 0.45);
+    border-color: rgba(52, 211, 153, 0.35);
+}
+
+.auth-card:hover::before {
+    opacity: 1;
+    height: 4px;
+}
+
+/* Authority Card Color Themes */
+.auth-card-sky::before { background: linear-gradient(90deg, #38bdf8 0%, rgba(56, 189, 248, 0.2) 100%); }
+.auth-card-emerald::before { background: linear-gradient(90deg, #34d399 0%, rgba(52, 211, 153, 0.2) 100%); }
+.auth-card-indigo::before { background: linear-gradient(90deg, #818cf8 0%, rgba(129, 140, 248, 0.2) 100%); }
+.auth-card-teal::before { background: linear-gradient(90deg, #2dd4bf 0%, rgba(45, 212, 191, 0.2) 100%); }
+.auth-card-amber::before { background: linear-gradient(90deg, #f59e0b 0%, rgba(245, 158, 11, 0.2) 100%); }
+.auth-card-copper::before { background: linear-gradient(90deg, #fb923c 0%, rgba(251, 146, 60, 0.2) 100%); }
+
+/* Card Header */
+.auth-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.85rem;
+    margin-bottom: 1.25rem;
+}
+
+.auth-insignia {
+    width: 44px;
+    height: 44px;
+    border-radius: 11px;
+    display: grid;
+    place-items: center;
+    font-weight: 800;
+    font-size: 0.82rem;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+}
+
+.auth-card-sky .auth-insignia {
+    background: rgba(56, 189, 248, 0.12);
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.35);
+}
+
+.auth-card-emerald .auth-insignia {
+    background: rgba(52, 211, 153, 0.12);
+    color: #34d399;
+    border: 1px solid rgba(52, 211, 153, 0.35);
+}
+
+.auth-card-indigo .auth-insignia {
+    background: rgba(129, 140, 248, 0.12);
+    color: #a5b4fc;
+    border: 1px solid rgba(129, 140, 248, 0.35);
+}
+
+.auth-card-teal .auth-insignia {
+    background: rgba(45, 212, 191, 0.12);
+    color: #2dd4bf;
+    border: 1px solid rgba(45, 212, 191, 0.35);
+}
+
+.auth-card-amber .auth-insignia {
+    background: rgba(245, 158, 11, 0.12);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.35);
+}
+
+.auth-card-copper .auth-insignia {
+    background: rgba(251, 146, 60, 0.12);
+    color: #fdba74;
+    border: 1px solid rgba(251, 146, 60, 0.35);
+}
+
+.auth-tags-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.4rem;
+}
+
+.auth-tag-pill {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    padding: 0.22rem 0.65rem;
+    border-radius: 999px;
+    line-height: 1.2;
+}
+
+.pill-supranational {
+    background: rgba(56, 189, 248, 0.12);
+    color: #7dd3fc;
+    border: 1px solid rgba(56, 189, 248, 0.25);
+}
+
+.pill-statutory {
+    background: rgba(52, 211, 153, 0.12);
+    color: #6ee7b7;
+    border: 1px solid rgba(52, 211, 153, 0.25);
+}
+
+.pill-continental {
+    background: rgba(129, 140, 248, 0.12);
+    color: #c7d2fe;
+    border: 1px solid rgba(129, 140, 248, 0.25);
+}
+
+.pill-health {
+    background: rgba(45, 212, 191, 0.12);
+    color: #5eead4;
+    border: 1px solid rgba(45, 212, 191, 0.25);
+}
+
+.pill-field {
+    background: rgba(245, 158, 11, 0.12);
+    color: #fde68a;
+    border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.pill-agronomic {
+    background: rgba(251, 146, 60, 0.12);
+    color: #fed7aa;
+    border: 1px solid rgba(251, 146, 60, 0.25);
+}
+
+.auth-verified-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.32rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #34d399;
+    background: rgba(52, 211, 153, 0.08);
+    padding: 0.18rem 0.55rem;
+    border-radius: 6px;
+    border: 1px solid rgba(52, 211, 153, 0.2);
+}
+
+.auth-verified-chip.chip-law {
+    color: #fbbf24;
+    background: rgba(245, 158, 11, 0.08);
+    border-color: rgba(245, 158, 11, 0.25);
+}
+
+/* Card Body */
+.auth-card-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-title {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: #ffffff;
+    line-height: 1.3;
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.auth-year-badge {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #9ab4a7;
+    background: rgba(255, 255, 255, 0.06);
+    padding: 0.18rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.auth-org-name {
+    font-size: 0.8rem;
+    color: #8ba89b;
+    margin-bottom: 0.95rem;
+    line-height: 1.45;
+}
+
+.auth-pub-quote {
+    background: rgba(7, 21, 17, 0.65);
+    border-left: 3px solid #34d399;
+    padding: 0.75rem 0.95rem;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: #d1e2da;
+    margin-bottom: 1.15rem;
+    position: relative;
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+}
+
+.pub-quote-icon {
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+    opacity: 0.6;
+    color: #34d399;
+}
+
+.auth-pub-quote em {
+    font-style: italic;
+    color: #ecfdf5;
+}
+
+.auth-extract-box {
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    padding: 0.9rem 1rem;
+    margin-bottom: 1.25rem;
+    flex-grow: 1;
+}
+
+.auth-extract-label {
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #6ee7b7;
+    margin-bottom: 0.55rem;
+}
+
+.auth-extract-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.auth-extract-list li {
+    font-size: 0.78rem;
+    line-height: 1.45;
+    color: #a3bfb2;
+    position: relative;
+    padding-left: 1rem;
+}
+
+.auth-extract-list li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #34d399;
+    font-weight: bold;
+    font-size: 0.9rem;
+    line-height: 1;
+}
+
+.auth-extract-list strong {
+    color: #f0fdf4;
+    font-weight: 600;
+}
+
+/* Card Footer */
+.auth-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    margin-top: auto;
+    flex-wrap: wrap;
+}
+
+.auth-doi-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.72rem;
+    font-family: monospace;
+    color: #93c5fd;
+    background: rgba(59, 130, 246, 0.08);
+    padding: 0.28rem 0.65rem;
+    border-radius: 6px;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.auth-module-chip {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #8ba89b;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.22rem 0.55rem;
+    border-radius: 6px;
+}
+
+/* Open Science & Citation Transparency Card */
+.citations-transparency-card {
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+    padding: 2.25rem 2.5rem;
+    background: linear-gradient(135deg, rgba(14, 38, 30, 0.92) 0%, rgba(7, 21, 17, 0.95) 100%);
+    border: 1px solid rgba(52, 211, 153, 0.3);
+    border-radius: 16px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+    margin-bottom: 4.5rem;
+}
+
+.transparency-icon-box {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background: rgba(52, 211, 153, 0.12);
+    border: 1px solid rgba(52, 211, 153, 0.3);
+    color: #34d399;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+}
+
+.transparency-content {
+    flex-grow: 1;
+}
+
+.transparency-content h4 {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 500;
+    color: #ffffff;
+    margin-bottom: 0.45rem;
+}
+
+.transparency-content p {
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: #a3bfb2;
+    margin: 0;
+}
+
+.transparency-content strong {
+    color: #34d399;
+    font-weight: 600;
+}
+
+.transparency-actions {
+    flex-shrink: 0;
+}
+
+/* Platform Colophon / Modern Signature Footer */
+.platform-colophon {
+    padding-top: 3.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.colophon-top-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 3.5rem;
+    padding-bottom: 2.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.colophon-brand {
+    max-width: 360px;
+}
+
+.colophon-brand .brand-line {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.colophon-brand .brand-gem {
+    color: #34d399;
+    font-size: 1rem;
+}
+
+.colophon-brand .brand-text {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: #ffffff;
+}
+
+.colophon-brand .brand-mission {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: #7d968b;
+    margin: 0;
+}
+
+.colophon-nav-links {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    flex-grow: 1;
+    max-width: 680px;
+}
+
+.colophon-col h5 {
+    font-size: 0.76rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #d1e2da;
+    margin-bottom: 1.1rem;
+}
+
+.colophon-col a {
+    display: block;
+    font-size: 0.82rem;
+    color: #7d968b;
+    text-decoration: none;
+    margin-bottom: 0.65rem;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.colophon-col a:hover {
+    color: #34d399;
+    transform: translateX(3px);
+}
+
+.colophon-bottom-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1.75rem;
+    flex-wrap: wrap;
     gap: 1.25rem;
 }
 
-.citation-entry {
-    font-size: 0.82rem;
+.colophon-copyright {
+    font-size: 0.78rem;
     line-height: 1.55;
-    color: #9ab4a7;
-    padding: 0.85rem 1rem;
-    background: rgba(7, 21, 17, 0.5);
-    border-radius: 8px;
-    border-left: 3px solid #34d399;
+    color: #5f756b;
+    margin: 0;
+    max-width: 780px;
 }
 
-.citation-entry strong {
-    color: #e5ede8;
+.back-to-top-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #34d399;
+    background: rgba(52, 211, 153, 0.08);
+    border: 1px solid rgba(52, 211, 153, 0.22);
+    padding: 0.45rem 1rem;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.back-to-top-btn:hover {
+    background: rgba(52, 211, 153, 0.2);
+    color: #ffffff;
+    border-color: rgba(52, 211, 153, 0.45);
+    transform: translateY(-2px);
 }
 
 /* Scroll-Triggered Reveal Classes */
@@ -2396,9 +2912,28 @@ body:has(.home-page-master) .navbar-toggler span {
         grid-template-columns: 1fr;
     }
 
-    .dossier-narrative-group,
-    .citations-links-grid {
+    .dossier-narrative-group {
         grid-template-columns: 1fr;
+    }
+
+    .authorities-card-deck {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .authorities-metrics-ribbon {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.25rem;
+    }
+
+    .colophon-top-row {
+        flex-direction: column;
+        gap: 2.25rem;
+    }
+
+    .citations-transparency-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.25rem;
     }
 
     .registry-grid {
@@ -2431,6 +2966,34 @@ body:has(.home-page-master) .navbar-toggler span {
     .hero-actions-group {
         flex-direction: column;
         align-items: stretch;
+    }
+
+    .authorities-card-deck {
+        grid-template-columns: 1fr;
+    }
+
+    .authorities-metrics-ribbon {
+        grid-template-columns: 1fr;
+        padding: 1.25rem;
+    }
+
+    .auth-metric-item:not(:last-child)::after {
+        display: none;
+    }
+
+    .auth-card {
+        padding: 1.4rem;
+    }
+
+    .colophon-nav-links {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .colophon-bottom-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.25rem;
     }
 
     .registry-grid {
