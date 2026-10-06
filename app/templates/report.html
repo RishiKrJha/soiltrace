@@ -33,15 +33,7 @@
                         <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
                     </div>
                     <fieldset>
-                        <legend><span>01</span> Location</legend>
-                        <div class="field-group">
-                            <label for="location">Location or area name <small class="optional">Optional</small></label>
-                            <input type="text" id="location" name="location" value="{{ form.get('location', '') }}" maxlength="200" placeholder="e.g. Riverside market, East Ward">
-                        </div>
-                    </fieldset>
-
-                    <fieldset>
-                        <legend><span>02</span> Country</legend>
+                        <legend><span>01</span> Country</legend>
                         <div class="field-group">
                             <label for="country">Country <span class="required">*</span></label>
                             <input type="text" id="country" name="country" value="{{ form.get('country', '') }}" list="country-options" autocomplete="off" maxlength="100" placeholder="Start typing a country" required disabled>
@@ -52,7 +44,7 @@
                     </fieldset>
 
                     <fieldset id="region-fieldset" hidden>
-                        <legend><span>03</span> State or region</legend>
+                        <legend><span>02</span> State or region</legend>
                         <div class="field-group">
                             <label for="region">State or region <span id="region-required-marker" class="required">*</span></label>
                             <input type="text" id="region" name="region" value="{{ form.get('region', '') }}" list="region-options" autocomplete="off" maxlength="100" placeholder="Select a country first" disabled>
@@ -60,6 +52,14 @@
                             <input type="hidden" id="region-required" name="region_required" value="no">
                             <datalist id="region-options"></datalist>
                             <p id="region-status" class="location-status" role="status"></p>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend><span>03</span> Location</legend>
+                        <div class="field-group">
+                            <label for="location">Location or area name <small class="optional">Optional</small></label>
+                            <input type="text" id="location" name="location" value="{{ form.get('location', '') }}" maxlength="200" placeholder="e.g. Riverside market, East Ward">
                         </div>
                     </fieldset>
 

@@ -41,19 +41,15 @@ function hideRegion() {
 }
 
 function showRegion(country, preserveValue = false) {
-    const states = countriesWithoutRegions.has(country.iso2) ? [] : country.states || [];
-    regionFieldset.hidden = false;
+    const states = (countriesWithoutRegions.has(country.iso2) ? [] : country.states) || [];
 
     if (!states.length) {
-        clearRegion();
-        regionInput.disabled = true;
-        regionInput.required = false;
-        regionInput.placeholder = 'No state or region is required';
-        regionRequiredInput.value = 'no';
-        regionRequiredMarker.hidden = true;
-        regionStatus.textContent = `${country.name} does not require a state or region.`;
+        // No regions for this country — keep the fieldset fully hidden.
+        hideRegion();
         return;
     }
+
+    regionFieldset.hidden = false;
 
     if (!preserveValue) {
         clearRegion();
