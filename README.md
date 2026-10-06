@@ -66,7 +66,7 @@ SoilTrace bridges the gap between community field observations and environmental
 - **Backend**: Python 3, [Flask](https://flask.palletsprojects.com/) (Application Factory pattern)
 - **Database**: SQLite (Local development / prototype storage with automatic migration support)
 - **Frontend**: Semantic HTML5, Modern CSS3 (Variables, Flexbox, Grid, Conic Gradients), Vanilla JavaScript (ES6+)
-- **External API**: [CountriesNow API](https://countriesnow.space/) for country and state/region dropdown taxonomies
+- **Geographic Data**: Bundled local dataset (`app/static/countries.json`) for instant country lookups and on-demand regional subdivision querying
 - **Configuration & Security**: `python-dotenv` for environment management, honeypot spam protection
 
 ---
@@ -82,9 +82,10 @@ soiltrace/
 │   ├── static/
 │   │   ├── css/
 │   │   │   └── style.css     # Unified stylesheets and design system
-│   │   └── js/
-│   │       ├── navbar.js     # Responsive mobile navigation menu toggle
-│   │       └── report.js     # Country/region fetching and form validations
+│   │   ├── js/
+│   │   │   ├── navbar.js     # Responsive mobile navigation menu toggle
+│   │   │   └── report.js     # Country/region fetching and form validations
+│   │   └── countries.json    # Bundled country list dataset
 │   └── templates/
 │       ├── base.html         # Base template with navigation, header, and footer
 │       ├── index.html        # Informational homepage and platform overview

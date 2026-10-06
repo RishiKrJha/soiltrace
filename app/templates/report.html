@@ -36,7 +36,7 @@
                         <legend><span>01</span> Country</legend>
                         <div class="field-group">
                             <label for="country">Country <span class="required">*</span></label>
-                            <input type="text" id="country" name="country" value="{{ form.get('country', '') }}" list="country-options" autocomplete="off" maxlength="100" placeholder="Start typing a country" required disabled>
+                            <input type="text" id="country" name="country" value="{{ form.get('country', '') }}" list="country-options" autocomplete="off" maxlength="100" placeholder="Start typing a country" data-countries-url="{{ url_for('static', filename='countries.json') }}" required disabled>
                             <input type="hidden" id="country-code" name="country_code" value="{{ form.get('country_code', '') }}">
                             <datalist id="country-options"></datalist>
                             <p id="country-status" class="location-status" role="status">Loading country options...</p>
