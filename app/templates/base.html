@@ -46,16 +46,6 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ url_for('index') }}#risk-analyzer" class="nav-link">
-                                <span>Risk Analyzer</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ url_for('index') }}#hotspots-dossier" class="nav-link">
-                                <span>Hotspots</span>
-                            </a>
-                        </li>
-                        <li>
                             <a href="{{ url_for('dashboard') }}" class="nav-link{% if request.endpoint == 'dashboard' %} active{% endif %}"{% if request.endpoint == 'dashboard' %} aria-current="page"{% endif %}>
                                 <span>Dashboard</span>
                                 <span class="nav-pill-badge">Live</span>
@@ -66,7 +56,7 @@
                                 <svg class="cta-icon" width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
                                     <path d="M8 2a.75.75 0 0 1 .75.75v4.5h4.5a.75.75 0 0 1 0 1.5h-4.5v4.5a.75.75 0 0 1-1.5 0v-4.5h-4.5a.75.75 0 0 1 0-1.5h4.5v-4.5A.75.75 0 0 1 8 2z"/>
                                 </svg>
-                                <span>Report Ground Signal</span>
+                                <span>Report Observation</span>
                             </a>
                         </li>
                     </ul>

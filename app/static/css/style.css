@@ -579,6 +579,7 @@ body:has(.home-page-master) .navbar-toggler span {
 .hero-headline-accent {
     background: linear-gradient(135deg, #a7f3d0 0%, #34d399 45%, #e07a5f 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -739,6 +740,298 @@ body:has(.home-page-master) .navbar-toggler span {
     font-size: 1.05rem;
     line-height: 1.65;
     color: #9ab4a7;
+}
+
+/* ==========================================================================
+   AWARENESS & EDUCATIONAL MODULES
+   Plain-language explanations, living superpowers, warning signs, action guide
+   ========================================================================== */
+
+/* Superpowers Grid */
+.awareness-superpowers-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 3.5rem;
+}
+
+.superpower-card {
+    padding: 2rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.superpower-icon-box {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: rgba(52, 211, 153, 0.15);
+    border: 1px solid rgba(52, 211, 153, 0.35);
+    color: #34d399;
+    margin-bottom: 1.25rem;
+}
+
+.superpower-card h3 {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 0.65rem;
+}
+
+.superpower-card p {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: #b5ccc1;
+    margin-bottom: 1.25rem;
+    flex-grow: 1;
+}
+
+.why-matters-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.4rem 0.85rem;
+    background: rgba(14, 38, 30, 0.7);
+    border: 1px solid rgba(52, 211, 153, 0.25);
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #a7f3d0;
+}
+
+/* Living Soil vs Degraded Dirt Contrast */
+.soil-contrast-banner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.75rem;
+    padding: 2.25rem;
+    background: rgba(10, 28, 22, 0.75);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 2rem;
+}
+
+.contrast-col {
+    padding: 1.5rem;
+    border-radius: 12px;
+}
+
+.contrast-col.col-healthy {
+    background: rgba(52, 211, 153, 0.08);
+    border: 1px solid rgba(52, 211, 153, 0.3);
+}
+
+.contrast-col.col-degraded {
+    background: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.contrast-col h4 {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.col-healthy h4 { color: #34d399; }
+.col-degraded h4 { color: #f87171; }
+
+.contrast-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    font-size: 0.88rem;
+    color: #cbdad2;
+}
+
+.contrast-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+}
+
+/* Everyday Culprits Grid */
+.daily-culprits-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+}
+
+.culprit-card {
+    padding: 2rem 1.6rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.culprit-badge {
+    align-self: flex-start;
+    padding: 0.25rem 0.65rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.1rem;
+}
+
+.badge-plastic { background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.35); color: #38bdf8; }
+.badge-agri { background: rgba(251, 191, 36, 0.15); border: 1px solid rgba(251, 191, 36, 0.35); color: #fbbf24; }
+.badge-industry { background: rgba(249, 115, 22, 0.15); border: 1px solid rgba(249, 115, 22, 0.35); color: #fb923c; }
+.badge-ewaste { background: rgba(168, 85, 247, 0.15); border: 1px solid rgba(168, 85, 247, 0.35); color: #c084fc; }
+
+.culprit-card h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.65rem;
+}
+
+.culprit-card p {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: #b5ccc1;
+    margin-bottom: 1.25rem;
+    flex-grow: 1;
+}
+
+.culprit-stat-pill {
+    padding: 0.65rem 0.85rem;
+    background: rgba(7, 21, 17, 0.6);
+    border-radius: 6px;
+    font-size: 0.78rem;
+    color: #d1e2da;
+    border-left: 3px solid #34d399;
+}
+
+.culprit-stat-pill strong {
+    color: #ffffff;
+}
+
+/* 5 Warning Signs Grid */
+.warning-signs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.warning-card {
+    padding: 1.85rem;
+    border-left: 4px solid #f59e0b;
+}
+
+.warning-num-tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #f59e0b;
+    margin-bottom: 0.4rem;
+}
+
+.warning-card h3 {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 0.65rem;
+}
+
+.warning-card p {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: #b5ccc1;
+}
+
+.warning-card .warning-hint {
+    margin-top: 1rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.78rem;
+    color: #fcd34d;
+}
+
+/* Citizen Actions Grid */
+.citizen-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+}
+
+.action-card {
+    padding: 2rem 1.6rem;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+}
+
+.action-step-num {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(52, 211, 153, 0.15);
+    border: 1px solid #34d399;
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #34d399;
+    margin-bottom: 1.25rem;
+}
+
+.action-card h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.65rem;
+}
+
+.action-card p {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: #b5ccc1;
+    flex-grow: 1;
+}
+
+/* Plain English Explanatory Callout */
+.plain-english-callout {
+    margin-top: 1.75rem;
+    padding: 1.25rem 1.5rem;
+    background: rgba(52, 211, 153, 0.08);
+    border: 1px solid rgba(52, 211, 153, 0.25);
+    border-radius: 10px;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.callout-icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    color: #34d399;
+    margin-top: 2px;
+}
+
+.callout-text h5 {
+    font-size: 0.86rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #34d399;
+    margin-bottom: 0.25rem;
+}
+
+.callout-text p {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: #d1e2da;
 }
 
 /* 3. Pedosphere Stratigraphy Visualizer */
