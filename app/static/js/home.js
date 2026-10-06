@@ -1,10 +1,14 @@
 /**
  * SoilTrace - Interactive Homepage & Awareness Engine
  * Features:
- * 1. Live Soil Risk & Threshold Analyzer (MoEFCC 2015, EU Directive, WHO Standards)
- * 2. Pedosphere Stratigraphy Horizon Switcher (0-20cm, 20-80cm, 80cm+)
- * 3. Verified Contamination Hotspots Dossier Explorer
- * 4. Scroll-Triggered Reveal Animations
+ * 1. Scroll Reading Progress Bar
+ * 2. Animated Number Roll-up Counters
+ * 3. Live Soil Risk & Threshold Analyzer (MoEFCC 2015, EU Directive, WHO Standards)
+ * 4. Citizen Area Context Simulator
+ * 5. Pedosphere Stratigraphy Horizon Switcher (0-20cm, 20-80cm, 80cm+)
+ * 6. Verified Contamination Hotspots Dossier Explorer
+ * 7. Interactive Citizen FAQ Accordion
+ * 8. Scroll-Triggered Reveal Animations & Floating Jump Nav
  */
 
 (function () {
@@ -193,22 +197,172 @@
         }
     };
 
+    // --- CITIZEN SIMULATOR MATRIX ---
+    const SIMULATOR_DATA = {
+        'peri-urban': {
+            'canal': {
+                threat: 'Industrial Heavy Metal Irrigation (Lead & Chromium)',
+                foodRisk: 'Extremely high accumulation in leafy greens (spinach, coriander, fenugreek). Vegetables irrigated with untreated city drains absorb ionic lead rapidly.',
+                testAdvice: 'Ask for ICP-MS testing of edible greens and topsoil Lead (Pb) & Hexavalent Chromium Cr(VI).',
+                actionSteps: 'Never eat raw peri-urban ditch-irrigated greens without verification. Advocate for effluent treatment before irrigation discharge.'
+            },
+            'borewell': {
+                threat: 'Industrial Solvent & Chemical Plume Leaching',
+                foodRisk: 'Deep groundwater contamination near industrial outfalls. Leaching of persistent synthetic solvents into tubewells.',
+                testAdvice: 'Test drinking tubewells for volatile organic compounds (VOCs) and dissolved heavy metals.',
+                actionSteps: 'Install multi-stage reverse osmosis filtration; test borewell depth water annually.'
+            },
+            'municipal': {
+                threat: 'Vehicle Exhaust Lead Dust & Roadside Settling',
+                foodRisk: 'Atmospheric aerosols settling on backyard vegetables and community gardens within 100 meters of highways.',
+                testAdvice: 'Check topsoil for legacy lead particulates (Pb) and Polycyclic Aromatic Hydrocarbons (PAHs).',
+                actionSteps: 'Erect green plant barrier hedges and peel root crops thoroughly.'
+            }
+        },
+        'agri-belt': {
+            'borewell': {
+                threat: 'Cadmium Accumulation from Phosphate Fertilizers',
+                foodRisk: 'Rock-phosphate fertilizers introduce natural cadmium impurities, leading to chronic kidney dysfunction.',
+                testAdvice: 'Request Soil Health Card testing for Organic Carbon and Cadmium (Cd) concentration.',
+                actionSteps: 'Apply woody biochar (up to 72% fixation) and balance NPK fertilizers with organic compost.'
+            },
+            'canal': {
+                threat: 'Upstream Agrochemical & Pesticide Runoff',
+                foodRisk: 'Accumulation of synthetic herbicides, organophosphates, and nitrates triggering algal blooms and soil acidity.',
+                testAdvice: 'Test irrigation canal water for nitrate levels and synthetic pesticide residues.',
+                actionSteps: 'Adopt Integrated Pest Management (IPM) and construct vegetative filter strips along canals.'
+            },
+            'municipal': {
+                threat: 'Plasticulture & Microplastic Saturation',
+                foodRisk: 'Agricultural mulch films fragmenting into microplastics, reducing soil water retention and earthworm counts.',
+                testAdvice: 'Inspect soil structure for visible plastic shreds and check bulk density.',
+                actionSteps: 'Transition away from single-use polyethylene mulches to biodegradable straw or compost covers.'
+            }
+        },
+        'industrial': {
+            'borewell': {
+                threat: 'Acute Aquifer Contamination (Cr VI & Arsenic)',
+                foodRisk: 'Unregulated dumping of industrial sludge seeps directly into groundwater (as seen in the Ranipet crisis).',
+                testAdvice: 'Urgent chemical spectroscopy of water for Hexavalent Chromium (Cr VI) and Arsenic (As).',
+                actionSteps: 'Immediately halt drinking untreated groundwater; report suspicious discharges to the pollution board.'
+            },
+            'canal': {
+                threat: 'Direct Tannery & Plating Effluent Inundation',
+                foodRisk: 'Severe soil toxicity rendering land unfit for cultivation, causing extreme crop chlorosis and root burns.',
+                testAdvice: 'Perform comprehensive heavy metal panel (Cr, Ni, Cu, Zn, Pb) on topsoil.',
+                actionSteps: 'Engage local authorities to inspect industrial TSDF compliance; file ground observations on SoilTrace.'
+            },
+            'municipal': {
+                threat: 'Airborne Industrial Smelter Dust Fallout',
+                foodRisk: 'Fine heavy metal dust settling on urban gardens, parks, and playgrounds where children play.',
+                testAdvice: 'Surface swipe dust testing for Lead and Cadmium.',
+                actionSteps: 'Use raised garden planter beds filled with clean certified potting soil.'
+            }
+        },
+        'urban-dump': {
+            'borewell': {
+                threat: 'Landfill Leachate Percolation (Barium & E-Waste)',
+                foodRisk: 'Unlined municipal dumps leaking complex toxic cocktails into shallow and deep aquifers.',
+                testAdvice: 'Test well water for heavy metals, electrical conductivity (salinity), and coliforms.',
+                actionSteps: 'Rely strictly on certified municipal treated water for drinking and cooking.'
+            },
+            'canal': {
+                threat: 'Urban Stormwater & Plastic Waste Washing',
+                foodRisk: 'Macro-plastics breaking down into soil, trapping heavy metals and endocrine-disrupting chemicals.',
+                testAdvice: 'Analyze soil for phthalates, bisphenols, and microplastic fragment counts.',
+                actionSteps: 'Prevent open dumping along riverbanks and clean neighborhood stormwater channels.'
+            },
+            'municipal': {
+                threat: 'Toxic Ash from Informal Open Cable Burning',
+                foodRisk: 'Informal e-waste recycling burning copper wires, depositing heavy concentrations of lead and dioxins into city dirt.',
+                testAdvice: 'Test playground and backyard soil for Lead (Pb) and Barium (Ba).',
+                actionSteps: 'Advocate for strict enforcement of e-waste recycling laws; submit photos of illegal burning.'
+            }
+        }
+    };
+
     // --- DOM INITIALIZATION ---
     document.addEventListener('DOMContentLoaded', function () {
+        initScrollProgress();
+        initNumberCounters();
         initRiskAnalyzer();
+        initAreaSimulator();
         initStratigraphyExplorer();
         initHotspotsExplorer();
+        initFaqAccordion();
         initScrollAnimations();
         initSmoothAnchors();
+        initFloatingJumpNav();
     });
 
-    // 1. RISK ANALYZER ENGINE
+    // 1. SCROLL PROGRESS BAR
+    function initScrollProgress() {
+        const progressBar = document.getElementById('scroll-progress');
+        if (!progressBar) return;
+
+        window.addEventListener('scroll', function () {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPercentage = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+            progressBar.style.width = `${Math.min(100, Math.max(0, scrollPercentage))}%`;
+        }, { passive: true });
+    }
+
+    // 2. NUMBER ROLL-UP COUNTER ANIMATION
+    function initNumberCounters() {
+        const counterElements = document.querySelectorAll('[data-counter]');
+        if (!counterElements.length || !('IntersectionObserver' in window)) return;
+
+        const counterObserver = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const targetVal = parseFloat(el.getAttribute('data-counter'));
+                    const isDecimal = el.getAttribute('data-decimal') === 'true';
+                    const duration = 1600; // ms
+                    const startTime = performance.now();
+
+                    function updateNumber(currentTime) {
+                        const elapsed = currentTime - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+                        // Easing out cubic: 1 - pow(1 - progress, 3)
+                        const easeOut = 1 - Math.pow(1 - progress, 3);
+                        const currentVal = easeOut * targetVal;
+
+                        if (isDecimal) {
+                            el.textContent = currentVal.toFixed(2);
+                        } else {
+                            el.textContent = Math.round(currentVal);
+                        }
+
+                        if (progress < 1) {
+                            requestAnimationFrame(updateNumber);
+                        } else {
+                            if (isDecimal) {
+                                el.textContent = targetVal.toFixed(2);
+                            } else {
+                                el.textContent = targetVal;
+                            }
+                        }
+                    }
+
+                    requestAnimationFrame(updateNumber);
+                    obs.unobserve(el);
+                }
+            });
+        }, { threshold: 0.2 });
+
+        counterElements.forEach(el => counterObserver.observe(el));
+    }
+
+    // 3. RISK ANALYZER ENGINE
     function initRiskAnalyzer() {
         const contaminantSelect = document.getElementById('analyzer-contaminant');
         const landUseRadios = document.querySelectorAll('input[name="land-use"]');
         const valueSlider = document.getElementById('analyzer-slider');
         const valueInput = document.getElementById('analyzer-value');
         const unitDisplay = document.getElementById('analyzer-unit');
+        const resultsContainer = document.querySelector('.analyzer-results');
 
         if (!contaminantSelect || !valueSlider || !valueInput) return;
 
@@ -227,7 +381,6 @@
             valueSlider.step = data.step || 1;
             unitDisplay.textContent = data.unit;
 
-            // Reset value to reasonable default if outside bounds
             let cur = parseFloat(valueInput.value);
             if (isNaN(cur) || cur > data.max || cur < data.min) {
                 valueSlider.value = data.defaultVal;
@@ -246,7 +399,6 @@
             const statutoryLimit = data.limits[landUse] || data.limits.agricultural;
             const ratio = val / statutoryLimit;
 
-            // DOM elements to update
             const statusBadge = document.getElementById('analyzer-status-badge');
             const statusSummary = document.getElementById('analyzer-status-summary');
             const gaugeBar = document.getElementById('analyzer-gauge-bar');
@@ -266,11 +418,14 @@
                 cropStandardDisplay.textContent = data.cropStandard;
             }
 
-            // Determine status
             let statusText = '';
             let statusClass = '';
             let summaryText = '';
             let gaugePercent = Math.min(100, Math.max(5, (val / (statutoryLimit * 2.5)) * 100));
+
+            if (resultsContainer) {
+                resultsContainer.classList.remove('hazard-pulse');
+            }
 
             if (ratio <= 0.6) {
                 statusText = 'Low Baseline (Safe)';
@@ -290,6 +445,9 @@
                 statusClass = 'status-danger';
                 const times = ratio.toFixed(1);
                 summaryText = `Extreme contamination: ${times}x times the statutory threshold! Requires immediate soil containment and official site remediation.`;
+                if (resultsContainer) {
+                    resultsContainer.classList.add('hazard-pulse');
+                }
             }
 
             statusBadge.textContent = statusText;
@@ -300,7 +458,6 @@
             gaugeBar.className = `gauge-progress ${statusClass}`;
         }
 
-        // Event Listeners
         contaminantSelect.addEventListener('change', updateSliderLimits);
         landUseRadios.forEach(radio => radio.addEventListener('change', calculateRisk));
 
@@ -314,11 +471,44 @@
             calculateRisk();
         });
 
-        // Initial setup
         updateSliderLimits();
     }
 
-    // 2. STRATIGRAPHY HORIZONS SWITCHER
+    // 4. CITIZEN CONTEXT SIMULATOR
+    function initAreaSimulator() {
+        const envSelect = document.getElementById('sim-env');
+        const waterSelect = document.getElementById('sim-water');
+        if (!envSelect || !waterSelect) return;
+
+        const threatHeading = document.getElementById('sim-threat-heading');
+        const foodRiskEl = document.getElementById('sim-food-risk');
+        const testAdviceEl = document.getElementById('sim-test-advice');
+        const actionStepsEl = document.getElementById('sim-action-steps');
+
+        function updateSimulation() {
+            const env = envSelect.value;
+            const water = waterSelect.value;
+
+            const envGroup = SIMULATOR_DATA[env] || SIMULATOR_DATA['peri-urban'];
+            const res = envGroup[water] || envGroup['canal'] || {
+                threat: 'Potential Soil Contaminant Accumulation',
+                foodRisk: 'Excess chemicals in soil slowly migrate into edible crops and water supplies.',
+                testAdvice: 'Conduct baseline heavy metal and pH soil tests.',
+                actionSteps: 'Wash all market vegetables thoroughly and compost organic kitchen waste.'
+            };
+
+            if (threatHeading) threatHeading.textContent = res.threat;
+            if (foodRiskEl) foodRiskEl.textContent = res.foodRisk;
+            if (testAdviceEl) testAdviceEl.textContent = res.testAdvice;
+            if (actionStepsEl) actionStepsEl.textContent = res.actionSteps;
+        }
+
+        envSelect.addEventListener('change', updateSimulation);
+        waterSelect.addEventListener('change', updateSimulation);
+        updateSimulation();
+    }
+
+    // 5. STRATIGRAPHY HORIZONS SWITCHER
     function initStratigraphyExplorer() {
         const horizonButtons = document.querySelectorAll('[data-horizon-target]');
         if (!horizonButtons.length) return;
@@ -337,7 +527,6 @@
                 const data = HORIZONS_DATA[targetKey];
                 if (!data) return;
 
-                // Update active button state
                 horizonButtons.forEach(b => {
                     b.classList.remove('active');
                     b.setAttribute('aria-selected', 'false');
@@ -345,7 +534,6 @@
                 this.classList.add('active');
                 this.setAttribute('aria-selected', 'true');
 
-                // Update layer highlight
                 layers.forEach(layer => {
                     if (layer.getAttribute('data-layer') === targetKey) {
                         layer.classList.add('stratum-highlighted');
@@ -354,7 +542,6 @@
                     }
                 });
 
-                // Update text with quick cross-fade
                 if (nameEl) nameEl.textContent = data.name;
                 if (badgeEl) badgeEl.textContent = data.badge;
                 if (depthEl) depthEl.textContent = data.depthText;
@@ -365,7 +552,7 @@
         });
     }
 
-    // 3. HOTSPOTS EXPLORER
+    // 6. HOTSPOTS EXPLORER
     function initHotspotsExplorer() {
         const hotspotButtons = document.querySelectorAll('[data-hotspot-target]');
         if (!hotspotButtons.length) return;
@@ -404,11 +591,29 @@
         });
     }
 
-    // 4. SCROLL REVEAL ANIMATIONS
+    // 7. FAQ ACCORDION
+    function initFaqAccordion() {
+        const faqButtons = document.querySelectorAll('.faq-question-btn');
+        faqButtons.forEach(btn => {
+            btn.addEventListener('click', function () {
+                const item = this.closest('.faq-item');
+                const isActive = item.classList.contains('active');
+
+                // Close all other FAQ items for clean focus
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+
+                // Toggle current item
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    }
+
+    // 8. SCROLL REVEAL ANIMATIONS
     function initScrollAnimations() {
         const revealElements = document.querySelectorAll('.reveal-on-scroll');
         if (!revealElements.length || !('IntersectionObserver' in window)) {
-            // Fallback: make everything visible immediately
             revealElements.forEach(el => el.classList.add('is-revealed'));
             return;
         }
@@ -431,7 +636,7 @@
         revealElements.forEach(el => observer.observe(el));
     }
 
-    // 5. SMOOTH ANCHOR NAVIGATION
+    // 9. SMOOTH ANCHOR NAVIGATION
     function initSmoothAnchors() {
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -448,5 +653,34 @@
             });
         });
     }
-})();
 
+    // 10. FLOATING QUICK-JUMP NAV HIGHLIGHT
+    function initFloatingJumpNav() {
+        const jumpLinks = document.querySelectorAll('.jump-link');
+        if (!jumpLinks.length) return;
+
+        const sections = Array.from(jumpLinks).map(link => {
+            const id = link.getAttribute('href').slice(1);
+            return document.getElementById(id);
+        }).filter(Boolean);
+
+        window.addEventListener('scroll', function () {
+            const scrollPos = window.scrollY + 200;
+            let currentId = '';
+
+            sections.forEach(sec => {
+                if (sec.offsetTop <= scrollPos) {
+                    currentId = sec.id;
+                }
+            });
+
+            jumpLinks.forEach(link => {
+                if (link.getAttribute('href') === `#${currentId}`) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }, { passive: true });
+    }
+})();

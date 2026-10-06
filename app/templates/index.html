@@ -3,6 +3,14 @@
 {% block title %}SoilTrace - Soil Pollution Awareness with Digital Records{% endblock %}
 
 {% block content %}
+<!-- 0. SCROLL PROGRESS BAR & AMBIENT AURORA GLOW -->
+<div id="scroll-progress" aria-hidden="true"></div>
+<div class="ambient-glow-wrapper" aria-hidden="true">
+    <div class="ambient-glow-orb orb-1"></div>
+    <div class="ambient-glow-orb orb-2"></div>
+    <div class="ambient-glow-orb orb-3"></div>
+</div>
+
 <main class="home-page-master" id="main-content">
 
     <!-- 1. HERO SECTION: AWARENESS + RESEARCH HOOK -->
@@ -49,25 +57,25 @@
                 </a>
             </div>
 
-            <!-- Verified Benchmark Stat Cards with Plain-Language Meaning -->
+            <!-- Verified Benchmark Stat Cards with Animated Number Counters -->
             <div class="hero-stats-grid reveal-on-scroll">
                 <article class="stat-pill-card">
-                    <div class="stat-pill-number">33<span class="stat-unit">%</span></div>
+                    <div class="stat-pill-number"><span class="counter-val" data-counter="33">33</span><span class="stat-unit">%</span></div>
                     <div class="stat-pill-label">1 in 3 Fields Degraded</div>
                     <div class="stat-pill-sub">Global lands losing natural fertility & health (FAO)</div>
                 </article>
                 <article class="stat-pill-card">
-                    <div class="stat-pill-number">20<span class="stat-unit">%</span></div>
+                    <div class="stat-pill-number"><span class="counter-val" data-counter="20">20</span><span class="stat-unit">%</span></div>
                     <div class="stat-pill-label">Food Yield Stolen by Toxins</div>
                     <div class="stat-pill-sub">Global agricultural output lost to soil contaminants (UNEP)</div>
                 </article>
                 <article class="stat-pill-card">
-                    <div class="stat-pill-number">3.70<span class="stat-unit">Mt</span></div>
+                    <div class="stat-pill-number"><span class="counter-val" data-counter="3.70" data-decimal="true">3.70</span><span class="stat-unit">Mt</span></div>
                     <div class="stat-pill-label">Pesticides Applied Yearly</div>
                     <div class="stat-pill-sub">Chemical residues piling up faster than soil can decompose them (FAOSTAT)</div>
                 </article>
                 <article class="stat-pill-card">
-                    <div class="stat-pill-number">3.5<span class="stat-unit">M</span></div>
+                    <div class="stat-pill-number"><span class="counter-val" data-counter="3.5" data-decimal="true">3.5</span><span class="stat-unit">M</span></div>
                     <div class="stat-pill-label">Silent Lead Fatalities / Yr</div>
                     <div class="stat-pill-sub">Cardiovascular deaths linked to environmental lead in soil & food (WHO)</div>
                 </article>
@@ -225,7 +233,50 @@
         </div>
     </aside>
 
-    <!-- 5. INTERACTIVE PEDOSPHERE STRATIGRAPHY -->
+    <!-- 5. INTERACTIVE MYTH VS FACT SECTION -->
+    <section class="section-container" id="myths-facts" aria-labelledby="myths-title">
+        <div class="section-header reveal-on-scroll">
+            <span class="section-kicker">Public Misconceptions</span>
+            <h2 id="myths-title">Busting Common Soil Pollution Myths</h2>
+            <p class="section-lead">
+                Widespread misunderstandings keep soil pollution invisible. Here is what science and laboratory testing actually reveal:
+            </p>
+        </div>
+
+        <div class="myths-grid reveal-on-scroll">
+            <article class="myth-card glass-panel">
+                <span class="myth-label">Myth 01</span>
+                <p class="myth-quote">"If a vegetable looks crisp and green at the market, the soil it grew in must be clean."</p>
+                <div class="fact-divider"></div>
+                <span class="fact-label">The Scientific Fact</span>
+                <p class="fact-explanation">
+                    Plants absorb toxic heavy metals through their roots invisibly. NEERI’s laboratory tests on Yamuna floodplains found crisp, green spinach containing <strong>14.1 mg/kg of lead</strong>—nearly 6 times the legal safety limit. Produce looks completely normal even when carrying hazardous toxins.
+                </p>
+            </article>
+
+            <article class="myth-card glass-panel">
+                <span class="myth-label">Myth 02</span>
+                <p class="myth-quote">"Washing and boiling vegetables removes any chemical contamination from soil."</p>
+                <div class="fact-divider"></div>
+                <span class="fact-label">The Scientific Fact</span>
+                <p class="fact-explanation">
+                    Washing only removes surface dirt. Heavy metals such as Cadmium, Lead, and Arsenic are translocated into the plant's inner cellular structure. Boiling or peeling will not remove systemic heavy metals stored inside leaf tissues or grains.
+                </p>
+            </article>
+
+            <article class="myth-card glass-panel">
+                <span class="myth-label">Myth 03</span>
+                <p class="myth-quote">"Chemical fertilizers just feed plants and leave no lasting harm in the ground."</p>
+                <div class="fact-divider"></div>
+                <span class="fact-label">The Scientific Fact</span>
+                <p class="fact-explanation">
+                    Synthetic fertilizers introduce natural Cadmium impurities (present in mined rock phosphate). Over decades, continuous application acidifies soil, burns away living organic carbon (now deficient in 73% of Indian soils), and kills beneficial earthworms.
+                </p>
+            </article>
+        </div>
+    </section>
+
+    <!-- 6. INTERACTIVE PEDOSPHERE STRATIGRAPHY -->
     <section class="section-container" id="stratigraphy" aria-labelledby="stratigraphy-title">
         <div class="section-header reveal-on-scroll">
             <span class="section-kicker">Geological Exploration</span>
@@ -301,7 +352,7 @@
         </div>
     </section>
 
-    <!-- 6. AWARENESS PILLAR 3: EVERYDAY SOURCES -->
+    <!-- 7. AWARENESS PILLAR 3: EVERYDAY SOURCES -->
     <section class="section-container" id="daily-culprits" aria-labelledby="culprits-title">
         <div class="section-header reveal-on-scroll">
             <span class="section-kicker">Everyday Awareness</span>
@@ -350,7 +401,7 @@
         </div>
     </section>
 
-    <!-- 7. THE FOOD-CHAIN REALITY: BIOACCUMULATION STEPPER -->
+    <!-- 8. THE FOOD-CHAIN REALITY: BIOACCUMULATION STEPPER -->
     <section class="section-container" id="bioaccumulation" aria-labelledby="bioaccum-title">
         <div class="section-header reveal-on-scroll">
             <span class="section-kicker">Food Safety Reality</span>
@@ -414,7 +465,7 @@
         </div>
     </section>
 
-    <!-- 8. INTERACTIVE AWARENESS TOOL: SOIL RISK ANALYZER -->
+    <!-- 9. INTERACTIVE AWARENESS TOOL: SOIL RISK ANALYZER -->
     <section class="section-container" id="risk-analyzer" aria-labelledby="analyzer-title">
         <div class="section-header reveal-on-scroll">
             <span class="section-kicker">Interactive Awareness Tool</span>
@@ -537,7 +588,67 @@
         </div>
     </section>
 
-    <!-- 9. DOCUMENTED HOTSPOTS: REAL-WORLD STORIES -->
+    <!-- 10. CITIZEN CONTEXT SIMULATOR: WHAT'S IN YOUR AREA? -->
+    <section class="section-container" id="area-simulator" aria-labelledby="sim-title">
+        <div class="section-header reveal-on-scroll">
+            <span class="section-kicker">Interactive Scenario Checker</span>
+            <h2 id="sim-title">What’s the Soil Threat in Your Area?</h2>
+            <p class="section-lead">
+                Every region faces different environmental pressures. Select your local geography and water source to identify the primary soil toxins you should be aware of:
+            </p>
+        </div>
+
+        <div class="simulator-layout reveal-on-scroll">
+            <div class="simulator-controls glass-panel">
+                <div class="control-group">
+                    <label for="sim-env" class="control-label">1. Where Do You Live / Farm?</label>
+                    <select id="sim-env" class="custom-select">
+                        <option value="peri-urban">Peri-Urban Riverbank (Border of a Big City)</option>
+                        <option value="agri-belt">Intensive Agricultural Belt (Wheat / Rice / Cash Crops)</option>
+                        <option value="industrial">Industrial Hub (Near Tanneries, Smelters, Chemical Units)</option>
+                        <option value="urban-dump">Residential Area Near Landfills or Informal E-Waste Clusters</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label for="sim-water" class="control-label">2. What is the Main Water Source for Farming / Wells?</label>
+                    <select id="sim-water" class="custom-select">
+                        <option value="canal">River / Canal / City Drainage Channel</option>
+                        <option value="borewell">Deep Underground Borewell / Tubewell</option>
+                        <option value="municipal">Piped Municipal Supply (City Water)</option>
+                    </select>
+                </div>
+
+                <div class="analyzer-footnote">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                    <span>Based on peer-reviewed environmental surveys across Indian agricultural corridors and urban floodplains.</span>
+                </div>
+            </div>
+
+            <!-- Dynamic Scenario Result -->
+            <div class="simulator-result-card glass-panel" aria-live="polite">
+                <span class="sim-output-badge">Primary Local Risk Profile</span>
+                <h3 class="sim-threat-heading" id="sim-threat-heading">Industrial Heavy Metal Irrigation (Lead & Chromium)</h3>
+
+                <div class="sim-detail-block">
+                    <h5>Food & Crop Vulnerability</h5>
+                    <p id="sim-food-risk">Extremely high accumulation in leafy greens (spinach, coriander, fenugreek). Vegetables irrigated with untreated city drains absorb ionic lead rapidly.</p>
+                </div>
+
+                <div class="sim-detail-block">
+                    <h5>What You Should Ask to Test</h5>
+                    <p id="sim-test-advice">Ask for ICP-MS testing of edible greens and topsoil Lead (Pb) & Hexavalent Chromium Cr(VI).</p>
+                </div>
+
+                <div class="sim-detail-block">
+                    <h5>Safe Citizen Action Steps</h5>
+                    <p id="sim-action-steps">Never eat raw peri-urban ditch-irrigated greens without verification. Advocate for effluent treatment before irrigation discharge.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 11. DOCUMENTED HOTSPOTS: REAL-WORLD STORIES -->
     <section class="section-container" id="hotspots-dossier" aria-labelledby="hotspots-title">
         <div class="section-header reveal-on-scroll">
             <span class="section-kicker">Digital Records Archive</span>
@@ -611,7 +722,7 @@
         </div>
     </section>
 
-    <!-- 10. CITIZEN FIELD GUIDE: HOW TO SPOT SOIL POLLUTION -->
+    <!-- 12. CITIZEN FIELD GUIDE: HOW TO SPOT SOIL POLLUTION -->
     <section class="section-container" id="spot-pollution" aria-labelledby="spot-title">
         <div class="section-header reveal-on-scroll">
             <span class="section-kicker">Citizen Field Guide</span>
@@ -666,7 +777,7 @@
         </div>
     </section>
 
-    <!-- 11. CONTAMINANT REGISTRY: CHEMISTRY EXPLAINED SIMPLY -->
+    <!-- 13. CONTAMINANT REGISTRY: CHEMISTRY EXPLAINED SIMPLY -->
     <section class="section-container" id="periodic-registry" aria-labelledby="registry-title">
         <div class="section-header reveal-on-scroll">
             <span class="section-kicker">Chemical Encyclopedia</span>
@@ -799,7 +910,7 @@
         </div>
     </section>
 
-    <!-- 12. REMEDIATION & RESTORATION: HOW WE HEAL THE EARTH -->
+    <!-- 14. REMEDIATION & RESTORATION: HOW WE HEAL THE EARTH -->
     <section class="section-container" id="remediation-matrix" aria-labelledby="remedy-title">
         <div class="section-header reveal-on-scroll">
             <span class="section-kicker">Hope & Science</span>
@@ -813,7 +924,7 @@
             <div class="remediation-image-column">
                 <img src="{{ url_for('static', filename='images/phytoremediation-sunflowers.jpg') }}" alt="Phytoremediation field planted with golden sunflowers and Indian mustard plants under golden sunset" class="remediation-img" loading="lazy">
                 <div class="remediation-stat-box glass-panel">
-                    <span class="remedy-stat-num">96.34%</span>
+                    <span class="remedy-stat-num"><span class="counter-val" data-counter="96.34" data-decimal="true">96.34</span>%</span>
                     <span class="remedy-stat-txt">Reduction in soil Cadmium bioavailability achieved through adding natural biochar amendment.</span>
                 </div>
             </div>
@@ -862,7 +973,7 @@
         </div>
     </section>
 
-    <!-- 13. CITIZEN ACTION GUIDE: WHAT YOU CAN DO TODAY -->
+    <!-- 15. CITIZEN ACTION GUIDE: WHAT YOU CAN DO TODAY -->
     <section class="section-container" id="citizen-actions" aria-labelledby="actions-title">
         <div class="section-header reveal-on-scroll">
             <span class="section-kicker">Empowerment</span>
@@ -899,7 +1010,60 @@
         </div>
     </section>
 
-    <!-- 14. SCIENTIFIC HIERARCHY OF EVIDENCE NOTICE -->
+    <!-- 16. CITIZEN FAQ ACCORDION -->
+    <section class="section-container" id="citizen-faq" aria-labelledby="faq-heading">
+        <div class="section-header reveal-on-scroll">
+            <span class="section-kicker">Citizen Questions</span>
+            <h2 id="faq-heading">Frequently Asked Questions About Soil Pollution</h2>
+            <p class="section-lead">
+                Simple answers to the questions families, students, and community gardeners ask most often:
+            </p>
+        </div>
+
+        <div class="faq-accordion-group reveal-on-scroll">
+            <article class="faq-item glass-panel">
+                <button class="faq-question-btn" type="button" aria-expanded="false">
+                    <span>Can I test my backyard or community garden soil without an expensive lab?</span>
+                    <svg class="faq-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-answer">
+                    <p>Yes. Many agricultural extension offices, Krishi Vigyan Kendras (KVKs in India), and university soil testing labs offer low-cost soil health testing ($10–$25 or free under government programs). For heavy metals like Lead, simple home test swab kits can screen for high concentrations, though an accredited ICP-MS laboratory test is needed for exact parts-per-million measurements.</p>
+                </div>
+            </article>
+
+            <article class="faq-item glass-panel">
+                <button class="faq-question-btn" type="button" aria-expanded="false">
+                    <span>Which vegetables absorb the most heavy metals vs which are safest?</span>
+                    <svg class="faq-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-answer">
+                    <p><strong>Highest Bioaccumulators:</strong> Leafy greens (spinach, lettuce, coriander) and root crops (carrots, radishes, beets) absorb the highest concentrations of lead and cadmium through their root systems. <br><br><strong>Safest Produce:</strong> Fruiting crops (tomatoes, peppers, squash, eggplants) and tree fruits (apples, oranges) have much lower bioaccumulation factors because the plant filters toxins through multiple stem nodes before nutrients reach the fruit.</p>
+                </div>
+            </article>
+
+            <article class="faq-item glass-panel">
+                <button class="faq-question-btn" type="button" aria-expanded="false">
+                    <span>How does composting kitchen scraps help protect against soil pollution?</span>
+                    <svg class="faq-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-answer">
+                    <p>Compost adds humic acids and organic matter to soil. Organic matter possesses a high "cation exchange capacity," meaning it acts like a natural magnet that binds toxic heavy metal ions, reducing their bioavailability so plant roots cannot absorb them. It also restores earthworms and beneficial bacteria.</p>
+                </div>
+            </article>
+
+            <article class="faq-item glass-panel">
+                <button class="faq-question-btn" type="button" aria-expanded="false">
+                    <span>What happens after I submit a field observation on SoilTrace?</span>
+                    <svg class="faq-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-answer">
+                    <p>Your observation is sanitized to protect your privacy and instantly aggregated into the public SoilTrace live dashboard. It generates regional signals, alerting community members and environmental researchers to potential hotspots, unscientific dumping, or agricultural plasticulture clusters.</p>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- 17. SCIENTIFIC HIERARCHY OF EVIDENCE NOTICE -->
     <section class="section-container" id="evidence-hierarchy" aria-labelledby="hierarchy-title">
         <div class="section-header reveal-on-scroll">
             <span class="section-kicker">Data Integrity</span>
@@ -948,7 +1112,7 @@
         </div>
     </section>
 
-    <!-- 15. COMMUNITY RADAR CALL TO ACTION -->
+    <!-- 18. COMMUNITY RADAR CALL TO ACTION -->
     <section class="section-container community-cta-section" id="community-cta" aria-labelledby="cta-heading">
         <div class="community-cta-box glass-panel reveal-on-scroll">
             <span class="cta-kicker">Take Action</span>
@@ -973,7 +1137,7 @@
         </div>
     </section>
 
-    <!-- 16. RESEARCH CITATIONS & AUTHORITIES FOOTER -->
+    <!-- 19. RESEARCH CITATIONS & AUTHORITIES FOOTER -->
     <section class="section-container citations-digest-section" id="citations-footer" aria-labelledby="citations-heading">
         <div class="citations-box glass-panel reveal-on-scroll">
             <h3 id="citations-heading">Statutory & Research Authorities Referenced</h3>
@@ -1004,6 +1168,17 @@
     </section>
 
 </main>
+
+<!-- FLOATING QUICK-JUMP NAVIGATOR PILL -->
+<nav class="floating-jump-nav" aria-label="Page quick navigation">
+    <a href="#why-soil-matters" class="jump-link">Living Soil</a>
+    <a href="#myths-facts" class="jump-link">Myths</a>
+    <a href="#stratigraphy" class="jump-link">Horizons</a>
+    <a href="#risk-analyzer" class="jump-link">Risk Engine</a>
+    <a href="#area-simulator" class="jump-link">Simulator</a>
+    <a href="#spot-pollution" class="jump-link">Spot Signs</a>
+    <a href="#citizen-faq" class="jump-link">FAQ</a>
+</nav>
 
 <script src="{{ url_for('static', filename='js/home.js') }}" defer></script>
 {% endblock %}

@@ -439,11 +439,78 @@ body:has(.home-page-master) .navbar-toggler span {
    Product-Page Style: Deep Ecological Slate, Glassmorphism, Kinetic Dynamics
    ========================================================================== */
 
+/* Scroll Reading Progress Bar */
+#scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, #34d399 0%, #10b981 50%, #f59e0b 80%, #cf5b32 100%);
+    z-index: 99999;
+    transition: width 0.1s ease-out;
+    box-shadow: 0 0 10px rgba(52, 211, 153, 0.7);
+}
+
+/* Ambient Aurora Glow Orbs */
+.ambient-glow-wrapper {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.ambient-glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(140px);
+    opacity: 0.18;
+    pointer-events: none;
+    animation: orbDrift 20s infinite alternate ease-in-out;
+}
+
+.orb-1 {
+    width: 550px;
+    height: 550px;
+    background: #34d399;
+    top: -100px;
+    left: 15%;
+}
+
+.orb-2 {
+    width: 600px;
+    height: 600px;
+    background: #b4532f;
+    top: 40%;
+    right: -100px;
+    animation-duration: 26s;
+    animation-delay: -5s;
+}
+
+.orb-3 {
+    width: 500px;
+    height: 500px;
+    background: #0ea5e9;
+    bottom: 10%;
+    left: -50px;
+    animation-duration: 22s;
+    animation-delay: -10s;
+}
+
+@keyframes orbDrift {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(60px, 40px) scale(1.08); }
+    100% { transform: translate(-40px, 80px) scale(0.95); }
+}
+
 .home-page-master {
+    position: relative;
     min-height: calc(100vh - 78px);
     background: radial-gradient(circle at 50% 0%, #15392e 0%, #0c201a 45%, #071511 100%);
     color: #e5ede8;
     overflow-x: hidden;
+    z-index: 1;
 }
 
 /* Glassmorphic Panel Primitive */
@@ -661,6 +728,8 @@ body:has(.home-page-master) .navbar-toggler span {
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     padding: 0.85rem 0;
     white-space: nowrap;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
 }
 
 .ticker-track {
@@ -1032,6 +1101,269 @@ body:has(.home-page-master) .navbar-toggler span {
     font-size: 0.88rem;
     line-height: 1.55;
     color: #d1e2da;
+}
+
+/* Myth vs Fact Section */
+.myths-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75rem;
+}
+
+.myth-card {
+    padding: 2.25rem 2rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-top: 3px solid #ef4444;
+}
+
+.myth-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.35rem 0.8rem;
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    border-radius: 999px;
+    color: #f87171;
+    font-size: 0.76rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 1.1rem;
+    width: fit-content;
+}
+
+.myth-quote {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: #ffffff;
+    line-height: 1.35;
+    margin-bottom: 1.5rem;
+}
+
+.fact-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin-bottom: 1.5rem;
+}
+
+.fact-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.35rem 0.8rem;
+    background: rgba(52, 211, 153, 0.15);
+    border: 1px solid rgba(52, 211, 153, 0.35);
+    border-radius: 999px;
+    color: #34d399;
+    font-size: 0.76rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 0.85rem;
+    width: fit-content;
+}
+
+.fact-explanation {
+    font-size: 0.92rem;
+    line-height: 1.65;
+    color: #b5ccc1;
+}
+
+/* Citizen Area Simulator */
+.simulator-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 2.25rem;
+    align-items: start;
+}
+
+.simulator-controls {
+    padding: 2.25rem;
+}
+
+.simulator-result-card {
+    padding: 2.5rem;
+    border-left: 4px solid #34d399;
+    transition: all 0.25s ease;
+}
+
+.sim-output-badge {
+    display: inline-block;
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    background: rgba(52, 211, 153, 0.15);
+    border: 1px solid rgba(52, 211, 153, 0.35);
+    font-size: 0.76rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #34d399;
+    margin-bottom: 1rem;
+}
+
+.sim-threat-heading {
+    font-family: var(--font-heading);
+    font-size: 1.7rem;
+    font-weight: 500;
+    color: #ffffff;
+    margin-bottom: 1.25rem;
+}
+
+.sim-detail-block {
+    margin-bottom: 1.25rem;
+}
+
+.sim-detail-block h5 {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #34d399;
+    margin-bottom: 0.35rem;
+}
+
+.sim-detail-block p {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: #b5ccc1;
+}
+
+/* Citizen FAQ Accordion */
+.faq-accordion-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.faq-question-btn {
+    width: 100%;
+    padding: 1.45rem 1.85rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.faq-question-btn:hover {
+    color: #34d399;
+}
+
+.faq-icon-arrow {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    transition: transform 0.25s ease;
+    color: #34d399;
+}
+
+.faq-item.active .faq-icon-arrow {
+    transform: rotate(180deg);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1), padding 0.25s ease;
+    padding: 0 1.85rem;
+}
+
+.faq-item.active .faq-answer {
+    max-height: 500px;
+    padding: 0 1.85rem 1.6rem;
+}
+
+.faq-answer p {
+    font-size: 0.94rem;
+    line-height: 1.7;
+    color: #b5ccc1;
+}
+
+/* Floating Quick-Jump Pill */
+.floating-jump-nav {
+    position: fixed;
+    bottom: 1.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.45rem 0.65rem;
+    background: rgba(7, 21, 17, 0.88);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 999px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.jump-link {
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+    color: #9ab4a7;
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 700;
+    transition: all 0.18s ease;
+    white-space: nowrap;
+}
+
+.jump-link:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.jump-link.active {
+    color: #071511;
+    background: #34d399;
+}
+
+@media (max-width: 860px) {
+    .floating-jump-nav {
+        display: none;
+    }
+
+    .myths-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .simulator-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Dynamic Analyzer Hazard Pulse */
+.analyzer-results.hazard-pulse {
+    animation: hazardBorderPulse 2s infinite ease-in-out;
+}
+
+@keyframes hazardBorderPulse {
+    0%, 100% {
+        border-color: rgba(239, 68, 68, 0.4);
+        box-shadow: 0 16px 36px rgba(239, 68, 68, 0.15);
+    }
+    50% {
+        border-color: rgba(239, 68, 68, 0.8);
+        box-shadow: 0 20px 48px rgba(239, 68, 68, 0.3);
+    }
 }
 
 /* 3. Pedosphere Stratigraphy Visualizer */
