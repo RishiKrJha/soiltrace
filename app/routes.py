@@ -200,7 +200,7 @@ def init_routes(app):
                 'label': CATEGORY_LABELS[item['category']],
                 'total': item_total,
                 'percentage': percentage,
-                'color': category_colors[item['category']],
+                'color': category_colors.get(item['category'], '#8a8c86'),
                 'start': running_total,
                 'end': segment_end,
             })
