@@ -744,6 +744,7 @@ body {
     height: 150px;
     place-items: center;
     border-radius: 50%;
+    background: var(--donut-bg);
 }
 
 .donut > span {
@@ -847,7 +848,7 @@ body {
 }
 
 .activity-item h3 { color: #173f35; font-family: Georgia, 'Times New Roman', serif; font-size: 1.05rem; font-weight: 500; }
-.activity-item p { display: -webkit-box; margin-top: 0.25rem; overflow: hidden; color: #63716b; font-size: 0.83rem; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.activity-item p { display: -webkit-box; margin-top: 0.25rem; overflow: hidden; color: #63716b; font-size: 0.83rem; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; }
 .activity-item time { color: #63716b; font-size: 0.75rem; text-align: right; }
 
 .empty-state p {

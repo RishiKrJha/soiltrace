@@ -38,7 +38,7 @@
             <section class="dashboard-card category-card" aria-labelledby="categories-title">
                 <div class="card-heading"><div><p class="section-kicker">Distribution</p><h2 id="categories-title">What is being reported</h2></div></div>
                 <div class="category-overview">
-                    <div class="donut" aria-hidden="true" style="background: {{ donut_background }};"><span><strong>{{ total }}</strong><small>reports</small></span></div>
+                    <div class="donut" aria-hidden="true" style="--donut-bg: {{ donut_background }};"><span><strong>{{ total }}</strong><small>reports</small></span></div>
                     <ul class="category-legend" aria-label="Category distribution">
                         {% for item in category_data %}
                             <li><span class="legend-dot" style="--category-color: {{ item['color'] }}"></span><span>{{ item['label'] }}</span><strong>{{ item['percentage'] }}%</strong><small>{{ item['total'] }}</small></li>
