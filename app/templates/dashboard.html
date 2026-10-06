@@ -3,48 +3,68 @@
 {% block content %}
 <main class="dashboard-page">
     <section class="dashboard-heading" aria-labelledby="dashboard-title">
-        <p class="eyebrow">Community observations</p>
-        <h1 id="dashboard-title">Global SoilTrace Dashboard</h1>
-        <p>Anonymous, user-submitted observations of potential soil pollution. These reports are not laboratory-confirmed measurements.</p>
+        <div>
+            <p class="eyebrow">Community signal tracker</p>
+            <h1 id="dashboard-title">What people are seeing in the soil.</h1>
+        </div>
+        <p>Anonymous observations of potential soil pollution, collected to reveal broad patterns. They are not laboratory-confirmed findings.</p>
     </section>
 
     <section class="metric-grid" aria-label="Observation summary">
-        <article class="metric-card"><span>Total observations</span><strong>{{ total }}</strong></article>
-        <article class="metric-card"><span>Reported categories</span><strong>{{ category_counts|length }}</strong></article>
-        <article class="metric-card"><span>Locations represented</span><strong>{{ location_total }}</strong></article>
+        <article class="metric-card"><span class="metric-label">All observations</span><strong>{{ total }}</strong><small>Community reports on record</small></article>
+        <article class="metric-card"><span class="metric-label">Last 30 days</span><strong>{{ recent_total }}</strong><small>Observed in the past month</small></article>
+        <article class="metric-card"><span class="metric-label">Leading signal</span><strong class="metric-word">{{ top_category['label'] if top_category else 'N/A' }}</strong><small>{{ top_category['total'] if top_category else 0 }} reports in this category</small></article>
+        <article class="metric-card"><span class="metric-label">Places represented</span><strong>{{ location_total }}</strong><small>Distinct locations reported</small></article>
     </section>
 
     {% if total %}
-        <div class="dashboard-grid">
-            <section class="dashboard-card" aria-labelledby="categories-title">
-                <h2 id="categories-title">By category</h2>
-                <ul class="data-list">
-                    {% for item in category_counts %}
-                        <li><span>{{ category_labels[item['category']] }}</span><strong>{{ item['total'] }}</strong></li>
-                    {% endfor %}
-                </ul>
+        <section class="dashboard-card trend-card" aria-labelledby="trend-title">
+            <div class="card-heading">
+                <div><p class="section-kicker">Pattern over time</p><h2 id="trend-title">Observation trend</h2></div>
+                <p>Last {{ trend_data|length }} active month{{ '' if trend_data|length == 1 else 's' }}</p>
+            </div>
+            <div class="trend-chart" role="img" aria-label="Observation totals by month: {% for item in trend_data %}{{ item['label'] }} {{ item['total'] }}{{ ', ' if not loop.last else '' }}{% endfor %}">
+                {% for item in trend_data %}
+                    <div class="trend-column">
+                        <span class="trend-value">{{ item['total'] }}</span>
+                        <span class="trend-bar" style="--bar-height: {{ (item['total'] / trend_max * 100)|round }}%"></span>
+                        <span class="trend-label">{{ item['label'] }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <div class="dashboard-grid dashboard-grid-featured">
+            <section class="dashboard-card category-card" aria-labelledby="categories-title">
+                <div class="card-heading"><div><p class="section-kicker">Distribution</p><h2 id="categories-title">What is being reported</h2></div></div>
+                <div class="category-overview">
+                    <div class="donut" aria-hidden="true" style="background: conic-gradient({% for item in category_data %}{{ item['color'] }} {{ item['start'] }}% {{ item['end'] }}%{{ ', ' if not loop.last else '' }}{% endfor %});"><span><strong>{{ total }}</strong><small>reports</small></span></div>
+                    <ul class="category-legend" aria-label="Category distribution">
+                        {% for item in category_data %}
+                            <li><span class="legend-dot" style="--category-color: {{ item['color'] }}"></span><span>{{ item['label'] }}</span><strong>{{ item['percentage'] }}%</strong><small>{{ item['total'] }}</small></li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </section>
-            <section class="dashboard-card" aria-labelledby="locations-title">
-                <h2 id="locations-title">Most reported locations</h2>
-                <ul class="data-list">
-                    {% for item in location_counts %}
-                        <li><span>{{ item['location'] }}</span><strong>{{ item['total'] }}</strong></li>
+            <section class="dashboard-card ranking-card" aria-labelledby="locations-title">
+                <div class="card-heading"><div><p class="section-kicker">Location ranking</p><h2 id="locations-title">Most reported areas</h2></div></div>
+                <ol class="ranking-list">
+                    {% for item in location_data %}
+                        <li>
+                            <span class="rank">{{ loop.index }}</span>
+                            <div class="ranking-place"><div><span>{{ item['location'] }}</span><strong>{{ item['total'] }} report{{ '' if item['total'] == 1 else 's' }}</strong></div><span class="ranking-bar"><span style="--ranking-width: {{ item['percentage'] }}%"></span></span></div>
+                        </li>
                     {% endfor %}
-                </ul>
+                </ol>
             </section>
         </div>
 
         <section class="dashboard-card recent-card" aria-labelledby="recent-title">
-            <h2 id="recent-title">Recent observations</h2>
-            <div class="table-wrap">
-                <table>
-                    <thead><tr><th>Location</th><th>Category</th><th>Observed</th><th>Description</th></tr></thead>
-                    <tbody>
-                        {% for observation in recent_observations %}
-                            <tr><td>{{ observation['location'] }}</td><td>{{ category_labels[observation['category']] }}</td><td>{{ observation['observation_date'] }}</td><td>{{ observation['description'] }}</td></tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+            <div class="card-heading"><div><p class="section-kicker">Latest contributions</p><h2 id="recent-title">Recent field notes</h2></div><a href="{{ url_for('report') }}">Add an observation <span aria-hidden="true">→</span></a></div>
+            <div class="activity-list">
+                {% for observation in recent_observations %}
+                    <article class="activity-item"><span class="activity-category">{{ category_labels[observation['category']] }}</span><div><h3>{{ observation['location'] }}</h3><p>{{ observation['description'] }}</p></div><time datetime="{{ observation['observation_date'] }}">Observed {{ observation['observation_date'] }}</time></article>
+                {% endfor %}
             </div>
         </section>
     {% else %}

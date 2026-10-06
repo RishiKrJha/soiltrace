@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, timedelta
 
 from flask import flash, redirect, render_template, request, url_for
 
@@ -76,6 +76,10 @@ def init_routes(app):
     def dashboard():
         db = get_db()
         total = db.execute('SELECT COUNT(*) FROM observations').fetchone()[0]
+        recent_total = db.execute(
+            'SELECT COUNT(*) FROM observations WHERE observation_date >= ?',
+            ((date.today() - timedelta(days=30)).isoformat(),),
+        ).fetchone()[0]
         location_total = db.execute(
             'SELECT COUNT(DISTINCT location) FROM observations'
         ).fetchone()[0]
@@ -91,12 +95,62 @@ def init_routes(app):
             '''SELECT name, location, observation_date, category, description, created_at
                FROM observations ORDER BY created_at DESC, id DESC LIMIT 10'''
         ).fetchall()
+        trend_rows = db.execute(
+            '''SELECT substr(observation_date, 1, 7) AS month, COUNT(*) AS total
+               FROM observations GROUP BY month ORDER BY month DESC LIMIT 12'''
+        ).fetchall()
+
+        category_colors = {
+            'plastic-waste': '#d66f45',
+            'agricultural-waste': '#bb993e',
+            'industrial-waste': '#697b68',
+            'chemical-waste': '#ad5d68',
+            'e-waste': '#607d92',
+            'construction-waste': '#9a765e',
+            'other': '#8a8c86',
+        }
+        category_data = []
+        running_total = 0
+        for item in category_counts:
+            item_total = item['total']
+            percentage = round((item_total / total) * 100) if total else 0
+            category_data.append({
+                'category': item['category'],
+                'label': CATEGORY_LABELS[item['category']],
+                'total': item_total,
+                'percentage': percentage,
+                'color': category_colors[item['category']],
+                'start': running_total,
+                'end': running_total + (item_total / total * 100) if total else 0,
+            })
+            running_total += item_total / total * 100 if total else 0
+
+        location_data = [
+            {
+                'location': item['location'],
+                'total': item['total'],
+                'percentage': round((item['total'] / total) * 100) if total else 0,
+            }
+            for item in location_counts
+        ]
+        trend_data = [
+            {
+                'label': date.fromisoformat(f"{item['month']}-01").strftime("%b %y"),
+                'total': item['total'],
+            }
+            for item in reversed(trend_rows)
+        ]
+        trend_max = max((item['total'] for item in trend_data), default=1)
         return render_template(
             'dashboard.html',
             total=total,
+            recent_total=recent_total,
             location_total=location_total,
-            category_counts=category_counts,
-            location_counts=location_counts,
+            category_data=category_data,
+            top_category=category_data[0] if category_data else None,
+            location_data=location_data,
             recent_observations=recent_observations,
+            trend_data=trend_data,
+            trend_max=trend_max,
             category_labels=CATEGORY_LABELS,
         )
