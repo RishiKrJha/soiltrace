@@ -1,7 +1,8 @@
 import os
 from dotenv import load_dotenv
 from flask import Flask
-from .routes import init_routes     #This will contain the route definitions
+from . import db
+from .routes import init_routes
 
 def create_app(test_config=None):
 
@@ -12,6 +13,7 @@ def create_app(test_config=None):
 
     app.config.from_mapping(
         SECRET_KEY=os.environ.get('SECRET_KEY'),
+        DATABASE=os.path.join(app.instance_path, 'soiltrace.sqlite'),
     )
 
     # Load the instance config, if it exists, when not testing
@@ -26,7 +28,7 @@ def create_app(test_config=None):
 
     os.makedirs(app.instance_path, exist_ok=True)
 
-    # Initialize routes
+    db.init_app(app)
     init_routes(app)
 
     return app

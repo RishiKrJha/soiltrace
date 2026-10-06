@@ -65,6 +65,9 @@ db.sqlite3-journal
 instance/
 .webassets-cache
 
+# Local planning notes
+PLANS.md
+
 # Scrapy stuff:
 .scrapy
 
