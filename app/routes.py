@@ -197,7 +197,7 @@ def init_routes(app):
             segment_end = running_total + (item_total / total * 100) if total else 0
             category_data.append({
                 'category': item['category'],
-                'label': CATEGORY_LABELS[item['category']],
+                'label': CATEGORY_LABELS.get(item['category'], item['category'].replace('-', ' ').title()),
                 'total': item_total,
                 'percentage': percentage,
                 'color': category_colors.get(item['category'], '#8a8c86'),

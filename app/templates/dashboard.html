@@ -102,7 +102,7 @@
             <div class="card-heading"><div><p class="section-kicker">Latest contributions</p><h2 id="recent-title">Recent field notes</h2></div><a href="{{ url_for('report') }}">Add an observation <span aria-hidden="true">→</span></a></div>
             <div class="activity-list">
                 {% for observation in recent_data %}
-                    <article class="activity-item"><span class="activity-category">{{ category_labels[observation['category']] }}</span><div><h3>{{ observation['place'] }}</h3><p>{{ observation['description'] }}</p></div><time datetime="{{ observation['observation_date'] }}">Observed {{ observation['observation_date'] }}</time></article>
+                    <article class="activity-item"><span class="activity-category">{{ category_labels.get(observation['category'], observation['category']) }}</span><div><h3>{{ observation['place'] }}</h3><p>{{ observation['description'] }}</p></div><time datetime="{{ observation['observation_date'] }}">Observed {{ observation['observation_date'] }}</time></article>
                 {% endfor %}
             </div>
         </section>
