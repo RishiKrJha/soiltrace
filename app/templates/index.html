@@ -1,65 +1,1563 @@
 {% extends "base.html" %}
 
-{% block title %}Home{% endblock %}
+{% block title %}SoilTrace - Soil Pollution Awareness with Digital Records{% endblock %}
 
 {% block content %}
-<main class="home-page" id="main-content">
-    <section class="home-hero" aria-labelledby="hero-title">
-        <p class="eyebrow">Community soil intelligence</p>
-        <h1 id="hero-title">Every layer of earth tells an environmental story.</h1>
-        <p class="hero-description">
-            SoilTrace is an open community platform to record observations of potential soil pollution, surface emerging environmental signals, and track local soil health patterns worldwide.
-        </p>
-        <div class="hero-actions">
-            <a href="{{ url_for('report') }}" class="btn btn-primary">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-                    <path d="M8 2a.75.75 0 0 1 .75.75v4.5h4.5a.75.75 0 0 1 0 1.5h-4.5v4.5a.75.75 0 0 1-1.5 0v-4.5h-4.5a.75.75 0 0 1 0-1.5h4.5v-4.5A.75.75 0 0 1 8 2z"/>
-                </svg>
-                <span>Report an Observation</span>
-            </a>
-            <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-                    <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-4zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z"/>
-                </svg>
-                <span>View Live Dashboard</span>
-            </a>
+<!-- 0. SCROLL PROGRESS BAR & AMBIENT AURORA GLOW -->
+<div id="scroll-progress" aria-hidden="true"></div>
+<div class="ambient-glow-wrapper" aria-hidden="true">
+    <div class="ambient-glow-orb orb-1"></div>
+    <div class="ambient-glow-orb orb-2"></div>
+    <div class="ambient-glow-orb orb-3"></div>
+</div>
+
+<main class="home-page-master" id="main-content">
+
+    <!-- 1. HERO SECTION: AWARENESS + RESEARCH HOOK -->
+    <header class="hero-section" id="hero">
+        <div class="hero-container">
+            <div class="hero-badge reveal-on-scroll">
+                <span class="badge-pulse" aria-hidden="true"></span>
+                <span class="badge-text">Environmental Awareness & Digital Records Portal</span>
+            </div>
+            <h1 class="hero-headline reveal-on-scroll">
+                The Living Earth is in Crisis. <br><span class="hero-headline-accent">And It's Happening Silently Beneath Our Feet.</span>
+            </h1>
+            <p class="hero-lead reveal-on-scroll">
+                Soil is not just dirt—it is a <strong>breathing, biological ecosystem</strong> that grows 95% of everything we eat, purifies the water we drink, and regulates the global climate. Yet across the world, toxic chemical dumping, pesticide overuse, and microplastics are poisoning the ground in complete silence. SoilTrace bridges <strong>verified scientific records</strong> with <strong>public awareness and citizen reporting</strong> so everyone can understand, recognize, and combat soil pollution.
+            </p>
+            <div class="hero-actions-group reveal-on-scroll">
+                <a href="#why-soil-matters" class="btn btn-primary btn-lg">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 16v-4M12 8h.01"/>
+                    </svg>
+                    <span>Why Healthy Soil Matters</span>
+                </a>
+                <a href="#spot-pollution" class="btn btn-secondary btn-lg">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                    <span>How to Spot Pollution</span>
+                </a>
+                <a href="#risk-analyzer" class="btn btn-secondary btn-lg">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M10 2v7.31M14 2v7.31M8.5 2h7M14 9.3a6.5 6.5 0 1 1-4 0"/>
+                        <path d="M5.52 16h12.96"/>
+                    </svg>
+                    <span>Test Soil Risk Analyzer</span>
+                </a>
+                <a href="{{ url_for('report') }}" class="btn btn-accent-ghost btn-lg">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+                        <line x1="4" y1="22" x2="4" y2="15"/>
+                    </svg>
+                    <span>Report Observation</span>
+                </a>
+            </div>
+
+            <!-- Verified Benchmark Stat Cards with Animated Number Counters -->
+            <div class="hero-stats-grid reveal-on-scroll">
+                <article class="stat-pill-card">
+                    <div class="stat-pill-number"><span class="counter-val" data-counter="33">33</span><span class="stat-unit">%</span></div>
+                    <div class="stat-pill-label">1 in 3 Fields Degraded</div>
+                    <div class="stat-pill-sub">Global lands losing natural fertility & health (FAO)</div>
+                </article>
+                <article class="stat-pill-card">
+                    <div class="stat-pill-number"><span class="counter-val" data-counter="20">20</span><span class="stat-unit">%</span></div>
+                    <div class="stat-pill-label">Food Yield Stolen by Toxins</div>
+                    <div class="stat-pill-sub">Global agricultural output lost to soil contaminants (UNEP)</div>
+                </article>
+                <article class="stat-pill-card">
+                    <div class="stat-pill-number"><span class="counter-val" data-counter="3.70" data-decimal="true">3.70</span><span class="stat-unit">Mt</span></div>
+                    <div class="stat-pill-label">Pesticides Applied Yearly</div>
+                    <div class="stat-pill-sub">Chemical residues piling up faster than soil can decompose them (FAOSTAT)</div>
+                </article>
+                <article class="stat-pill-card">
+                    <div class="stat-pill-number"><span class="counter-val" data-counter="3.5" data-decimal="true">3.5</span><span class="stat-unit">M</span></div>
+                    <div class="stat-pill-label">Silent Lead Fatalities / Yr</div>
+                    <div class="stat-pill-sub">Cardiovascular deaths linked to environmental lead in soil & food (WHO)</div>
+                </article>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. AWARENESS PILLAR 1: WHY SOIL MATTERS -->
+    <section class="section-container" id="why-soil-matters" aria-labelledby="matters-title">
+        <div class="section-header reveal-on-scroll">
+            <span class="section-kicker">Awareness Foundation</span>
+            <h2 id="matters-title">Soil is Alive: The 4 Living Superpowers of Healthy Earth</h2>
+            <p class="section-lead">
+                Most people view soil as empty dirt beneath their shoes. In reality, healthy topsoil is a thriving, living universe. A single tablespoon of fertile earth contains billions of beneficial bacteria, fungi, and earthworms that keep human civilization alive.
+            </p>
+        </div>
+
+        <div class="awareness-superpowers-grid reveal-on-scroll">
+            <article class="superpower-card glass-panel">
+                <div class="superpower-icon-box">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                </div>
+                <h3>1. The Global Breadbasket</h3>
+                <p>Over <strong>95% of all human food calories</strong> originate directly or indirectly in topsoil. When soil is healthy, crops are rich in zinc, iron, and protein. When soil is poisoned, food crops absorb toxic lead and cadmium instead.</p>
+                <span class="why-matters-pill">Why it matters: What enters the soil enters your body.</span>
+            </article>
+
+            <article class="superpower-card glass-panel">
+                <div class="superpower-icon-box">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+                </div>
+                <h3>2. Nature’s Giant Water Filter</h3>
+                <p>Living soil acts as the planet’s primary water purifier. It traps sediment, neutralizes pathogens, and stores up to <strong>600 liters of water per cubic meter</strong>, slowly recharging clean underground aquifers.</p>
+                <span class="why-matters-pill">Why it matters: Polluted soil means polluted drinking wells.</span>
+            </article>
+
+            <article class="superpower-card glass-panel">
+                <div class="superpower-icon-box">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <h3>3. The Earth’s Carbon Sponge</h3>
+                <p>Soil stores more organic carbon than the entire Earth’s atmosphere and all living plant life combined. Healthy soil actively locks away atmospheric carbon, cooling the planet and buffering against droughts.</p>
+                <span class="why-matters-pill">Why it matters: Degraded soil releases carbon, worsening climate extremes.</span>
+            </article>
+
+            <article class="superpower-card glass-panel">
+                <div class="superpower-icon-box">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                </div>
+                <h3>4. The Foundation of Biodiversity</h3>
+                <p>More than <strong>25% of all living species on Earth</strong> make their home inside the soil matrix. Earthworms, nematodes, and mycorrhizal fungi break down organic matter into life-giving plant nutrients.</p>
+                <span class="why-matters-pill">Why it matters: Chemical poisons kill earthworms first, collapsing fertility.</span>
+            </article>
+        </div>
+
+        <!-- Living Soil vs Degraded Dirt Contrast Banner -->
+        <div class="soil-contrast-banner glass-panel reveal-on-scroll">
+            <div class="contrast-col col-healthy">
+                <h4>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    <span>Healthy Living Soil</span>
+                </h4>
+                <ul class="contrast-list">
+                    <li>🌱 Rich, dark crumbly texture full of decomposed organic humus.</li>
+                    <li>🪱 Teeming with earthworms, mycorrhizal fungi, and beneficial bacteria.</li>
+                    <li>💧 Absorbs heavy monsoon rain like a sponge, preventing destructive floods.</li>
+                    <li>🥗 Produces clean, nutrient-dense crops free from heavy metals.</li>
+                </ul>
+            </div>
+
+            <div class="contrast-col col-degraded">
+                <h4>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                    <span>Chemically Polluted & Degraded Soil</span>
+                </h4>
+                <ul class="contrast-list">
+                    <li>☠️ Compacted, cracked, or discolored with chemical sheens and salt crusts.</li>
+                    <li>🚫 Devoid of earthworms; microbial respiration (dehydrogenase) collapsed.</li>
+                    <li>🌊 Repels water or washes away easily into rivers, accelerating erosion.</li>
+                    <li>🥬 Passes lead, cadmium, and pesticide residues directly into the food chain.</li>
+                </ul>
+            </div>
         </div>
     </section>
 
-    <section class="home-pillars" aria-label="Key features">
-        <article class="pillar-card">
-            <div class="pillar-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                </svg>
-            </div>
-            <h2>Anonymous & Private</h2>
-            <p>Observations protect community contributor privacy while documenting potential pollution signals without requiring user accounts.</p>
-        </article>
+    <!-- 3. AWARENESS PILLAR 2: DEMYSTIFYING THE CRISIS -->
+    <section class="section-container" id="what-is-pollution" aria-labelledby="demystify-title">
+        <div class="section-header reveal-on-scroll">
+            <span class="section-kicker">Core Understanding</span>
+            <h2 id="demystify-title">What is Soil Pollution? Why is It Called "The Hidden Crisis"?</h2>
+            <p class="section-lead">
+                Unlike thick black smog in city skies or plastic bottles floating down a river, soil pollution is completely invisible to the human eye. You can walk across a severely contaminated field, and to your eyes, the grass may look green—even while the earth is laced with lethal poisons.
+            </p>
+        </div>
 
-        <article class="pillar-card">
-            <div class="pillar-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/>
-                    <line x1="9" y1="3" x2="9" y2="18"/>
-                    <line x1="15" y1="6" x2="15" y2="21"/>
-                </svg>
-            </div>
-            <h2>Structured Geodata</h2>
-            <p>Controlled country and regional taxonomies prevent duplicate location variants and ensure consistent community aggregates.</p>
-        </article>
+        <div class="hierarchy-cards-grid reveal-on-scroll">
+            <article class="hierarchy-card glass-panel">
+                <div class="hierarchy-level-tag">Concept 1</div>
+                <h3>Soil Degradation</h3>
+                <p class="hierarchy-desc">
+                    The broad physical, biological, and chemical wearing-down of soil quality. Includes wind erosion, topsoil loss, compaction from heavy machinery, salinization, and loss of organic carbon.
+                </p>
+                <div class="hierarchy-meta">
+                    <strong>Everyday Example:</strong> A dry, over-plowed field blowing away as dust storms.
+                </div>
+            </article>
 
-        <article class="pillar-card">
-            <div class="pillar-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="20" x2="18" y2="10"/>
-                    <line x1="12" y1="20" x2="12" y2="4"/>
-                    <line x1="6" y1="20" x2="6" y2="14"/>
-                </svg>
-            </div>
-            <h2>Pattern Intelligence</h2>
-            <p>Explore monthly observation trends, waste category breakdowns, and geographic signal distributions in real time.</p>
-        </article>
+            <article class="hierarchy-card glass-panel">
+                <div class="hierarchy-level-tag">Concept 2</div>
+                <h3>Soil Contamination</h3>
+                <p class="hierarchy-desc">
+                    The presence of a man-made chemical or elevated element slightly higher than natural geological background levels, but not yet proven to cause biological toxicity.
+                </p>
+                <div class="hierarchy-meta">
+                    <strong>Everyday Example:</strong> A tiny trace of copper in garden soil from old water pipes.
+                </div>
+            </article>
+
+            <article class="hierarchy-card glass-panel highlight-border">
+                <div class="hierarchy-level-tag level-certified">Concept 3 &bull; Critical Hazard</div>
+                <h3>Soil Pollution</h3>
+                <p class="hierarchy-desc">
+                    When toxicant concentrations exceed statutory safety screening limits, causing verified biological damage to plants, animals, soil organisms, or human consumers.
+                </p>
+                <div class="hierarchy-meta">
+                    <strong>Everyday Example:</strong> Farm crops accumulating lead beyond FSSAI safety limits.
+                </div>
+            </article>
+        </div>
     </section>
+
+    <!-- 4. CONTINUOUS RESEARCH TICKER: VERIFIED DIGITAL RECORDS STREAM -->
+    <aside class="research-ticker-bar" aria-label="Verified Research Stream">
+        <div class="ticker-track">
+            <div class="ticker-content">
+                <span class="ticker-item"><span class="ticker-tag">FAOSTAT 2022</span> 3.70 Million Tonnes active pesticide ingredients applied worldwide</span>
+                <span class="ticker-item"><span class="ticker-tag">WHO / IHME</span> 3.5 Million global cardiovascular deaths attributed to lead exposure</span>
+                <span class="ticker-item"><span class="ticker-tag">CPCB INDIA</span> 128 Confirmed and 320 Probable contaminated hazardous sites tracked</span>
+                <span class="ticker-item"><span class="ticker-tag">FAO 2019</span> 12.5 Million Tonnes of plastics used in agricultural value chains yearly</span>
+                <span class="ticker-item"><span class="ticker-tag">NEERI STUDY</span> 14.1 mg/kg Lead in Yamuna floodplain spinach (nearly 6x FSSAI limit of 2.5 mg/kg)</span>
+                <span class="ticker-item"><span class="ticker-tag">RANIPET NGT</span> Hexavalent Chromium in groundwater hit 277.6 mg/L (5,550x WHO drinking limit)</span>
+                <span class="ticker-item"><span class="ticker-tag">ICAR / ICRIER</span> 73% of Indian agricultural soils deficient in Soil Organic Carbon (&lt;0.75%)</span>
+                <span class="ticker-item"><span class="ticker-tag">EU LUCAS</span> 21,684 topsoil records benchmark continental heavy metal baselines</span>
+            </div>
+            <div class="ticker-content" aria-hidden="true">
+                <span class="ticker-item"><span class="ticker-tag">FAOSTAT 2022</span> 3.70 Million Tonnes active pesticide ingredients applied worldwide</span>
+                <span class="ticker-item"><span class="ticker-tag">WHO / IHME</span> 3.5 Million global cardiovascular deaths attributed to lead exposure</span>
+                <span class="ticker-item"><span class="ticker-tag">CPCB INDIA</span> 128 Confirmed and 320 Probable contaminated hazardous sites tracked</span>
+                <span class="ticker-item"><span class="ticker-tag">FAO 2019</span> 12.5 Million Tonnes of plastics used in agricultural value chains yearly</span>
+                <span class="ticker-item"><span class="ticker-tag">NEERI STUDY</span> 14.1 mg/kg Lead in Yamuna floodplain spinach (nearly 6x FSSAI limit of 2.5 mg/kg)</span>
+                <span class="ticker-item"><span class="ticker-tag">RANIPET NGT</span> Hexavalent Chromium in groundwater hit 277.6 mg/L (5,550x WHO drinking limit)</span>
+                <span class="ticker-item"><span class="ticker-tag">ICAR / ICRIER</span> 73% of Indian agricultural soils deficient in Soil Organic Carbon (&lt;0.75%)</span>
+                <span class="ticker-item"><span class="ticker-tag">EU LUCAS</span> 21,684 topsoil records benchmark continental heavy metal baselines</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- 5. INTERACTIVE MYTH VS FACT SECTION -->
+    <section class="section-container" id="myths-facts" aria-labelledby="myths-title">
+        <div class="section-header reveal-on-scroll">
+            <span class="section-kicker">Public Misconceptions</span>
+            <h2 id="myths-title">Busting Common Soil Pollution Myths</h2>
+            <p class="section-lead">
+                Widespread misunderstandings keep soil pollution invisible. Here is what science and laboratory testing actually reveal:
+            </p>
+        </div>
+
+        <div class="myths-grid reveal-on-scroll">
+            <article class="myth-card glass-panel">
+                <span class="myth-label">Myth 01</span>
+                <p class="myth-quote">"If a vegetable looks crisp and green at the market, the soil it grew in must be clean."</p>
+                <div class="fact-divider"></div>
+                <span class="fact-label">The Scientific Fact</span>
+                <p class="fact-explanation">
+                    Plants absorb toxic heavy metals through their roots invisibly. NEERI’s laboratory tests on Yamuna floodplains found crisp, green spinach containing <strong>14.1 mg/kg of lead</strong>—nearly 6 times the legal safety limit. Produce looks completely normal even when carrying hazardous toxins.
+                </p>
+            </article>
+
+            <article class="myth-card glass-panel">
+                <span class="myth-label">Myth 02</span>
+                <p class="myth-quote">"Washing and boiling vegetables removes any chemical contamination from soil."</p>
+                <div class="fact-divider"></div>
+                <span class="fact-label">The Scientific Fact</span>
+                <p class="fact-explanation">
+                    Washing only removes surface dirt. Heavy metals such as Cadmium, Lead, and Arsenic are translocated into the plant's inner cellular structure. Boiling or peeling will not remove systemic heavy metals stored inside leaf tissues or grains.
+                </p>
+            </article>
+
+            <article class="myth-card glass-panel">
+                <span class="myth-label">Myth 03</span>
+                <p class="myth-quote">"Chemical fertilizers just feed plants and leave no lasting harm in the ground."</p>
+                <div class="fact-divider"></div>
+                <span class="fact-label">The Scientific Fact</span>
+                <p class="fact-explanation">
+                    Synthetic fertilizers introduce natural Cadmium impurities (present in mined rock phosphate). Over decades, continuous application acidifies soil, burns away living organic carbon (now deficient in 73% of Indian soils), and kills beneficial earthworms.
+                </p>
+            </article>
+        </div>
+    </section>
+
+    <!-- 6. INTERACTIVE PEDOSPHERE STRATIGRAPHY -->
+    <section class="section-container" id="stratigraphy" aria-labelledby="stratigraphy-title">
+        <div class="section-header reveal-on-scroll">
+            <span class="section-kicker">Geological Exploration</span>
+            <h2 id="stratigraphy-title">Journey Underground: How Toxins Infiltrate Soil Horizons</h2>
+            <p class="section-lead">
+                Soil is divided into natural layers called "horizons." How long a pollutant survives, whether plant roots absorb it, and whether it leaches into your drinking water depends entirely on how deep it travels.
+            </p>
+        </div>
+
+        <div class="stratigraphy-grid reveal-on-scroll">
+            <!-- Visual Cutaway Column -->
+            <div class="stratigraphy-visual-panel">
+                <div class="stratigraphy-image-wrapper">
+                    <img src="{{ url_for('static', filename='images/soil-stratigraphy.jpg') }}" alt="Cinematic geological cross-section of earth horizons from topsoil to subsoil to bedrock" class="stratigraphy-img" loading="lazy">
+                    <div class="stratigraphy-overlay-zones">
+                        <div class="stratum-layer stratum-highlighted" data-layer="topsoil">
+                            <span class="stratum-label">0 – 20 cm &bull; Epipedon & Rhizosphere</span>
+                        </div>
+                        <div class="stratum-layer" data-layer="subsoil">
+                            <span class="stratum-label">20 – 80 cm &bull; Illuvial B-Horizon</span>
+                        </div>
+                        <div class="stratum-layer" data-layer="bedrock">
+                            <span class="stratum-label">80+ cm &bull; Deep Substratum & Aquifers</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="horizon-toggle-bar" role="tablist" aria-label="Soil Horizon Selector">
+                    <button class="horizon-btn active" data-horizon-target="topsoil" role="tab" aria-selected="true" id="tab-topsoil">
+                        <span>0 – 20 cm Topsoil</span>
+                    </button>
+                    <button class="horizon-btn" data-horizon-target="subsoil" role="tab" aria-selected="false" id="tab-subsoil">
+                        <span>20 – 80 cm Subsoil</span>
+                    </button>
+                    <button class="horizon-btn" data-horizon-target="bedrock" role="tab" aria-selected="false" id="tab-bedrock">
+                        <span>80+ cm Aquifer Layer</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dynamic Science Card Column -->
+            <article class="stratigraphy-card glass-panel" aria-live="polite">
+                <div class="card-meta-row">
+                    <span class="tag-badge" id="horizon-badge">Biological Hotspot</span>
+                    <span class="depth-indicator" id="horizon-depth">Active Root Zone & Surface Organic Layer</span>
+                </div>
+                <h3 class="horizon-heading" id="horizon-name">0 – 20 cm: Epipedon & Rhizosphere</h3>
+
+                <div class="horizon-spec-block">
+                    <h4>Primary Infiltrating Contaminants</h4>
+                    <p id="horizon-pollutants">Microplastics (12.5 Mt mulch films), Agrochemical residues, Lead particulate dust, Cadmium from phosphate fertilizers.</p>
+                </div>
+
+                <div class="horizon-spec-block">
+                    <h4>Physicochemical & Biological Dynamics</h4>
+                    <p id="horizon-dynamics">Contains highest biological activity (microbial biomass carbon, dehydrogenase enzyme respiration). This horizon is where plant root capillaries directly absorb ionic heavy metals and transport them into edible agricultural crops.</p>
+                </div>
+
+                <div class="horizon-spec-block horizon-alert-box">
+                    <h4>Vulnerability & Degradation Status</h4>
+                    <p id="horizon-status">Vulnerable to erosion, compaction, and agrochemical saturation. 73% of Indian soils show organic carbon deficiency (&lt;0.75%) here.</p>
+                </div>
+
+                <!-- Plain English Human Explanation -->
+                <div class="plain-english-callout">
+                    <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                    <div class="callout-text">
+                        <h5>What This Means in Daily Life</h5>
+                        <p>This is where your food grows. When plastic films break down and fertilizers acidify this top layer, plant roots suck up lead, cadmium, and arsenic directly into market greens like spinach and carrots.</p>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- 7. AWARENESS PILLAR 3: EVERYDAY SOURCES -->
+    <section class="section-container" id="daily-culprits" aria-labelledby="culprits-title">
+        <div class="section-header reveal-on-scroll">
+            <span class="section-kicker">Everyday Awareness</span>
+            <h2 id="culprits-title">How Soil Gets Poisoned Around You: The 4 Daily Culprits</h2>
+            <p class="section-lead">
+                Soil pollution doesn't just come from far-off factories. Common farming methods, discarded household plastics, and poorly managed city garbage poison our land every single day.
+            </p>
+        </div>
+
+        <div class="daily-culprits-grid reveal-on-scroll">
+            <article class="culprit-card glass-panel">
+                <span class="culprit-badge badge-plastic">1. The Plastic Trap</span>
+                <h3>Agricultural Plasticulture</h3>
+                <p>Farmers use thin polyethylene plastic mulch sheets to block weeds and retain moisture. Left in fields, sunlight and plows shatter them into millions of microplastics (<5 mm). Microplastics suffocate earthworms, reduce water retention, and leach chemical phthalates into the earth.</p>
+                <div class="culprit-stat-pill">
+                    <strong>12.5 Million Tonnes</strong> of agricultural plastics used worldwide each year (FAO).
+                </div>
+            </article>
+
+            <article class="culprit-card glass-panel">
+                <span class="culprit-badge badge-agri">2. Chemical Addiction</span>
+                <h3>Agrochemical Overdosing</h3>
+                <p>Continuous overuse of chemical nitrogen and phosphate fertilizers burns away Soil Organic Carbon and kills natural soil fungi. Worse, rock phosphate used in fertilizers naturally contains toxic Cadmium—slowly poisoning arable soil for generations.</p>
+                <div class="culprit-stat-pill">
+                    <strong>73% of farmland in India</strong> is now deficient in Soil Organic Carbon (&lt;0.75%).
+                </div>
+            </article>
+
+            <article class="culprit-card glass-panel">
+                <span class="culprit-badge badge-industry">3. Factory Shortcuts</span>
+                <h3>Industrial Effluent Runoff</h3>
+                <p>Tanneries, metal-plating shops, and chemical plants frequently dump wastewater into unlined drainage channels. This water is pumped by nearby farmers for irrigation, coating vegetables in hexavalent chromium, lead, and arsenic.</p>
+                <div class="culprit-stat-pill">
+                    <strong>40,500 mg/kg</strong> total chromium found in tannery sludge soil at Jajmau (Kanpur).
+                </div>
+            </article>
+
+            <article class="culprit-card glass-panel">
+                <span class="culprit-badge badge-ewaste">4. Urban Waste</span>
+                <h3>Informal E-Waste & Dumps</h3>
+                <p>When discarded mobile phones, computers, and vehicle batteries are dumped or burned in back alleys to extract copper, heavy metals like Lead, Barium, and Mercury soak directly into local soil, creating toxic playgrounds for nearby children.</p>
+                <div class="culprit-stat-pill">
+                    <strong>Over 3,000 legacy waste dumps</strong> currently sit unlined across Indian cities.
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- 8. THE FOOD-CHAIN REALITY: BIOACCUMULATION STEPPER -->
+    <section class="section-container" id="bioaccumulation" aria-labelledby="bioaccum-title">
+        <div class="section-header reveal-on-scroll">
+            <span class="section-kicker">Food Safety Reality</span>
+            <h2 id="bioaccum-title">From Poisoned Soil to Your Plate: The Food-Chain Journey</h2>
+            <p class="section-lead">
+                Toxic chemicals in the ground don’t stay buried. They are absorbed by crops, sold in city wholesale markets, and eaten by families every day. Here is the step-by-step biological journey:
+            </p>
+        </div>
+
+        <div class="bioaccum-layout reveal-on-scroll">
+            <div class="bioaccum-visual-column">
+                <img src="{{ url_for('static', filename='images/food-chain-bioaccumulation.jpg') }}" alt="Artistic scientific progression illustrating soil contaminants traveling through crop roots to dining food" class="bioaccum-feature-img" loading="lazy">
+                <div class="case-callout-glass">
+                    <span class="callout-tag">Real-World Laboratory Evidence</span>
+                    <h4>Yamuna River Floodplain Spinach Study (Delhi)</h4>
+                    <p>Scientific tests conducted by NEERI discovered that winter spinach grown along the Yamuna riverbed contained <strong>14.1 mg/kg of lead</strong>—nearly <strong>600% higher</strong> than the legal FSSAI safety limit of 2.5 mg/kg. Unsuspecting shoppers bought this produce across city markets daily.</p>
+                </div>
+            </div>
+
+            <div class="stepper-timeline-column">
+                <div class="step-card">
+                    <div class="step-marker">01</div>
+                    <div class="step-content">
+                        <h3>1. Chemical Soil Saturation</h3>
+                        <p>Untreated industrial wastewater, chemical fertilizers, or polluted irrigation water saturate the arable topsoil layer with toxic heavy metals.</p>
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-marker">02</div>
+                    <div class="step-content">
+                        <h3>2. Root Capillary Uptake</h3>
+                        <p>Plant roots cannot tell the difference between nutrients and poisons. Cadmium slips inside via zinc channels; Lead mimics vital calcium.</p>
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-marker">03</div>
+                    <div class="step-content">
+                        <h3>3. Crop Bioaccumulation</h3>
+                        <p>Toxins concentrate heavily in leafy green foliage (spinach, coriander) and root vegetables (radish, carrots). The plant looks normal and healthy on the outside.</p>
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-marker">04</div>
+                    <div class="step-content">
+                        <h3>4. Wholesale Mandi Distribution</h3>
+                        <p>Contaminated crops are harvested and sold in massive city wholesale markets (e.g. Azadpur, Ghazipur in Delhi), mixing with ordinary produce without testing.</p>
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-marker">05</div>
+                    <div class="step-content">
+                        <h3>5. Chronic Human Toxicity</h3>
+                        <p>When eaten over months and years, heavy metals build up in human kidneys, bones, and brains, causing irreversible learning disabilities in children and heart disease in adults.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. INTERACTIVE AWARENESS TOOL: SOIL RISK ANALYZER -->
+    <section class="section-container" id="risk-analyzer" aria-labelledby="analyzer-title">
+        <div class="section-header reveal-on-scroll">
+            <span class="section-kicker">Interactive Awareness Tool</span>
+            <h2 id="analyzer-title">Live Soil Risk & Threshold Analyzer</h2>
+            <p class="section-lead">
+                Got numbers from a soil test report? Or curious how much contamination is legal? Test any value against official Indian statutory screening limits (MoEFCC 2015) and European Union benchmarks.
+            </p>
+        </div>
+
+        <div class="analyzer-layout reveal-on-scroll">
+            <!-- Controls Form -->
+            <div class="analyzer-controls glass-panel">
+                <div class="control-group">
+                    <label for="analyzer-contaminant" class="control-label">Select Contaminant to Test</label>
+                    <select id="analyzer-contaminant" class="custom-select">
+                        <option value="lead">Lead (Pb) &bull; Battery / E-waste / Fuel</option>
+                        <option value="cadmium">Cadmium (Cd) &bull; Phosphate Fertilizer Impurity</option>
+                        <option value="chromium">Hexavalent Chromium Cr(VI) &bull; Tannery & Chemical Sludge</option>
+                        <option value="arsenic">Arsenic (As) &bull; Geogenic & Agrochemical</option>
+                        <option value="nickel">Nickel (Ni) &bull; Effluents & Sludge</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <span class="control-label">Where Was This Soil Sampled?</span>
+                    <div class="landuse-pills" role="radiogroup" aria-label="Land Use">
+                        <label class="radio-pill">
+                            <input type="radio" name="land-use" value="agricultural" checked>
+                            <span>Agricultural Farmland (Food Production)</span>
+                        </label>
+                        <label class="radio-pill">
+                            <input type="radio" name="land-use" value="residential">
+                            <span>Residential / Playground / School</span>
+                        </label>
+                        <label class="radio-pill">
+                            <input type="radio" name="land-use" value="industrial">
+                            <span>Commercial / Industrial Zone</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="slider-header-row">
+                        <label for="analyzer-slider" class="control-label">Concentration Level in Dry Soil</label>
+                        <div class="value-readout">
+                            <input type="number" id="analyzer-value" value="85" min="0" max="500" step="1" class="numeric-input">
+                            <span class="unit-tag" id="analyzer-unit">mg/kg</span>
+                        </div>
+                    </div>
+                    <input type="range" id="analyzer-slider" min="0" max="500" value="85" step="1" class="custom-slider">
+                    <div class="slider-scale-row">
+                        <span>0 mg/kg</span>
+                        <span>Legal Threshold</span>
+                        <span>Severe Hazard</span>
+                    </div>
+                </div>
+
+                <div class="analyzer-footnote">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                    <span>mg/kg equals parts per million (ppm). Values reflect dry topsoil testing (0–20 cm core depth).</span>
+                </div>
+            </div>
+
+            <!-- Reactive Output Card -->
+            <div class="analyzer-results glass-panel" aria-live="polite">
+                <div class="results-top-bar">
+                    <span class="status-badge status-warning" id="analyzer-status-badge">Elevated Contamination (Non-Compliant)</span>
+                    <div class="statutory-cutoff">
+                        <span class="cutoff-label">Statutory Safety Limit:</span>
+                        <strong class="cutoff-value" id="analyzer-limit-display">70 mg/kg</strong>
+                    </div>
+                </div>
+
+                <div class="gauge-container">
+                    <div class="gauge-bar-bg">
+                        <div class="gauge-progress status-warning" id="analyzer-gauge-bar" style="width: 60%;"></div>
+                    </div>
+                    <p class="status-summary-text" id="analyzer-status-summary">
+                        Exceeds the agricultural legal safety limit by +21%. High risk of vegetative uptake and groundwater migration.
+                    </p>
+                </div>
+
+                <div class="benchmark-grid">
+                    <div class="benchmark-item">
+                        <span class="benchmark-label">Legal Authority:</span>
+                        <span class="benchmark-text" id="analyzer-authority">MoEFCC (2015) Standard & EU Directive 86/278/EEC</span>
+                    </div>
+                    <div class="benchmark-item">
+                        <span class="benchmark-label">Safe Food Limit:</span>
+                        <span class="benchmark-text" id="analyzer-crop-standard">FSSAI Vegetable Maximum Limit: 2.5 mg/kg</span>
+                    </div>
+                </div>
+
+                <div class="impact-cards-group">
+                    <div class="impact-card health-impact">
+                        <h5>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                            <span>What This Means for Human Health</span>
+                        </h5>
+                        <p id="analyzer-health">Potent cumulative neurotoxin causing irreversible cognitive deficits and developmental delay in children. WHO / IHME attributes 3.5 million cardiovascular deaths globally in 2023 directly to lead exposure.</p>
+                    </div>
+
+                    <div class="impact-card agri-impact">
+                        <h5>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                            <span>What This Means for Crops & Food</span>
+                        </h5>
+                        <p id="analyzer-agri">Strong root bioaccumulation in leafy vegetables. The NEERI Yamuna Floodplain study revealed spinach accumulating 14.1 mg/kg of lead—nearly 6 times the FSSAI legal safety cap.</p>
+                    </div>
+
+                    <div class="impact-card remedy-impact">
+                        <h5>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/></svg>
+                            <span>What Action is Needed to Fix This</span>
+                        </h5>
+                        <p id="analyzer-remedy">Apply woody biochar amendment (achieves up to 72.9% lead immobilization), induce insoluble pyromorphite formation with phosphorus, or utilize phytoremediation with Indian mustard (Brassica juncea).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. CITIZEN CONTEXT SIMULATOR: WHAT'S IN YOUR AREA? -->
+    <section class="section-container" id="area-simulator" aria-labelledby="sim-title">
+        <div class="section-header reveal-on-scroll">
+            <span class="section-kicker">Interactive Scenario Checker</span>
+            <h2 id="sim-title">What’s the Soil Threat in Your Area?</h2>
+            <p class="section-lead">
+                Every region faces different environmental pressures. Select your local geography and water source to identify the primary soil toxins you should be aware of:
+            </p>
+        </div>
+
+        <div class="simulator-layout reveal-on-scroll">
+            <div class="simulator-controls glass-panel">
+                <div class="control-group">
+                    <label for="sim-env" class="control-label">1. Where Do You Live / Farm?</label>
+                    <select id="sim-env" class="custom-select">
+                        <option value="peri-urban">Peri-Urban Riverbank (Border of a Big City)</option>
+                        <option value="agri-belt">Intensive Agricultural Belt (Wheat / Rice / Cash Crops)</option>
+                        <option value="industrial">Industrial Hub (Near Tanneries, Smelters, Chemical Units)</option>
+                        <option value="urban-dump">Residential Area Near Landfills or Informal E-Waste Clusters</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label for="sim-water" class="control-label">2. What is the Main Water Source for Farming / Wells?</label>
+                    <select id="sim-water" class="custom-select">
+                        <option value="canal">River / Canal / City Drainage Channel</option>
+                        <option value="borewell">Deep Underground Borewell / Tubewell</option>
+                        <option value="municipal">Piped Municipal Supply (City Water)</option>
+                    </select>
+                </div>
+
+                <div class="analyzer-footnote">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                    <span>Based on peer-reviewed environmental surveys across Indian agricultural corridors and urban floodplains.</span>
+                </div>
+            </div>
+
+            <!-- Dynamic Scenario Result -->
+            <div class="simulator-result-card glass-panel" aria-live="polite">
+                <span class="sim-output-badge">Primary Local Risk Profile</span>
+                <h3 class="sim-threat-heading" id="sim-threat-heading">Industrial Heavy Metal Irrigation (Lead & Chromium)</h3>
+
+                <div class="sim-detail-block">
+                    <h5>Food & Crop Vulnerability</h5>
+                    <p id="sim-food-risk">Extremely high accumulation in leafy greens (spinach, coriander, fenugreek). Vegetables irrigated with untreated city drains absorb ionic lead rapidly.</p>
+                </div>
+
+                <div class="sim-detail-block">
+                    <h5>What You Should Ask to Test</h5>
+                    <p id="sim-test-advice">Ask for ICP-MS testing of edible greens and topsoil Lead (Pb) & Hexavalent Chromium Cr(VI).</p>
+                </div>
+
+                <div class="sim-detail-block">
+                    <h5>Safe Citizen Action Steps</h5>
+                    <p id="sim-action-steps">Never eat raw peri-urban ditch-irrigated greens without verification. Advocate for effluent treatment before irrigation discharge.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 11. DOCUMENTED HOTSPOTS: REAL-WORLD STORIES -->
+    <section class="section-container" id="hotspots-dossier" aria-labelledby="hotspots-title">
+        <div class="section-header reveal-on-scroll">
+            <span class="section-kicker">Digital Records Archive</span>
+            <h2 id="hotspots-title">Documented Contamination Hotspots: Lessons from the Ground</h2>
+            <p class="section-lead">
+                These are not hypothetical statistics. These are real-world environmental contamination crises documented in official court orders from the National Green Tribunal (NGT) and Central Pollution Control Board (CPCB) surveys.
+            </p>
+        </div>
+
+        <div class="hotspots-explorer reveal-on-scroll">
+            <!-- Tabs Navigation -->
+            <div class="hotspots-nav" role="tablist" aria-label="Contaminated Sites Selector">
+                <button class="hotspot-tab active" data-hotspot-target="ranipet" role="tab" aria-selected="true">
+                    <span class="hotspot-tab-title">Ranipet (Tamil Nadu)</span>
+                    <span class="hotspot-tab-contam">Tannery Cr(VI) Plume</span>
+                </button>
+                <button class="hotspot-tab" data-hotspot-target="yamuna" role="tab" aria-selected="false">
+                    <span class="hotspot-tab-title">Yamuna Floodplains (Delhi)</span>
+                    <span class="hotspot-tab-contam">Lead & Cadmium in Food</span>
+                </button>
+                <button class="hotspot-tab" data-hotspot-target="jajmau" role="tab" aria-selected="false">
+                    <span class="hotspot-tab-title">Jajmau Kanpur (UP)</span>
+                    <span class="hotspot-tab-contam">Tannery Sludge Disaster</span>
+                </button>
+                <button class="hotspot-tab" data-hotspot-target="bhopal" role="tab" aria-selected="false">
+                    <span class="hotspot-tab-title">Bhopal UCIL (MP)</span>
+                    <span class="hotspot-tab-contam">Pesticide Legacy Plume</span>
+                </button>
+                <button class="hotspot-tab" data-hotspot-target="sukinda" role="tab" aria-selected="false">
+                    <span class="hotspot-tab-title">Sukinda Valley (Odisha)</span>
+                    <span class="hotspot-tab-contam">Chromite Mining Runoff</span>
+                </button>
+            </div>
+
+            <!-- Dynamic Highlight Panel -->
+            <article class="hotspot-dossier-card glass-panel" aria-live="polite">
+                <div class="dossier-header-row">
+                    <div>
+                        <span class="dossier-location-tag" id="hotspot-location">Ranipet, Tamil Nadu, India</span>
+                        <h3 class="dossier-title" id="hotspot-title">Ranipet TCCL Industrial Corridor</h3>
+                    </div>
+                    <span class="dossier-status-pill" id="hotspot-status">Confirmed Contaminated Site (CPCB & NGT)</span>
+                </div>
+
+                <div class="dossier-metrics-grid">
+                    <div class="dossier-metric">
+                        <span class="metric-caption">Toxic Chemical Found:</span>
+                        <strong class="metric-val" id="hotspot-contaminant">Hexavalent Chromium Cr(VI)</strong>
+                    </div>
+                    <div class="dossier-metric">
+                        <span class="metric-caption">Peak Documented Levels:</span>
+                        <strong class="metric-val text-danger" id="hotspot-peak">5,596 mg/kg (Soil) | 277.6 mg/L (Groundwater)</strong>
+                    </div>
+                    <div class="dossier-metric">
+                        <span class="metric-caption">Court-Ordered Cleanup Bill:</span>
+                        <strong class="metric-val text-warning" id="hotspot-cost">₹206 Crore (Soil ₹194 Cr + Water ₹12 Cr)</strong>
+                    </div>
+                </div>
+
+                <div class="dossier-narrative-group">
+                    <div class="narrative-block">
+                        <h4>How It Happened (The Vector)</h4>
+                        <p id="hotspot-vector">Decades of open-air dumping of Chromium Ore Processing Residue (COPR) caused acute aquifer leaching exceeding drinking water caps by 5,550×.</p>
+                    </div>
+                    <div class="narrative-block">
+                        <h4>The Human & Legal Impact</h4>
+                        <p id="hotspot-details">National Green Tribunal remediation mandates ordered excavation, stabilization, and deep groundwater pump-and-treat systems to halt regional toxic dispersion.</p>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- 12. CITIZEN FIELD GUIDE: HOW TO SPOT SOIL POLLUTION -->
+    <section class="section-container" id="spot-pollution" aria-labelledby="spot-title">
+        <div class="section-header reveal-on-scroll">
+            <span class="section-kicker">Citizen Field Guide</span>
+            <h2 id="spot-title">How to Spot Soil Pollution with Your Own Eyes</h2>
+            <p class="section-lead">
+                You don’t need an advanced laboratory degree to notice when land is dying. If you notice these five sensory and environmental warning signs in your area, the soil may be chemically compromised.
+            </p>
+        </div>
+
+        <div class="warning-signs-grid reveal-on-scroll">
+            <article class="warning-card glass-panel">
+                <span class="warning-num-tag">Warning Sign 01</span>
+                <h3>Stunted Crops & Yellowing Leaves</h3>
+                <p>Crops or plants burning, wilting, or failing to grow in localized patches despite regular watering and sunlight. Leaf yellowing (chlorosis) indicates heavy metals are blocking iron and zinc absorption.</p>
+                <div class="warning-hint">Look for: Dead patches in otherwise healthy farm fields or gardens.</div>
+            </article>
+
+            <article class="warning-card glass-panel">
+                <span class="warning-num-tag">Warning Sign 02</span>
+                <h3>Chemical Sheens & Discoloration</h3>
+                <p>Topsoil that appears abnormally dark, oily, reddish-purple, or stained. Puddles that form an iridescent rainbow film on water after rain often reveal petroleum or chemical solvent dumping.</p>
+                <div class="warning-hint">Look for: Iridescent rainbow oil slicks in ground puddles.</div>
+            </article>
+
+            <article class="warning-card glass-panel">
+                <span class="warning-num-tag">Warning Sign 03</span>
+                <h3>Total Absence of Earthworms</h3>
+                <p>Earthworms are the ultimate biological canary in the coalmine. If you dig 6 inches into damp soil and find zero earthworms, ants, or soil fungi, the ground is suffering from toxic chemical stress.</p>
+                <div class="warning-hint">Look for: Lifeless dirt where insects and worms refuse to live.</div>
+            </article>
+
+            <article class="warning-card glass-panel">
+                <span class="warning-num-tag">Warning Sign 04</span>
+                <h3>Pungent Chemical Odors</h3>
+                <p>Healthy earth smells rich, sweet, and musky after rain (geosmin). Toxic soil releases sharp chemical, rotten egg (sulfur), petrol, or acidic odors when the ground is disturbed or wet.</p>
+                <div class="warning-hint">Look for: Sharp unnatural smells rising from damp ground.</div>
+            </article>
+
+            <article class="warning-card glass-panel">
+                <span class="warning-num-tag">Warning Sign 05</span>
+                <h3>Chalky White or Slag Crusts</h3>
+                <p>A powdery white or crusty gray surface layer indicates severe salinization from bad irrigation water or dumping of industrial ash and mining slag that locks plant roots.</p>
+                <div class="warning-hint">Look for: Hard mineral or chemical crusts forming on topsoil.</div>
+            </article>
+
+            <article class="warning-card glass-panel">
+                <span class="warning-num-tag">Warning Sign 06</span>
+                <h3>Shredded Plastic Mulch Buildup</h3>
+                <p>Layers of brittle, weathered black or clear plastic films tilled repeatedly into the ground. These never rot—they fragment into trillions of microscopic shards that plants choke on.</p>
+                <div class="warning-hint">Look for: Disintegrating plastic shreds mixed into farm soil.</div>
+            </article>
+        </div>
+    </section>
+
+    <!-- 13. CONTAMINANT REGISTRY: CHEMISTRY EXPLAINED SIMPLY -->
+    <section class="section-container" id="periodic-registry" aria-labelledby="registry-title">
+        <div class="section-header reveal-on-scroll">
+            <span class="section-kicker">Chemical Encyclopedia</span>
+            <h2 id="registry-title">The Contaminant Registry: Know Your Toxins</h2>
+            <p class="section-lead">
+                What are these chemicals, where do they come from, and what do they do to the human body? An everyday breakdown of major terrestrial pollutants.
+            </p>
+        </div>
+
+        <div class="registry-grid reveal-on-scroll">
+            <!-- Card Pb -->
+            <article class="element-card glass-panel">
+                <div class="element-header">
+                    <div class="element-symbol-box">
+                        <span class="elem-atomic">82</span>
+                        <span class="elem-sym">Pb</span>
+                    </div>
+                    <div class="element-title-wrap">
+                        <h3>Lead</h3>
+                        <span class="elem-class">Heavy Metal &bull; Lasts 1,000+ Years</span>
+                    </div>
+                </div>
+                <ul class="element-specs">
+                    <li><strong>Everyday Sources:</strong> Burning old electronics, car battery acid, paints</li>
+                    <li><strong>Legal Farm Limit:</strong> 70 mg/kg (MoEFCC 2015)</li>
+                    <li><strong>How You Ingest It:</strong> Spinach and leafy vegetables grown near roads</li>
+                    <li><strong>Human Harm:</strong> Irreversible loss of IQ in children; heart attacks in adults</li>
+                </ul>
+            </article>
+
+            <!-- Card Cd -->
+            <article class="element-card glass-panel">
+                <div class="element-header">
+                    <div class="element-symbol-box">
+                        <span class="elem-atomic">48</span>
+                        <span class="elem-sym">Cd</span>
+                    </div>
+                    <div class="element-title-wrap">
+                        <h3>Cadmium</h3>
+                        <span class="elem-class">Heavy Metal &bull; Highly Mobile</span>
+                    </div>
+                </div>
+                <ul class="element-specs">
+                    <li><strong>Everyday Sources:</strong> Phosphate fertilizers, zinc smelters, plastics</li>
+                    <li><strong>Legal Farm Limit:</strong> 1.4 mg/kg (MoEFCC 2015)</li>
+                    <li><strong>How You Ingest It:</strong> Readily absorbed by wheat, rice, and leafy greens</li>
+                    <li><strong>Human Harm:</strong> Destroys kidney filters and softens human bones</li>
+                </ul>
+            </article>
+
+            <!-- Card Cr(VI) -->
+            <article class="element-card glass-panel">
+                <div class="element-header">
+                    <div class="element-symbol-box">
+                        <span class="elem-atomic">24</span>
+                        <span class="elem-sym">Cr</span>
+                    </div>
+                    <div class="element-title-wrap">
+                        <h3>Hexavalent Chromium</h3>
+                        <span class="elem-class">Soluble Carcinogen</span>
+                    </div>
+                </div>
+                <ul class="element-specs">
+                    <li><strong>Everyday Sources:</strong> Leather tanneries, metal chrome plating, dyes</li>
+                    <li><strong>Legal Farm Limit:</strong> 0.4 mg/kg (MoEFCC 2015)</li>
+                    <li><strong>How You Ingest It:</strong> Dissolves into well water and irrigation canals</li>
+                    <li><strong>Human Harm:</strong> Proven cancer-causer; severe stomach ulcers and tumors</li>
+                </ul>
+            </article>
+
+            <!-- Card As -->
+            <article class="element-card glass-panel">
+                <div class="element-header">
+                    <div class="element-symbol-box">
+                        <span class="elem-atomic">33</span>
+                        <span class="elem-sym">As</span>
+                    </div>
+                    <div class="element-title-wrap">
+                        <h3>Arsenic</h3>
+                        <span class="elem-class">Metalloid &bull; Systemic Poison</span>
+                    </div>
+                </div>
+                <ul class="element-specs">
+                    <li><strong>Everyday Sources:</strong> Weathered rocks, historical pesticides, mining</li>
+                    <li><strong>Legal Farm Limit:</strong> 12 mg/kg (MoEFCC 2015)</li>
+                    <li><strong>How You Ingest It:</strong> Concentrates heavily in flooded paddy rice grains</li>
+                    <li><strong>Human Harm:</strong> Painful dark skin spots (arsenicosis) and organ cancers</li>
+                </ul>
+            </article>
+
+            <!-- Card Microplastics -->
+            <article class="element-card glass-panel">
+                <div class="element-header">
+                    <div class="element-symbol-box elem-symbol-plastic">
+                        <span class="elem-atomic">&lt;5mm</span>
+                        <span class="elem-sym">MP</span>
+                    </div>
+                    <div class="element-title-wrap">
+                        <h3>Microplastics</h3>
+                        <span class="elem-class">Synthetic Polymer Waste</span>
+                    </div>
+                </div>
+                <ul class="element-specs">
+                    <li><strong>Everyday Sources:</strong> Shredded mulch plastic sheets, compost bag debris</li>
+                    <li><strong>Global Scale:</strong> 12.5 Million Tonnes used in agriculture each year</li>
+                    <li><strong>Danger:</strong> Acts like a sponge soaking up pesticides and heavy metals</li>
+                    <li><strong>Harm:</strong> Chokes earthworms, dries out soil, and enters root tissue</li>
+                </ul>
+            </article>
+
+            <!-- Card Agrochemicals -->
+            <article class="element-card glass-panel">
+                <div class="element-header">
+                    <div class="element-symbol-box elem-symbol-agro">
+                        <span class="elem-atomic">POPs</span>
+                        <span class="elem-sym">Ag</span>
+                    </div>
+                    <div class="element-title-wrap">
+                        <h3>Agrochemicals</h3>
+                        <span class="elem-class">Synthetic Organic Residues</span>
+                    </div>
+                </div>
+                <ul class="element-specs">
+                    <li><strong>Everyday Sources:</strong> Overuse of synthetic sprays, weedkillers, insecticides</li>
+                    <li><strong>Global Scale:</strong> 3.70 Million Tonnes used annually (FAOSTAT)</li>
+                    <li><strong>Danger:</strong> Kills beneficial soil microbes that naturally cycle nitrogen</li>
+                    <li><strong>Trade Impact:</strong> Export crops rejected at borders (e.g. EU rice caps)</li>
+                </ul>
+            </article>
+        </div>
+    </section>
+
+    <!-- 14. REMEDIATION & RESTORATION: HOW WE HEAL THE EARTH -->
+    <section class="section-container" id="remediation-matrix" aria-labelledby="remedy-title">
+        <div class="section-header reveal-on-scroll">
+            <span class="section-kicker">Hope & Science</span>
+            <h2 id="remedy-title">Restoring the Earth: How Science Heals Damaged Soil</h2>
+            <p class="section-lead">
+                Soil damage is serious, but nature and environmental engineering have developed astonishing methods to lock away toxins, clean polluted earth, and bring dead soil back to life.
+            </p>
+        </div>
+
+        <div class="remediation-feature-layout reveal-on-scroll">
+            <div class="remediation-image-column">
+                <img src="{{ url_for('static', filename='images/phytoremediation-sunflowers.jpg') }}" alt="Phytoremediation field planted with golden sunflowers and Indian mustard plants under golden sunset" class="remediation-img" loading="lazy">
+                <div class="remediation-stat-box glass-panel">
+                    <span class="remedy-stat-num"><span class="counter-val" data-counter="96.34" data-decimal="true">96.34</span>%</span>
+                    <span class="remedy-stat-txt">Reduction in soil Cadmium bioavailability achieved through adding natural biochar amendment.</span>
+                </div>
+            </div>
+
+            <div class="remediation-methods-grid">
+                <article class="remedy-method-card glass-panel">
+                    <div class="remedy-icon-box">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    </div>
+                    <div>
+                        <h3>1. Biochar: Nature’s Microscopic Magnet</h3>
+                        <p>Biochar is made by baking crop residues without oxygen. It acts like an underground carbon sponge with millions of microscopic magnetic traps that lock up <strong>96.34% of Cadmium</strong> and <strong>72.9% of Lead</strong> forever so plants can’t touch them.</p>
+                    </div>
+                </article>
+
+                <article class="remedy-method-card glass-panel">
+                    <div class="remedy-icon-box">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/><path d="M12 6v6l4 2"/></svg>
+                    </div>
+                    <div>
+                        <h3>2. Phytoremediation: Plants That Drink Poison</h3>
+                        <p>Special "hyperaccumulator" plants like <em>sunflowers</em> and <em>Indian mustard</em> have deep roots that naturally suck heavy metals out of the earth and store them safely inside their stems, purifying the land over several growing seasons.</p>
+                    </div>
+                </article>
+
+                <article class="remedy-method-card glass-panel">
+                    <div class="remedy-icon-box">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    </div>
+                    <div>
+                        <h3>3. Microbial Cleaning: Helpful Bacteria</h3>
+                        <p>Specialized bacteria like <em>Bacillus subtilis</em> consume organic waste and biochemically convert deadly, soluble Hexavalent Chromium into harmless, insoluble Trivalent Chromium that cannot enter plants or water.</p>
+                    </div>
+                </article>
+
+                <article class="remedy-method-card glass-panel">
+                    <div class="remedy-icon-box">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    </div>
+                    <div>
+                        <h3>4. Precision Farming & Soil Health Cards</h3>
+                        <p>Government initiatives like India’s <strong>Soil Health Card scheme</strong> give over 11 crore farmers exact customized fertilizer formulas so they stop overdosing on nitrogen and rebuild missing organic carbon.</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- 15. CITIZEN ACTION GUIDE: WHAT YOU CAN DO TODAY -->
+    <section class="section-container" id="citizen-actions" aria-labelledby="actions-title">
+        <div class="section-header reveal-on-scroll">
+            <span class="section-kicker">Empowerment</span>
+            <h2 id="actions-title">What You Can Do Today: 4 Everyday Actions</h2>
+            <p class="section-lead">
+                Protecting the soil isn’t just a task for scientists and governments. Every gardener, consumer, farmer, and student can take immediate steps to keep the earth clean.
+            </p>
+        </div>
+
+        <div class="citizen-actions-grid reveal-on-scroll">
+            <article class="action-card glass-panel">
+                <div class="action-step-num">1</div>
+                <h3>Test Your Soil Before Planting</h3>
+                <p>If you grow vegetables in a community garden or home yard, test your soil for heavy metals—especially if you live near old roads, factories, or houses built before lead paint bans.</p>
+            </article>
+
+            <article class="action-card glass-panel">
+                <div class="action-step-num">2</div>
+                <h3>Ban Single-Use Plastics in Gardens</h3>
+                <p>Never leave plastic wrap, mulch films, or broken garden pots to break down in your soil. Switch to organic straw, wood chips, and leaf mulch that nourish the soil instead of poisoning it.</p>
+            </article>
+
+            <article class="action-card glass-panel">
+                <div class="action-step-num">3</div>
+                <h3>Feed the Soil with Home Compost</h3>
+                <p>Kitchen fruit peels, vegetable scraps, and coffee grounds create rich organic humus. Adding compost rebuilds Soil Organic Carbon and naturally buffers plants against chemical stress.</p>
+            </article>
+
+            <article class="action-card glass-panel">
+                <div class="action-step-num">4</div>
+                <h3>Be a Community Ground Watchdog</h3>
+                <p>Notice a factory dumping murky water into a farm ditch? See piles of burned cables or plastic trash dumping on agricultural land? Document it and submit an anonymous observation on SoilTrace.</p>
+            </article>
+        </div>
+    </section>
+
+    <!-- 16. CITIZEN FAQ ACCORDION -->
+    <section class="section-container" id="citizen-faq" aria-labelledby="faq-heading">
+        <div class="section-header reveal-on-scroll">
+            <span class="section-kicker">Citizen Questions</span>
+            <h2 id="faq-heading">Frequently Asked Questions About Soil Pollution</h2>
+            <p class="section-lead">
+                Simple answers to the questions families, students, and community gardeners ask most often:
+            </p>
+        </div>
+
+        <div class="faq-accordion-group reveal-on-scroll">
+            <article class="faq-item glass-panel">
+                <button class="faq-question-btn" type="button" aria-expanded="false">
+                    <span>Can I test my backyard or community garden soil without an expensive lab?</span>
+                    <svg class="faq-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-answer">
+                    <p>Yes. Many agricultural extension offices, Krishi Vigyan Kendras (KVKs in India), and university soil testing labs offer low-cost soil health testing ($10–$25 or free under government programs). For heavy metals like Lead, simple home test swab kits can screen for high concentrations, though an accredited ICP-MS laboratory test is needed for exact parts-per-million measurements.</p>
+                </div>
+            </article>
+
+            <article class="faq-item glass-panel">
+                <button class="faq-question-btn" type="button" aria-expanded="false">
+                    <span>Which vegetables absorb the most heavy metals vs which are safest?</span>
+                    <svg class="faq-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-answer">
+                    <p><strong>Highest Bioaccumulators:</strong> Leafy greens (spinach, lettuce, coriander) and root crops (carrots, radishes, beets) absorb the highest concentrations of lead and cadmium through their root systems. <br><br><strong>Safest Produce:</strong> Fruiting crops (tomatoes, peppers, squash, eggplants) and tree fruits (apples, oranges) have much lower bioaccumulation factors because the plant filters toxins through multiple stem nodes before nutrients reach the fruit.</p>
+                </div>
+            </article>
+
+            <article class="faq-item glass-panel">
+                <button class="faq-question-btn" type="button" aria-expanded="false">
+                    <span>How does composting kitchen scraps help protect against soil pollution?</span>
+                    <svg class="faq-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-answer">
+                    <p>Compost adds humic acids and organic matter to soil. Organic matter possesses a high "cation exchange capacity," meaning it acts like a natural magnet that binds toxic heavy metal ions, reducing their bioavailability so plant roots cannot absorb them. It also restores earthworms and beneficial bacteria.</p>
+                </div>
+            </article>
+
+            <article class="faq-item glass-panel">
+                <button class="faq-question-btn" type="button" aria-expanded="false">
+                    <span>What happens after I submit a field observation on SoilTrace?</span>
+                    <svg class="faq-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-answer">
+                    <p>Your observation is sanitized to protect your privacy and instantly aggregated into the public SoilTrace live dashboard. It generates regional signals, alerting community members and environmental researchers to potential hotspots, unscientific dumping, or agricultural plasticulture clusters.</p>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- 17. SCIENTIFIC HIERARCHY OF EVIDENCE NOTICE -->
+    <section class="section-container" id="evidence-hierarchy" aria-labelledby="hierarchy-title">
+        <div class="section-header reveal-on-scroll">
+            <span class="section-kicker">Data Integrity</span>
+            <h2 id="hierarchy-title">How We Handle Data: The Epistemic Hierarchy</h2>
+            <p class="section-lead">
+                To prevent false alarms and ensure scientific credibility, SoilTrace clearly separates everyday citizen observations from legally binding laboratory test proofs.
+            </p>
+        </div>
+
+        <div class="hierarchy-cards-grid reveal-on-scroll">
+            <article class="hierarchy-card glass-panel">
+                <div class="hierarchy-level-tag">Tier 1 &bull; Early Warning Radar</div>
+                <h3>Citizen Ground Signals</h3>
+                <p class="hierarchy-desc">
+                    Everyday qualitative sightings submitted by community members (visible dumping, discolored soil, dead crop patches). Acts as an early-warning tripwire, but does not constitute legal proof of chemical contamination.
+                </p>
+                <div class="hierarchy-meta">
+                    <strong>Instrument:</strong> Visual sightings & photos<br>
+                    <strong>Platform Role:</strong> SoilTrace Community Reports
+                </div>
+            </article>
+
+            <article class="hierarchy-card glass-panel">
+                <div class="hierarchy-level-tag">Tier 2 &bull; Investigative Screening</div>
+                <h3>Environmental Site Screening</h3>
+                <p class="hierarchy-desc">
+                    Preliminary field tests and government historical audits. Used by regulators to mark suspicious sites as "probable" contaminated sites requiring urgent laboratory inspection.
+                </p>
+                <div class="hierarchy-meta">
+                    <strong>Instrument:</strong> Portable field XRF test kits<br>
+                    <strong>Platform Role:</strong> CPCB 320 Probable Sites Registry
+                </div>
+            </article>
+
+            <article class="hierarchy-card glass-panel highlight-border">
+                <div class="hierarchy-level-tag level-certified">Tier 3 &bull; Definitive Proof</div>
+                <h3>Certified Laboratory Analysis</h3>
+                <p class="hierarchy-desc">
+                    Certified core sampling analyzed with Inductively Coupled Plasma Mass Spectrometry (ICP-MS) and HPLC. The sole legally binding proof of statutory environmental violation.
+                </p>
+                <div class="hierarchy-meta">
+                    <strong>Instrument:</strong> ISO 11466:1995 & ICP-MS / HPLC<br>
+                    <strong>Platform Role:</strong> MoEFCC 2015 Screening Standards
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- 18. COMMUNITY RADAR CALL TO ACTION -->
+    <section class="section-container community-cta-section" id="community-cta" aria-labelledby="cta-heading">
+        <div class="community-cta-box glass-panel reveal-on-scroll">
+            <span class="cta-kicker">Take Action</span>
+            <h2 id="cta-heading">Spot Suspected Contamination? Put It on the Map.</h2>
+            <p class="cta-body">
+                Official environmental surveys can take months or years. Community eyes are everywhere. If you see industrial sludge dumping, plastic accumulation, or dying agricultural soil, submit an anonymous observation today.
+            </p>
+            <div class="cta-buttons-wrap">
+                <a href="{{ url_for('report') }}" class="btn btn-primary btn-lg">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M12 5v14M5 12h14"/>
+                    </svg>
+                    <span>Submit Anonymous Observation</span>
+                </a>
+                <a href="{{ url_for('dashboard') }}" class="btn btn-secondary btn-lg">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-4zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z"/>
+                    </svg>
+                    <span>View Live Community Dashboard</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 19. RESEARCH CITATIONS & STATUTORY AUTHORITIES REGISTRY -->
+    <section class="section-container authorities-registry-section" id="citations-footer" aria-labelledby="citations-heading">
+        <div class="reveal-on-scroll">
+            <div class="section-header-block text-center">
+                <span class="section-badge-pill">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        <path d="M9 12l2 2 4-4"/>
+                    </svg>
+                    <span>Official Scientific &amp; Legal Register</span>
+                </span>
+                <h2 id="citations-heading" class="section-title">Statutory &amp; Research Authorities Referenced</h2>
+                <p class="section-subtitle">
+                    Every threshold, hazard classification, and bioaccumulation formula on SoilTrace is mathematically cross-referenced against sovereign environmental gazettes and peer-reviewed supranational literature. We bridge academic science with transparent citizen action.
+                </p>
+            </div>
+
+            <!-- EVIDENCE HIGHLIGHT METRIC RIBBON -->
+            <div class="authorities-metrics-ribbon">
+                <div class="auth-metric-item">
+                    <span class="auth-metric-num">6</span>
+                    <span class="auth-metric-lbl">Sovereign &amp; Supranational Bodies</span>
+                </div>
+                <div class="auth-metric-item">
+                    <span class="auth-metric-num">21,684+</span>
+                    <span class="auth-metric-lbl">EU LUCAS Harmonized Records</span>
+                </div>
+                <div class="auth-metric-item">
+                    <span class="auth-metric-num">128</span>
+                    <span class="auth-metric-lbl">National Contaminated Sites</span>
+                </div>
+                <div class="auth-metric-item">
+                    <span class="auth-metric-num">189</span>
+                    <span class="auth-metric-lbl">Statutory Chemical Response Limits</span>
+                </div>
+            </div>
+
+            <!-- AUTHORITIES 6-CARD GRID -->
+            <div class="authorities-card-deck">
+                <!-- Card 1: FAO & UNEP -->
+                <article class="auth-card glass-panel auth-card-sky">
+                    <div class="auth-card-header">
+                        <div class="auth-insignia">
+                            <span class="auth-monogram">FAO</span>
+                        </div>
+                        <div class="auth-tags-wrap">
+                            <span class="auth-tag-pill pill-supranational">Supranational Assessment</span>
+                            <span class="auth-verified-chip">
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                                <span>UN Mandate</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="auth-card-body">
+                        <h3 class="auth-title">FAO &amp; UNEP <span class="auth-year-badge">2021 Report</span></h3>
+                        <p class="auth-org-name">Food and Agriculture Organization of the United Nations &amp; UN Environment Programme</p>
+                        <div class="auth-pub-quote">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="pub-quote-icon" aria-hidden="true"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                            <em>Global Assessment of Soil Pollution: Report</em> &amp; <em>Status of the World's Soils</em>
+                        </div>
+                        <div class="auth-extract-box">
+                            <span class="auth-extract-label">Data Integrated in SoilTrace:</span>
+                            <ul class="auth-extract-list">
+                                <li><strong>33%</strong> of global soils categorized as moderately or highly degraded.</li>
+                                <li><strong>20%</strong> global agricultural productivity loss directly linked to soil pollution.</li>
+                                <li><strong>3.70M tonnes</strong> annual global agricultural pesticide consumption (FAOSTAT).</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="auth-card-footer">
+                        <span class="auth-doi-chip">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                            <span>DOI: 10.4060/cb4894en</span>
+                        </span>
+                        <span class="auth-module-chip">Hazard Classification</span>
+                    </div>
+                </article>
+
+                <!-- Card 2: MoEFCC & CPCB -->
+                <article class="auth-card glass-panel auth-card-emerald">
+                    <div class="auth-card-header">
+                        <div class="auth-insignia">
+                            <span class="auth-monogram">CPCB</span>
+                        </div>
+                        <div class="auth-tags-wrap">
+                            <span class="auth-tag-pill pill-statutory">Statutory Gazette (India)</span>
+                            <span class="auth-verified-chip chip-law">
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                                <span>Statutory Law</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="auth-card-body">
+                        <h3 class="auth-title">MoEFCC &amp; CPCB <span class="auth-year-badge">2025 Rules</span></h3>
+                        <p class="auth-org-name">Ministry of Environment, Forest &amp; Climate Change &amp; Central Pollution Control Board</p>
+                        <div class="auth-pub-quote">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="pub-quote-icon" aria-hidden="true"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                            <em>Environment Protection (Management of Contaminated Sites) Rules, 2025</em> &amp; National Inventory
+                        </div>
+                        <div class="auth-extract-box">
+                            <span class="auth-extract-label">Data Integrated in SoilTrace:</span>
+                            <ul class="auth-extract-list">
+                                <li><strong>128 confirmed</strong> + <strong>320 probable</strong> contaminated sites across 21 states.</li>
+                                <li>Statutory cutoffs: Pb 70 mg/kg, Cr(VI) 0.4 mg/kg, As 12 mg/kg, Cd 1.4 mg/kg.</li>
+                                <li>Mandatory 90-day assessment cycles and strict "polluter pays" liability doctrine.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="auth-card-footer">
+                        <span class="auth-doi-chip">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                            <span>G.S.R. 518(E) / MoEFCC 2015</span>
+                        </span>
+                        <span class="auth-module-chip">Hotspots &amp; Risk Limits</span>
+                    </div>
+                </article>
+
+                <!-- Card 3: European Commission ESDAC -->
+                <article class="auth-card glass-panel auth-card-indigo">
+                    <div class="auth-card-header">
+                        <div class="auth-insignia">
+                            <span class="auth-monogram">JRC</span>
+                        </div>
+                        <div class="auth-tags-wrap">
+                            <span class="auth-tag-pill pill-continental">Continental Survey (EU)</span>
+                            <span class="auth-verified-chip">
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                                <span>21.6K Records</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="auth-card-body">
+                        <h3 class="auth-title">European Commission ESDAC <span class="auth-year-badge">LUCAS Survey</span></h3>
+                        <p class="auth-org-name">Joint Research Centre &amp; European Soil Data Centre</p>
+                        <div class="auth-pub-quote">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="pub-quote-icon" aria-hidden="true"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                            <em>LUCAS Topsoil Database</em> &amp; <em>EU Sewage Sludge Directive 86/278/EEC</em>
+                        </div>
+                        <div class="auth-extract-box">
+                            <span class="auth-extract-label">Data Integrated in SoilTrace:</span>
+                            <ul class="auth-extract-list">
+                                <li><strong>21,684</strong> harmonized geochemical topsoil data points across 28 member states.</li>
+                                <li>Cadmium continental mean baseline of <strong>0.20 mg/kg</strong> for benchmark calibration.</li>
+                                <li>Standardized 0–20 cm depth stratification protocols for topsoil comparison.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="auth-card-footer">
+                        <span class="auth-doi-chip">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            <span>ESDAC JRC.I.4 / INSPIRE</span>
+                        </span>
+                        <span class="auth-module-chip">Stratigraphy Baselines</span>
+                    </div>
+                </article>
+
+                <!-- Card 4: WHO & IHME -->
+                <article class="auth-card glass-panel auth-card-teal">
+                    <div class="auth-card-header">
+                        <div class="auth-insignia">
+                            <span class="auth-monogram">WHO</span>
+                        </div>
+                        <div class="auth-tags-wrap">
+                            <span class="auth-tag-pill pill-health">Epidemiological Modeling</span>
+                            <span class="auth-verified-chip">
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                                <span>Lancet 2023</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="auth-card-body">
+                        <h3 class="auth-title">WHO &amp; IHME <span class="auth-year-badge">Global Health 2023</span></h3>
+                        <p class="auth-org-name">World Health Organization &amp; Institute for Health Metrics and Evaluation</p>
+                        <div class="auth-pub-quote">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="pub-quote-icon" aria-hidden="true"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                            <em>Global Burden of Disease: Environmental Lead Exposure</em> (Lancet Planetary Health)
+                        </div>
+                        <div class="auth-extract-box">
+                            <span class="auth-extract-label">Data Integrated in SoilTrace:</span>
+                            <ul class="auth-extract-list">
+                                <li><strong>3.5 Million</strong> cardiovascular deaths globally linked to lead exposure pathways.</li>
+                                <li><strong>5.5M DALYs</strong> from pediatric neurocognitive deficits via topsoil dust ingestion.</li>
+                                <li>Provides tolerable daily intake (TDI) &amp; chronic toxicity coefficients.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="auth-card-footer">
+                        <span class="auth-doi-chip">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                            <span>Lancet Planet Health 2023</span>
+                        </span>
+                        <span class="auth-module-chip">Health Burden Model</span>
+                    </div>
+                </article>
+
+                <!-- Card 5: CSIR-NEERI & University of Delhi -->
+                <article class="auth-card glass-panel auth-card-amber">
+                    <div class="auth-card-header">
+                        <div class="auth-insignia">
+                            <span class="auth-monogram">CSIR</span>
+                        </div>
+                        <div class="auth-tags-wrap">
+                            <span class="auth-tag-pill pill-field">Empirical Field Study</span>
+                            <span class="auth-verified-chip">
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                                <span>Peer-Reviewed</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="auth-card-body">
+                        <h3 class="auth-title">CSIR-NEERI &amp; DU <span class="auth-year-badge">Yamuna Study</span></h3>
+                        <p class="auth-org-name">CSIR - National Environmental Engineering Research Institute &amp; University of Delhi</p>
+                        <div class="auth-pub-quote">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="pub-quote-icon" aria-hidden="true"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                            <em>Heavy Metal Bioaccumulation in Riverine Floodplain Agroecosystems (2019)</em>
+                        </div>
+                        <div class="auth-extract-box">
+                            <span class="auth-extract-label">Data Integrated in SoilTrace:</span>
+                            <ul class="auth-extract-list">
+                                <li>Field measurements showing spinach accumulating <strong>14.1 mg/kg lead</strong> (5.64&times; FSSAI limit).</li>
+                                <li>Quantifies Bioaccumulation Factors (BAF) across brassica and leafy root crops.</li>
+                                <li>Powers SoilTrace's interactive Food-Chain Bioaccumulation Stepper.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="auth-card-footer">
+                        <span class="auth-doi-chip">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                            <span>CSIR-NEERI Floodplain Audit</span>
+                        </span>
+                        <span class="auth-module-chip">Bioaccum Stepper</span>
+                    </div>
+                </article>
+
+                <!-- Card 6: ICAR & ICRIER -->
+                <article class="auth-card glass-panel auth-card-copper">
+                    <div class="auth-card-header">
+                        <div class="auth-insignia">
+                            <span class="auth-monogram">ICAR</span>
+                        </div>
+                        <div class="auth-tags-wrap">
+                            <span class="auth-tag-pill pill-agronomic">National Agronomic Audit</span>
+                            <span class="auth-verified-chip">
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                                <span>All-India SHC</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="auth-card-body">
+                        <h3 class="auth-title">ICAR &amp; ICRIER <span class="auth-year-badge">2024 Audit</span></h3>
+                        <p class="auth-org-name">Indian Council of Agricultural Research &amp; ICRIER Economic Policy Center</p>
+                        <div class="auth-pub-quote">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="pub-quote-icon" aria-hidden="true"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                            <em>Healing Soils in India: Soil Health Card Scheme Audit</em> &amp; Micronutrient Atlas
+                        </div>
+                        <div class="auth-extract-box">
+                            <span class="auth-extract-label">Data Integrated in SoilTrace:</span>
+                            <ul class="auth-extract-list">
+                                <li><strong>73%</strong> of tested soils deficient in organic carbon (&lt;0.75%), 45% in boron, 39% in zinc.</li>
+                                <li>Severe fertilizer distortion: N:P:K at <strong>8.2 : 3.2 : 1</strong> (against ideal 4 : 2 : 1).</li>
+                                <li>Fertilizer response drop: 13.4 kg grain/kg nutrient (1970) to <strong>2.7 kg</strong> today.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="auth-card-footer">
+                        <span class="auth-doi-chip">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                            <span>ICRIER Policy Report No. 42</span>
+                        </span>
+                        <span class="auth-module-chip">Soil Organic Carbon</span>
+                    </div>
+                </article>
+            </div>
+
+            <!-- OPEN SCIENCE & CITATION TRANSPARENCY BANNER -->
+            <div class="citations-transparency-card glass-panel">
+                <div class="transparency-icon-box">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 16v-4"/>
+                        <path d="M12 8h.01"/>
+                    </svg>
+                </div>
+                <div class="transparency-content">
+                    <h4>The SoilTrace Open Science Guarantee</h4>
+                    <p>
+                        We operate under the <strong>FAIR Data Principles</strong> (Findable, Accessible, Interoperable, and Reusable). Qualitative community alerts submitted by citizens act as <strong>Tier 1 early-warning signals</strong> and are never represented as statutory findings. Certified legal violations require Tier 3 laboratory verification using ICP-MS / HPLC spectroscopy conducted in accordance with MoEFCC 2015 standards and ISO 11466:1995.
+                    </p>
+                </div>
+                <div class="transparency-actions">
+                    <a href="#risk-analyzer" class="btn btn-secondary btn-sm">
+                        <span>Test Risk Engine</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PLATFORM COLOPHON / FOOTER SIGNATURE -->
+            <footer class="platform-colophon">
+                <div class="colophon-top-row">
+                    <div class="colophon-brand">
+                        <div class="brand-line">
+                            <span class="brand-gem">&#9670;</span>
+                            <span class="brand-text">SOILTRACE</span>
+                        </div>
+                        <p class="brand-mission">
+                            Soil Pollution Awareness with Digital Environmental Records. Preserving the living pedosphere that sustains 95% of human caloric intake.
+                        </p>
+                    </div>
+                    <div class="colophon-nav-links">
+                        <div class="colophon-col">
+                            <h5>Explore Science</h5>
+                            <a href="#why-soil-matters">Living Superpowers</a>
+                            <a href="#myths-facts">Myths vs. Facts</a>
+                            <a href="#stratigraphy">Pedosphere Horizons</a>
+                            <a href="#bioaccumulation">Food-Chain Pathways</a>
+                        </div>
+                        <div class="colophon-col">
+                            <h5>Tools &amp; Records</h5>
+                            <a href="#risk-analyzer">Live Risk Engine</a>
+                            <a href="#area-simulator">Area Simulator</a>
+                            <a href="#hotspots-dossier">National Hotspots</a>
+                            <a href="#contaminant-registry">Periodic Contaminants</a>
+                        </div>
+                        <div class="colophon-col">
+                            <h5>Citizen Radar</h5>
+                            <a href="#spot-pollution">Field Warning Signs</a>
+                            <a href="#remediation-matrix">Regenerative Solutions</a>
+                            <a href="#citizen-faq">Frequently Asked Questions</a>
+                            <a href="{{ url_for('report') }}">Report Contamination</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="colophon-bottom-row">
+                    <p class="colophon-copyright">
+                        &copy; 2026 SoilTrace &bull; Open Scientific Records Initiative. Citations referenced from FAO, UNEP, MoEFCC, CPCB, European Commission ESDAC, WHO, NEERI, and ICAR under open-access educational guidelines.
+                    </p>
+                    <a href="#main-content" class="back-to-top-btn" aria-label="Back to top of page">
+                        <span>Back to Top</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
+                    </a>
+                </div>
+            </footer>
+        </div>
+    </section>
+
 </main>
+
+<!-- RIGHT-SIDE VERTICAL SCROLL TRACKER (SEAMLESS INTEGRATION) -->
+<nav class="side-scroll-rail" id="side-scroll-rail" aria-label="Page section navigator">
+    <a href="#why-soil-matters" class="rail-step" data-target="why-soil-matters" aria-label="Section 1: Living Soil">
+        <span class="rail-tooltip">
+            <span class="rail-step-num">01</span>
+            <span class="rail-step-title">Living Soil</span>
+        </span>
+        <span class="rail-bar"></span>
+    </a>
+    <a href="#myths-facts" class="rail-step" data-target="myths-facts" aria-label="Section 2: Myths vs. Facts">
+        <span class="rail-tooltip">
+            <span class="rail-step-num">02</span>
+            <span class="rail-step-title">Myths vs. Facts</span>
+        </span>
+        <span class="rail-bar"></span>
+    </a>
+    <a href="#stratigraphy" class="rail-step" data-target="stratigraphy" aria-label="Section 3: Pedosphere Horizons">
+        <span class="rail-tooltip">
+            <span class="rail-step-num">03</span>
+            <span class="rail-step-title">Soil Horizons</span>
+        </span>
+        <span class="rail-bar"></span>
+    </a>
+    <a href="#daily-culprits" class="rail-step" data-target="daily-culprits" aria-label="Section 4: The 4 Daily Culprits">
+        <span class="rail-tooltip">
+            <span class="rail-step-num">04</span>
+            <span class="rail-step-title">4 Daily Culprits</span>
+        </span>
+        <span class="rail-bar"></span>
+    </a>
+    <a href="#bioaccumulation" class="rail-step" data-target="bioaccumulation" aria-label="Section 5: Food-Chain Pathway">
+        <span class="rail-tooltip">
+            <span class="rail-step-num">05</span>
+            <span class="rail-step-title">Food Chain</span>
+        </span>
+        <span class="rail-bar"></span>
+    </a>
+    <a href="#risk-analyzer" class="rail-step" data-target="risk-analyzer" aria-label="Section 6: Risk & Threshold Engine">
+        <span class="rail-tooltip">
+            <span class="rail-step-num">06</span>
+            <span class="rail-step-title">Risk Engine</span>
+        </span>
+        <span class="rail-bar"></span>
+    </a>
+    <a href="#area-simulator" class="rail-step" data-target="area-simulator" aria-label="Section 7: Citizen Scenario Simulator">
+        <span class="rail-tooltip">
+            <span class="rail-step-num">07</span>
+            <span class="rail-step-title">Area Simulator</span>
+        </span>
+        <span class="rail-bar"></span>
+    </a>
+    <a href="#hotspots-dossier" class="rail-step" data-target="hotspots-dossier" aria-label="Section 8: National Hotspots Dossier">
+        <span class="rail-tooltip">
+            <span class="rail-step-num">08</span>
+            <span class="rail-step-title">Hotspots Dossier</span>
+        </span>
+        <span class="rail-bar"></span>
+    </a>
+    <a href="#spot-pollution" class="rail-step" data-target="spot-pollution" aria-label="Section 9: Sensory Warning Signs">
+        <span class="rail-tooltip">
+            <span class="rail-step-num">09</span>
+            <span class="rail-step-title">Spot Signs</span>
+        </span>
+        <span class="rail-bar"></span>
+    </a>
+    <a href="#citations-footer" class="rail-step" data-target="citations-footer" aria-label="Section 10: Statutory Authorities">
+        <span class="rail-tooltip">
+            <span class="rail-step-num">10</span>
+            <span class="rail-step-title">Authorities Registry</span>
+        </span>
+        <span class="rail-bar"></span>
+    </a>
+</nav>
+
+<script src="{{ url_for('static', filename='js/home.js') }}" defer></script>
 {% endblock %}
