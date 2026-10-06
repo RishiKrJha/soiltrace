@@ -1,6 +1,58 @@
 {% extends "base.html" %}
 {% block title %}Dashboard{% endblock %}
 {% block content %}
-    <h1>Welcome to SoilTrace</h1>
-    <p>This is the dashboard page of the SoilTrace application.</p>
+<main class="dashboard-page">
+    <section class="dashboard-heading" aria-labelledby="dashboard-title">
+        <p class="eyebrow">Community observations</p>
+        <h1 id="dashboard-title">Global SoilTrace Dashboard</h1>
+        <p>Anonymous, user-submitted observations of potential soil pollution. These reports are not laboratory-confirmed measurements.</p>
+    </section>
+
+    <section class="metric-grid" aria-label="Observation summary">
+        <article class="metric-card"><span>Total observations</span><strong>{{ total }}</strong></article>
+        <article class="metric-card"><span>Reported categories</span><strong>{{ category_counts|length }}</strong></article>
+        <article class="metric-card"><span>Locations represented</span><strong>{{ location_total }}</strong></article>
+    </section>
+
+    {% if total %}
+        <div class="dashboard-grid">
+            <section class="dashboard-card" aria-labelledby="categories-title">
+                <h2 id="categories-title">By category</h2>
+                <ul class="data-list">
+                    {% for item in category_counts %}
+                        <li><span>{{ category_labels[item['category']] }}</span><strong>{{ item['total'] }}</strong></li>
+                    {% endfor %}
+                </ul>
+            </section>
+            <section class="dashboard-card" aria-labelledby="locations-title">
+                <h2 id="locations-title">Most reported locations</h2>
+                <ul class="data-list">
+                    {% for item in location_counts %}
+                        <li><span>{{ item['location'] }}</span><strong>{{ item['total'] }}</strong></li>
+                    {% endfor %}
+                </ul>
+            </section>
+        </div>
+
+        <section class="dashboard-card recent-card" aria-labelledby="recent-title">
+            <h2 id="recent-title">Recent observations</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Location</th><th>Category</th><th>Observed</th><th>Description</th></tr></thead>
+                    <tbody>
+                        {% for observation in recent_observations %}
+                            <tr><td>{{ observation['location'] }}</td><td>{{ category_labels[observation['category']] }}</td><td>{{ observation['observation_date'] }}</td><td>{{ observation['description'] }}</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    {% else %}
+        <section class="dashboard-card empty-state">
+            <h2>No observations yet</h2>
+            <p>The dashboard will begin showing global trends after the first report is submitted.</p>
+            <a class="submit-button" href="{{ url_for('report') }}">Report an observation <span aria-hidden="true">&#8594;</span></a>
+        </section>
+    {% endif %}
+</main>
 {% endblock %}

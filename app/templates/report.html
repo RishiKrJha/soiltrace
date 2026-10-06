@@ -1,6 +1,89 @@
 {% extends "base.html" %}
-{% block title %}Report{% endblock %}
+{% block title %}Report an Observation{% endblock %}
 {% block content %}
-    <h1>Welcome to SoilTrace</h1>
-    <p>This is the report page of the SoilTrace application.</p>
+<main class="report-page">
+    <section class="report-intro" aria-labelledby="report-title">
+        <p class="eyebrow">SoilTrace field notes</p>
+        <h1 id="report-title">Report a Soil Pollution Observation</h1>
+        <p>Share a potential soil-pollution concern. This is an anonymous observation, not an official complaint.</p>
+    </section>
+
+    <div class="report-layout">
+        <aside class="report-aside" aria-label="Observation form guidance">
+            <h2>A few details can reveal a wider pattern.</h2>
+            <p>Reports are collected to show broad trends in potential soil pollution. Please only share information you are comfortable making public.</p>
+            <p class="aside-note">Do not include phone numbers, exact home addresses, or other sensitive personal information.</p>
+            <p class="aside-note">Submit one report for each distinct site or observation. Fields marked with an asterisk are required.</p>
+        </aside>
+
+        <section class="observation-panel" aria-label="Observation details">
+            {% if request.args.get('submitted') %}
+                <div class="success-message" role="status">
+                    <span class="success-icon" aria-hidden="true">&#10003;</span>
+                    <div>
+                        <h2>Observation recorded.</h2>
+                        <p>Thank you for contributing to the SoilTrace dataset.</p>
+                    </div>
+                    <a class="new-observation" href="{{ url_for('report') }}">Record another observation</a>
+                </div>
+            {% else %}
+                <form id="observation-form" class="observation-form" method="post" action="{{ url_for('report') }}">
+                    <div class="honeypot" aria-hidden="true">
+                        <label for="website">Website</label>
+                        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+                    </div>
+                    <fieldset>
+                        <legend><span>01</span> Location</legend>
+                        <div class="field-group">
+                            <label for="location">Location or area name <span class="required">*</span></label>
+                            <input type="text" id="location" name="location" value="{{ form.get('location', '') }}" maxlength="200" placeholder="e.g. Riverside market, East Ward" required>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend><span>02</span> Date of observation</legend>
+                        <div class="field-group compact-field">
+                            <label for="observation-date">When did you observe this? <span class="required">*</span></label>
+                            <input type="date" id="observation-date" name="observation_date" value="{{ form.get('observation_date', '') }}" max="{{ today if today else '' }}" required>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend><span>03</span> Primary pollution category</legend>
+                        <div class="field-group">
+                            <span class="field-label">Choose the main type you observed <span class="required">*</span></span>
+                            <div class="type-grid">
+                                {% for value, label in categories %}
+                                    <label class="choice-card"><input type="radio" name="category" value="{{ value }}"{% if form.get('category') == value %} checked{% endif %} required><span>{{ label }}</span></label>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend><span>04</span> Description</legend>
+                        <div class="field-group">
+                            <label for="description">Tell us what you observed <span class="required">*</span></label>
+                            <textarea id="description" name="description" rows="6" maxlength="2000" placeholder="Describe what you observed..." required>{{ form.get('description', '') }}</textarea>
+                            <p id="description-count" class="character-count" aria-live="polite">0 / 2000 characters</p>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend><span>05</span><span class="legend-title">Your name <small class="optional">Optional</small></span></legend>
+                        <div class="field-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" value="{{ form.get('name', '') }}" maxlength="100" autocomplete="name" placeholder="Leave blank to remain anonymous">
+                        </div>
+                    </fieldset>
+
+                    <label class="consent-check"><input type="checkbox" name="consent" value="yes"{% if form.get('consent') == 'yes' %} checked{% endif %} required><span>I understand this is a public observation, not a verified pollution finding.</span></label>
+
+                    <button class="submit-button" type="submit">Submit observation <span aria-hidden="true">&#8594;</span></button>
+                </form>
+            {% endif %}
+        </section>
+    </div>
+</main>
+<script src="{{ url_for('static', filename='js/report.js') }}"></script>
 {% endblock %}
