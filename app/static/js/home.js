@@ -620,6 +620,7 @@
                 if (prog) {
                     prog.classList.remove('is-animating', 'is-paused');
                     prog.style.width = '0%';
+                    prog.style.animation = 'none';
                 }
             });
         }
