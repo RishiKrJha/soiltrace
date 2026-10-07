@@ -82,18 +82,25 @@ soiltrace/
 │   ├── static/
 │   │   ├── css/
 │   │   │   └── style.css     # Unified stylesheets and design system
+│   │   ├── data/             # Research reports and synthesized datasets
+│   │   ├── images/           # Educational and platform imagery
 │   │   ├── js/
+│   │   │   ├── home.js       # Homepage interactions and logic
 │   │   │   ├── navbar.js     # Responsive mobile navigation menu toggle
 │   │   │   └── report.js     # Country/region fetching and form validations
-│   │   └── countries.json    # Bundled country list dataset
+│   │   ├── countries.json    # Bundled country list dataset
+│   │   └── favicon.svg       # Application favicon
 │   └── templates/
-│       ├── base.html         # Base template with navigation, header, and footer
+│       ├── 404.html          # Custom error page
+│       ├── base.html         # Base template with structural layout
+│       ├── dashboard.html    # Interactive metrics, charts, filters, and feed
+│       ├── footer.html       # Reusable footer component
 │       ├── index.html        # Informational homepage and platform overview
-│       ├── report.html       # Public observation submission form
-│       └── dashboard.html    # Interactive metrics, charts, filters, and feed
+│       └── report.html       # Public observation submission form
 ├── instance/
 │   └── soiltrace.sqlite      # SQLite database file (created at runtime)
 ├── .env.example              # Template for environment variables
+├── ACTIONS.md                # Task history and completed action records
 ├── PLANS.md                  # Project architecture roadmap and specifications
 ├── requirements.txt          # Python package dependencies
 └── README.md                 # Project documentation
