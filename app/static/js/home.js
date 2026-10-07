@@ -579,10 +579,16 @@
         });
     }
 
-    // 6. HOTSPOTS EXPLORER
+    // 6. HOTSPOTS EXPLORER: RIGHT-TO-LEFT AUTO-SCROLLING & MANUAL SELECTION WITH REPAUSE DELAY
     function initHotspotsExplorer() {
-        const hotspotButtons = document.querySelectorAll('[data-hotspot-target]');
-        if (!hotspotButtons.length) return;
+        const hotspotButtons = Array.from(document.querySelectorAll('[data-hotspot-target]'));
+        const dossierCard = document.querySelector('.hotspot-dossier-card');
+        const hotspotsNav = document.querySelector('.hotspots-nav');
+        const prevBtn = document.querySelector('.hotspot-arrow-btn.prev-btn');
+        const nextBtn = document.querySelector('.hotspot-arrow-btn.next-btn');
+        const currentNumEl = document.getElementById('hotspot-current-num');
+
+        if (!hotspotButtons.length || !dossierCard) return;
 
         const titleEl = document.getElementById('hotspot-title');
         const locEl = document.getElementById('hotspot-location');
@@ -593,29 +599,190 @@
         const vectorEl = document.getElementById('hotspot-vector');
         const detailsEl = document.getElementById('hotspot-details');
 
-        hotspotButtons.forEach(btn => {
-            btn.addEventListener('click', function () {
-                const targetKey = this.getAttribute('data-hotspot-target');
-                const data = HOTSPOTS_DATA[targetKey];
-                if (!data) return;
+        const AUTO_INTERVAL = 5500; // 5.5s per hotspot during auto-advance
+        const REPAUSE_DELAY = 8500; // 8.5s pause after manual selection before re-triggering auto-scroll
 
-                hotspotButtons.forEach(b => {
-                    b.classList.remove('active');
-                    b.setAttribute('aria-selected', 'false');
+        let currentIndex = 0;
+        let autoTimer = null;
+        let repauseTimer = null;
+        let isHovered = false;
+        let isManuallyPaused = false;
+        let isSectionVisible = true;
+
+        // Synchronize CSS animation variable for the tab progress indicator
+        document.documentElement.style.setProperty('--hotspot-duration', `${AUTO_INTERVAL}ms`);
+
+        function resetAllProgressBars() {
+            hotspotButtons.forEach(btn => {
+                const prog = btn.querySelector('.hotspot-tab-progress');
+                if (prog) {
+                    prog.classList.remove('is-animating');
+                    prog.style.width = '0%';
+                }
+            });
+        }
+
+        function startActiveProgressBar() {
+            resetAllProgressBars();
+            if (isManuallyPaused || isHovered || !isSectionVisible) return;
+            const activeBtn = hotspotButtons[currentIndex];
+            if (!activeBtn) return;
+            const prog = activeBtn.querySelector('.hotspot-tab-progress');
+            if (prog) {
+                void prog.offsetWidth; // Force CSS reflow to restart keyframe
+                prog.classList.add('is-animating');
+            }
+        }
+
+        function stopAutoScroll() {
+            if (autoTimer) {
+                clearInterval(autoTimer);
+                autoTimer = null;
+            }
+            resetAllProgressBars();
+        }
+
+        function startAutoScroll() {
+            stopAutoScroll();
+            if (isManuallyPaused || isHovered || !isSectionVisible) return;
+
+            startActiveProgressBar();
+            autoTimer = setInterval(() => {
+                const nextIndex = (currentIndex + 1) % hotspotButtons.length;
+                goToHotspot(nextIndex, 'next', false);
+            }, AUTO_INTERVAL);
+        }
+
+        function goToHotspot(index, direction = 'next', isManual = false) {
+            if (index < 0 || index >= hotspotButtons.length) return;
+            currentIndex = index;
+            const targetBtn = hotspotButtons[index];
+            const targetKey = targetBtn.getAttribute('data-hotspot-target');
+            const data = HOTSPOTS_DATA[targetKey];
+            if (!data) return;
+
+            // Update active state on tab buttons
+            hotspotButtons.forEach(b => {
+                b.classList.remove('active');
+                b.setAttribute('aria-selected', 'false');
+            });
+            targetBtn.classList.add('active');
+            targetBtn.setAttribute('aria-selected', 'true');
+
+            // Scroll horizontal tab navigation bar so the active tab is centered and in view
+            if (hotspotsNav) {
+                const offset = targetBtn.offsetLeft - (hotspotsNav.clientWidth / 2) + (targetBtn.clientWidth / 2);
+                hotspotsNav.scrollTo({
+                    left: Math.max(0, offset),
+                    behavior: 'smooth'
                 });
-                this.classList.add('active');
-                this.setAttribute('aria-selected', 'true');
+            }
 
-                if (titleEl) titleEl.textContent = data.title;
-                if (locEl) locEl.textContent = data.location;
-                if (contamEl) contamEl.textContent = data.contaminant;
-                if (peakEl) peakEl.textContent = data.peakValue;
-                if (statusEl) statusEl.textContent = data.legalStatus;
-                if (costEl) costEl.textContent = data.cost;
-                if (vectorEl) vectorEl.textContent = data.vector;
-                if (detailsEl) detailsEl.textContent = data.details;
+            // Update card textual details
+            if (titleEl) titleEl.textContent = data.title;
+            if (locEl) locEl.textContent = data.location;
+            if (contamEl) contamEl.textContent = data.contaminant;
+            if (peakEl) peakEl.textContent = data.peakValue;
+            if (statusEl) statusEl.textContent = data.legalStatus;
+            if (costEl) costEl.textContent = data.cost;
+            if (vectorEl) vectorEl.textContent = data.vector;
+            if (detailsEl) detailsEl.textContent = data.details;
+            if (currentNumEl) currentNumEl.textContent = (index + 1);
+
+            // Animate card with smooth slide (next = right-to-left, prev = left-to-right)
+            dossierCard.classList.remove('slide-right', 'slide-left');
+            void dossierCard.offsetWidth; // Force reflow
+            dossierCard.classList.add(direction === 'next' ? 'slide-right' : 'slide-left');
+
+            if (isManual) {
+                // Manual selection: stop auto-scroll immediately, then repause for delay
+                stopAutoScroll();
+                isManuallyPaused = true;
+                if (repauseTimer) {
+                    clearTimeout(repauseTimer);
+                }
+                repauseTimer = setTimeout(() => {
+                    isManuallyPaused = false;
+                    startAutoScroll();
+                }, REPAUSE_DELAY);
+            } else {
+                startActiveProgressBar();
+            }
+        }
+
+        // Tab click handlers (manual selection)
+        hotspotButtons.forEach((btn, idx) => {
+            btn.addEventListener('click', function () {
+                const dir = idx >= currentIndex ? 'next' : 'prev';
+                goToHotspot(idx, dir, true);
             });
         });
+
+        // Prev & Next navigation buttons
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                const prevIndex = (currentIndex - 1 + hotspotButtons.length) % hotspotButtons.length;
+                goToHotspot(prevIndex, 'prev', true);
+            });
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                const nextIndex = (currentIndex + 1) % hotspotButtons.length;
+                goToHotspot(nextIndex, 'next', true);
+            });
+        }
+
+        // Pause on mouse hover over card or nav bar; resume on mouse leave
+        const interactiveContainers = [dossierCard, hotspotsNav];
+        interactiveContainers.forEach(container => {
+            if (!container) return;
+            container.addEventListener('mouseenter', () => {
+                isHovered = true;
+                stopAutoScroll();
+            });
+            container.addEventListener('mouseleave', () => {
+                isHovered = false;
+                if (!isManuallyPaused) {
+                    startAutoScroll();
+                }
+            });
+        });
+
+        // Keyboard arrow navigation support
+        if (hotspotsNav) {
+            hotspotsNav.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    const nextIndex = (currentIndex + 1) % hotspotButtons.length;
+                    goToHotspot(nextIndex, 'next', true);
+                    hotspotButtons[nextIndex].focus();
+                } else if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    const prevIndex = (currentIndex - 1 + hotspotButtons.length) % hotspotButtons.length;
+                    goToHotspot(prevIndex, 'prev', true);
+                    hotspotButtons[prevIndex].focus();
+                }
+            });
+        }
+
+        // Section visibility detection: only auto-scroll when section is in viewport
+        const dossierSection = document.getElementById('hotspots-dossier');
+        if (dossierSection && 'IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    isSectionVisible = entry.isIntersecting;
+                    if (isSectionVisible && !isManuallyPaused && !isHovered) {
+                        startAutoScroll();
+                    } else {
+                        stopAutoScroll();
+                    }
+                });
+            }, { threshold: 0.15 });
+            observer.observe(dossierSection);
+        } else {
+            startAutoScroll();
+        }
     }
 
     // 7. FAQ ACCORDION
