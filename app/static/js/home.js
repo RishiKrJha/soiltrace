@@ -283,6 +283,7 @@
 
     // --- DOM INITIALIZATION ---
     function initHomepage() {
+        initTypingTicker();
         initScrollProgress();
         initNumberCounters();
         initRiskAnalyzer();
@@ -299,6 +300,64 @@
         initHomepage();
     } else {
         document.addEventListener('DOMContentLoaded', initHomepage);
+    }
+
+    // 0. TYPING TICKER (Verified Records Stream)
+    function initTypingTicker() {
+        const textElement = document.getElementById('typing-text');
+        if (!textElement) return;
+
+        const TYPING_FACTS = [
+            { tag: "FAOSTAT 2022", text: " 3.70 Million Tonnes active pesticide ingredients applied worldwide" },
+            { tag: "WHO / IHME", text: " 3.5 Million global cardiovascular deaths attributed to lead exposure" },
+            { tag: "CPCB INDIA", text: " 128 Confirmed and 320 Probable contaminated hazardous sites tracked" },
+            { tag: "FAO 2019", text: " 12.5 Million Tonnes of plastics used in agricultural value chains yearly" },
+            { tag: "NEERI STUDY", text: " 14.1 mg/kg Lead in Yamuna floodplain spinach (nearly 6x FSSAI limit of 2.5 mg/kg)" },
+            { tag: "RANIPET NGT", text: " Hexavalent Chromium in groundwater hit 277.6 mg/L (5,550x WHO drinking limit)" },
+            { tag: "ICAR / ICRIER", text: " 73% of Indian agricultural soils deficient in Soil Organic Carbon (<0.75%)" },
+            { tag: "EU LUCAS", text: " 21,684 topsoil records benchmark continental heavy metal baselines" }
+        ];
+
+        let currentFactIndex = 0;
+        let currentCharIndex = 0;
+        let isDeleting = false;
+        let isPaused = false;
+
+        function type() {
+            if (isPaused) return;
+
+            const currentFact = TYPING_FACTS[currentFactIndex];
+            const tagHTML = `<span class="ticker-tag">${currentFact.tag}</span>`;
+            
+            if (isDeleting) {
+                currentCharIndex--;
+                textElement.innerHTML = tagHTML + currentFact.text.substring(0, Math.max(0, currentCharIndex));
+            } else {
+                currentCharIndex++;
+                textElement.innerHTML = tagHTML + currentFact.text.substring(0, currentCharIndex);
+            }
+
+            let typeSpeed = isDeleting ? 30 : 60;
+
+            if (!isDeleting && currentCharIndex === currentFact.text.length) {
+                isPaused = true;
+                setTimeout(() => {
+                    isPaused = false;
+                    isDeleting = true;
+                    type();
+                }, 3000);
+                return;
+            } else if (isDeleting && currentCharIndex === 0) {
+                isDeleting = false;
+                currentFactIndex = (currentFactIndex + 1) % TYPING_FACTS.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(type, typeSpeed);
+        }
+
+        // Start typing loop
+        setTimeout(type, 1000);
     }
 
     // 1. SCROLL PROGRESS BAR
@@ -828,17 +887,26 @@
             const hero = document.getElementById('hero');
 
             if (indexPage) {
+                // Temporarily disable scroll snapping for smooth scroll to work reliably
+                indexPage.style.scrollSnapType = 'none';
                 indexPage.scrollTo({
                     top: 0,
                     behavior: 'smooth'
                 });
+                
+                // Re-enable after scroll completes (approximate timeout)
+                setTimeout(() => {
+                    indexPage.style.scrollSnapType = '';
+                }, 800);
             }
-            if (hero) {
+            
+            if (hero && !indexPage) {
                 hero.scrollIntoView({
                     behavior: 'smooth',
                     block: 'start'
                 });
             }
+            
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'

@@ -659,41 +659,24 @@ body:has(.home-page-master) .navbar-toggler span {
     line-height: 1.35;
 }
 
-/* 2. Infinite Continuous Research Ticker */
-.research-ticker-bar {
+/* 2. Typing Research Stream */
+.research-typing-bar {
     width: 100%;
-    overflow: hidden;
     background: #ffffff;
     border-top: 1px solid rgba(15, 23, 42, 0.08);
     border-bottom: 1px solid rgba(15, 23, 42, 0.08);
-    padding: 0.85rem 0;
-    white-space: nowrap;
-    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    padding: 1.1rem 0;
+    text-align: center;
 }
 
-.ticker-track {
-    display: flex;
-    width: max-content;
-    animation: tickerLoop 42s linear infinite;
-}
-
-.research-ticker-bar:hover .ticker-track {
-    animation-play-state: paused;
-}
-
-.ticker-content {
-    display: flex;
-    align-items: center;
-}
-
-.ticker-item {
+.typing-container {
     display: inline-flex;
     align-items: center;
     gap: 0.65rem;
-    font-size: 0.86rem;
+    font-size: 0.88rem;
+    font-weight: 500;
     color: #1e293b;
-    margin-right: 3.5rem;
+    min-height: 24px;
 }
 
 .ticker-tag {
@@ -701,15 +684,27 @@ body:has(.home-page-master) .navbar-toggler span {
     background: rgba(245, 158, 11, 0.15);
     border: 1px solid rgba(245, 158, 11, 0.35);
     border-radius: 4px;
-    font-size: 0.68rem;
+    font-size: 0.72rem;
     font-weight: 800;
     color: #0284c7;
     letter-spacing: 0.04em;
+    display: inline-block;
+    margin-right: 0.25rem;
 }
 
-@keyframes tickerLoop {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+.typing-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1.2em;
+    background-color: #0284c7;
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    animation: blinkCursor 0.7s step-end infinite;
+}
+
+@keyframes blinkCursor {
+    from, to { opacity: 1; }
+    50% { opacity: 0; }
 }
 
 /* Common Section Container */
@@ -835,25 +830,25 @@ body:has(.home-page-master) .navbar-toggler span {
 }
 
 .contrast-col.col-healthy {
-    background: linear-gradient(160deg, #f0fdf4 0%, #ecfdf5 100%);
-    border: 1.5px solid #86efac;
-    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.08);
+    background: #022c22;
+    border: 1px solid #064e3b;
+    box-shadow: 0 8px 24px rgba(2, 44, 34, 0.4);
 }
 
 .contrast-col.col-healthy:hover {
-    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.16);
-    border-color: #4ade80;
+    box-shadow: 0 12px 32px rgba(2, 44, 34, 0.6);
+    border-color: #059669;
 }
 
 .contrast-col.col-degraded {
-    background: linear-gradient(160deg, #fef2f2 0%, #fff1f2 100%);
-    border: 1.5px solid #fca5a5;
-    box-shadow: 0 4px 14px rgba(239, 68, 68, 0.08);
+    background: #450a0a;
+    border: 1px solid #7f1d1d;
+    box-shadow: 0 8px 24px rgba(69, 10, 10, 0.4);
 }
 
 .contrast-col.col-degraded:hover {
-    box-shadow: 0 8px 24px rgba(239, 68, 68, 0.16);
-    border-color: #f87171;
+    box-shadow: 0 12px 32px rgba(69, 10, 10, 0.6);
+    border-color: #dc2626;
 }
 
 .contrast-col h4 {
@@ -864,23 +859,23 @@ body:has(.home-page-master) .navbar-toggler span {
     font-weight: 700;
     margin-bottom: 1.15rem;
     padding-bottom: 0.65rem;
-    border-bottom: 1px dashed rgba(0, 0, 0, 0.08);
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
 }
 
 .col-healthy h4 {
-    color: #065f46;
+    color: #34d399;
 }
 
 .col-healthy h4 svg {
-    color: #059669;
+    color: #10b981;
 }
 
 .col-degraded h4 {
-    color: #991b1b;
+    color: #f87171;
 }
 
 .col-degraded h4 svg {
-    color: #dc2626;
+    color: #ef4444;
 }
 
 .contrast-list {
@@ -895,11 +890,11 @@ body:has(.home-page-master) .navbar-toggler span {
 }
 
 .col-healthy .contrast-list {
-    color: #14532d;
+    color: #a7f3d0;
 }
 
 .col-degraded .contrast-list {
-    color: #7f1d1d;
+    color: #fecaca;
 }
 
 .contrast-list li {
@@ -912,13 +907,13 @@ body:has(.home-page-master) .navbar-toggler span {
 }
 
 .col-healthy .contrast-list li {
-    background: rgba(255, 255, 255, 0.7);
-    border: 1px solid rgba(16, 185, 129, 0.15);
+    background: rgba(6, 78, 59, 0.4);
+    border: 1px solid rgba(16, 185, 129, 0.2);
 }
 
 .col-degraded .contrast-list li {
-    background: rgba(255, 255, 255, 0.7);
-    border: 1px solid rgba(239, 68, 68, 0.15);
+    background: rgba(127, 29, 29, 0.4);
+    border: 1px solid rgba(239, 68, 68, 0.2);
 }
 
 /* Everyday Culprits Grid */
@@ -2430,18 +2425,16 @@ body:has(.home-page-master) .navbar-toggler span {
     left: 1.25rem;
     right: 1.25rem;
     padding: 1.5rem 1.6rem;
-    background: rgba(255, 255, 255, 0.94);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    background: #0f172a;
     border-radius: 14px;
-    border: 1.5px solid rgba(255, 255, 255, 0.85);
-    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.18), 0 2px 8px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .remediation-stat-box:hover {
     transform: translateY(-2px);
-    box-shadow: 0 20px 44px rgba(15, 23, 42, 0.22);
+    box-shadow: 0 20px 44px rgba(15, 23, 42, 0.5);
 }
 
 .remediation-stat-box::before {
@@ -2451,9 +2444,9 @@ body:has(.home-page-master) .navbar-toggler span {
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: #047857;
-    background: #ecfdf5;
-    border: 1px solid #a7f3d0;
+    color: #34d399;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.3);
     padding: 0.22rem 0.6rem;
     border-radius: 999px;
     margin-bottom: 0.55rem;
@@ -2464,7 +2457,7 @@ body:has(.home-page-master) .navbar-toggler span {
     font-family: var(--font-heading);
     font-size: 2.5rem;
     font-weight: 800;
-    color: #059669;
+    color: #10b981;
     line-height: 1;
     letter-spacing: -0.02em;
     margin-bottom: 0.45rem;
@@ -2472,8 +2465,8 @@ body:has(.home-page-master) .navbar-toggler span {
 
 .remedy-stat-txt {
     font-size: 0.9rem;
-    color: #1e293b;
-    font-weight: 600;
+    color: #f8fafc;
+    font-weight: 500;
     line-height: 1.45;
 }
 
@@ -2566,9 +2559,12 @@ body:has(.home-page-master) .navbar-toggler span {
 
 /* 11. Statutory & Research Authorities Referenced Registry */
 .authorities-registry-section {
-    padding-top: 5rem;
-    padding-bottom: 2.5rem;
+    padding: 5rem 2rem;
     position: relative;
+    background: #0f172a;
+    border-radius: 24px;
+    margin: 3rem 0;
+    box-shadow: 0 24px 48px rgba(15, 23, 42, 0.2);
 }
 
 /* Section Header Badge & Titles */
@@ -2577,10 +2573,10 @@ body:has(.home-page-master) .navbar-toggler span {
     align-items: center;
     gap: 0.5rem;
     padding: 0.4rem 0.95rem;
-    background: rgba(2, 132, 199, 0.08);
-    border: 1px solid rgba(2, 132, 199, 0.25);
+    background: rgba(56, 189, 248, 0.15);
+    border: 1px solid rgba(56, 189, 248, 0.3);
     border-radius: 999px;
-    color: #0284c7;
+    color: #38bdf8;
     font-size: 0.78rem;
     font-weight: 700;
     letter-spacing: 0.05em;
@@ -2597,7 +2593,7 @@ body:has(.home-page-master) .navbar-toggler span {
 .section-header-block .section-title {
     font-family: var(--font-heading);
     font-size: clamp(2rem, 3.5vw, 2.9rem);
-    color: #0f172a;
+    color: #f8fafc;
     font-weight: 600;
     margin-bottom: 0.85rem;
     line-height: 1.25;
@@ -2605,7 +2601,7 @@ body:has(.home-page-master) .navbar-toggler span {
 
 .section-header-block .section-subtitle {
     font-size: 1rem;
-    color: #475569;
+    color: #cbd5e1;
     line-height: 1.65;
     max-width: 760px;
     margin: 0 auto;
@@ -2618,10 +2614,10 @@ body:has(.home-page-master) .navbar-toggler span {
     gap: 1.5rem;
     padding: 1.75rem 2rem;
     margin: 2rem 0 3.25rem;
-    background: #ffffff;
-    border: 1px solid rgba(15, 23, 42, 0.08);
+    background: #1e293b;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.02);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
 .auth-metric-item {
@@ -2636,7 +2632,7 @@ body:has(.home-page-master) .navbar-toggler span {
     top: 15%;
     height: 70%;
     width: 1px;
-    background: rgba(15, 23, 42, 0.08);
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .auth-metric-num {
@@ -2644,7 +2640,7 @@ body:has(.home-page-master) .navbar-toggler span {
     font-family: var(--font-heading);
     font-size: 2.25rem;
     font-weight: 700;
-    color: #0284c7;
+    color: #38bdf8;
     line-height: 1.1;
     margin-bottom: 0.35rem;
     letter-spacing: -0.02em;
@@ -2655,7 +2651,7 @@ body:has(.home-page-master) .navbar-toggler span {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: #64748b;
+    color: #94a3b8;
     line-height: 1.35;
 }
 
