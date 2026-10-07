@@ -663,12 +663,51 @@
         revealElements.forEach(el => observer.observe(el));
     }
 
-    // 9. SMOOTH ANCHOR NAVIGATION
+    // 9. SMOOTH ANCHOR NAVIGATION & BACK TO TOP
     function initSmoothAnchors() {
+        const scrollToTop = function (e) {
+            if (e) e.preventDefault();
+            const indexPage = document.querySelector('.index-page');
+            const hero = document.getElementById('hero');
+
+            if (indexPage) {
+                indexPage.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
+            if (hero) {
+                hero.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+
+            if (history.pushState) {
+                history.pushState(null, '', window.location.pathname);
+            }
+        };
+
+        // Explicit listeners for Back to Top buttons
+        document.querySelectorAll('.back-to-top-btn').forEach(btn => {
+            btn.addEventListener('click', scrollToTop);
+        });
+
         document.querySelectorAll('a[href^="#"]:not(.rail-step)').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 const targetId = this.getAttribute('href').slice(1);
                 if (!targetId) return;
+
+                // If targeting main-content, hero, or top, smoothly scroll to top of scroll container and window
+                if (targetId === 'main-content' || targetId === 'hero' || targetId === 'top' || this.classList.contains('back-to-top-btn')) {
+                    scrollToTop(e);
+                    return;
+                }
+
                 const targetElem = document.getElementById(targetId);
                 if (targetElem) {
                     e.preventDefault();
