@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Page Not Found{% endblock %}
+{% block content %}
+<main class="home-page-master" id="main-content" style="min-height: 60vh; display: flex; align-items: center;">
+    <section class="dashboard-heading" style="text-align: center; margin: 0 auto;">
+        <div>
+            <p class="eyebrow">Error 404</p>
+            <h1>Page not found.</h1>
+        </div>
+        <p>The page you are looking for doesn't exist or has been moved.</p>
+        <div style="margin-top: 2rem;">
+            <a href="{{ url_for('index') }}" class="btn-primary">Return to Homepage</a>
+        </div>
+    </section>
+</main>
+{% endblock %}
+
