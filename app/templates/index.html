@@ -16,72 +16,81 @@
     <!-- 1. HERO SECTION: AWARENESS + RESEARCH HOOK -->
     <header class="hero-section" id="hero">
         <div class="hero-container">
-            <div class="hero-badge reveal-on-scroll">
-                <span class="badge-pulse" aria-hidden="true"></span>
-                <span class="badge-text">Environmental Awareness & Digital Records Portal</span>
-            </div>
+
             <h1 class="hero-headline reveal-on-scroll">
                 The Living Earth is in Crisis. <br><span class="hero-headline-accent">And It's Happening Silently Beneath Our Feet.</span>
             </h1>
             <p class="hero-lead reveal-on-scroll">
                 Soil is not just dirt—it is a <strong>breathing, biological ecosystem</strong> that grows 95% of everything we eat, purifies the water we drink, and regulates the global climate. Yet across the world, toxic chemical dumping, pesticide overuse, and microplastics are poisoning the ground in complete silence. SoilTrace bridges <strong>verified scientific records</strong> with <strong>public awareness and citizen reporting</strong> so everyone can understand, recognize, and combat soil pollution.
             </p>
-            <div class="hero-actions-group reveal-on-scroll">
-                <a href="#why-soil-matters" class="btn btn-primary btn-lg">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <circle cx="12" cy="12" r="10"/>
-                        <path d="M12 16v-4M12 8h.01"/>
-                    </svg>
-                    <span>Why Healthy Soil Matters</span>
-                </a>
-                <a href="#spot-pollution" class="btn btn-secondary btn-lg">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/>
-                        <circle cx="12" cy="12" r="3"/>
-                    </svg>
-                    <span>How to Spot Pollution</span>
-                </a>
-                <a href="#risk-analyzer" class="btn btn-secondary btn-lg">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M10 2v7.31M14 2v7.31M8.5 2h7M14 9.3a6.5 6.5 0 1 1-4 0"/>
-                        <path d="M5.52 16h12.96"/>
-                    </svg>
-                    <span>Test Soil Risk Analyzer</span>
-                </a>
-                <a href="{{ url_for('report') }}" class="btn btn-accent-ghost btn-lg">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
-                        <line x1="4" y1="22" x2="4" y2="15"/>
-                    </svg>
-                    <span>Report Observation</span>
-                </a>
-            </div>
-
-            <!-- Verified Benchmark Stat Cards with Animated Number Counters -->
-            <div class="hero-stats-grid reveal-on-scroll">
-                <article class="stat-pill-card">
-                    <div class="stat-pill-number"><span class="counter-val" data-counter="33">33</span><span class="stat-unit">%</span></div>
-                    <div class="stat-pill-label">1 in 3 Fields Degraded</div>
-                    <div class="stat-pill-sub">Global lands losing natural fertility & health (FAO)</div>
-                </article>
-                <article class="stat-pill-card">
-                    <div class="stat-pill-number"><span class="counter-val" data-counter="20">20</span><span class="stat-unit">%</span></div>
-                    <div class="stat-pill-label">Food Yield Stolen by Toxins</div>
-                    <div class="stat-pill-sub">Global agricultural output lost to soil contaminants (UNEP)</div>
-                </article>
-                <article class="stat-pill-card">
-                    <div class="stat-pill-number"><span class="counter-val" data-counter="3.70" data-decimal="true">3.70</span><span class="stat-unit">Mt</span></div>
-                    <div class="stat-pill-label">Pesticides Applied Yearly</div>
-                    <div class="stat-pill-sub">Chemical residues piling up faster than soil can decompose them (FAOSTAT)</div>
-                </article>
-                <article class="stat-pill-card">
-                    <div class="stat-pill-number"><span class="counter-val" data-counter="3.5" data-decimal="true">3.5</span><span class="stat-unit">M</span></div>
-                    <div class="stat-pill-label">Silent Lead Fatalities / Yr</div>
-                    <div class="stat-pill-sub">Cardiovascular deaths linked to environmental lead in soil & food (WHO)</div>
-                </article>
-            </div>
         </div>
     </header>
+
+    <!-- NEW SECTION: METRICS, TYPING RESEARCH, & ACTIONS -->
+    <section class="section-container" id="hero-metrics" style="padding-top: 2rem;">
+        <!-- Verified Benchmark Stat Cards with Animated Number Counters -->
+        <div class="hero-stats-grid reveal-on-scroll">
+            <article class="stat-pill-card">
+                <div class="stat-pill-number"><span class="counter-val" data-counter="33">33</span><span class="stat-unit">%</span></div>
+                <div class="stat-pill-label">1 in 3 Fields Degraded</div>
+                <div class="stat-pill-sub">Global lands losing natural fertility & health (FAO)</div>
+            </article>
+            <article class="stat-pill-card">
+                <div class="stat-pill-number"><span class="counter-val" data-counter="20">20</span><span class="stat-unit">%</span></div>
+                <div class="stat-pill-label">Food Yield Stolen by Toxins</div>
+                <div class="stat-pill-sub">Global agricultural output lost to soil contaminants (UNEP)</div>
+            </article>
+            <article class="stat-pill-card">
+                <div class="stat-pill-number"><span class="counter-val" data-counter="3.70" data-decimal="true">3.70</span><span class="stat-unit">Mt</span></div>
+                <div class="stat-pill-label">Pesticides Applied Yearly</div>
+                <div class="stat-pill-sub">Chemical residues piling up faster than soil can decompose them (FAOSTAT)</div>
+            </article>
+            <article class="stat-pill-card">
+                <div class="stat-pill-number"><span class="counter-val" data-counter="3.5" data-decimal="true">3.5</span><span class="stat-unit">M</span></div>
+                <div class="stat-pill-label">Silent Lead Fatalities / Yr</div>
+                <div class="stat-pill-sub">Cardiovascular deaths linked to environmental lead in soil & food (WHO)</div>
+            </article>
+        </div>
+
+        <!-- TYPING RESEARCH TICKER: VERIFIED DIGITAL RECORDS STREAM -->
+        <aside class="research-typing-bar reveal-on-scroll" aria-label="Verified Research Stream" style="margin: 3rem 0; background: transparent; border: none;">
+            <div class="typing-container" style="justify-content: center; width: 100%; display: flex;">
+                <span id="typing-text"></span><span class="typing-cursor"></span>
+            </div>
+        </aside>
+
+        <!-- ACTION LINKS -->
+        <div class="hero-actions-group reveal-on-scroll" style="margin-top: 1rem; justify-content: center;">
+            <a href="#why-soil-matters" class="btn btn-primary btn-lg">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 16v-4M12 8h.01"/>
+                </svg>
+                <span>Why Healthy Soil Matters</span>
+            </a>
+            <a href="#spot-pollution" class="btn btn-secondary btn-lg">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                </svg>
+                <span>How to Spot Pollution</span>
+            </a>
+            <a href="#risk-analyzer" class="btn btn-secondary btn-lg">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M10 2v7.31M14 2v7.31M8.5 2h7M14 9.3a6.5 6.5 0 1 1-4 0"/>
+                    <path d="M5.52 16h12.96"/>
+                </svg>
+                <span>Test Soil Risk Analyzer</span>
+            </a>
+            <a href="{{ url_for('report') }}" class="btn btn-accent-ghost btn-lg">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+                    <line x1="4" y1="22" x2="4" y2="15"/>
+                </svg>
+                <span>Report Observation</span>
+            </a>
+        </div>
+    </section>
 
     <!-- 2. AWARENESS PILLAR 1: WHY SOIL MATTERS -->
     <section class="section-container" id="why-soil-matters" aria-labelledby="matters-title">
@@ -207,31 +216,7 @@
         </div>
     </section>
 
-    <!-- 4. CONTINUOUS RESEARCH TICKER: VERIFIED DIGITAL RECORDS STREAM -->
-    <aside class="research-ticker-bar" aria-label="Verified Research Stream">
-        <div class="ticker-track">
-            <div class="ticker-content">
-                <span class="ticker-item"><span class="ticker-tag">FAOSTAT 2022</span> 3.70 Million Tonnes active pesticide ingredients applied worldwide</span>
-                <span class="ticker-item"><span class="ticker-tag">WHO / IHME</span> 3.5 Million global cardiovascular deaths attributed to lead exposure</span>
-                <span class="ticker-item"><span class="ticker-tag">CPCB INDIA</span> 128 Confirmed and 320 Probable contaminated hazardous sites tracked</span>
-                <span class="ticker-item"><span class="ticker-tag">FAO 2019</span> 12.5 Million Tonnes of plastics used in agricultural value chains yearly</span>
-                <span class="ticker-item"><span class="ticker-tag">NEERI STUDY</span> 14.1 mg/kg Lead in Yamuna floodplain spinach (nearly 6x FSSAI limit of 2.5 mg/kg)</span>
-                <span class="ticker-item"><span class="ticker-tag">RANIPET NGT</span> Hexavalent Chromium in groundwater hit 277.6 mg/L (5,550x WHO drinking limit)</span>
-                <span class="ticker-item"><span class="ticker-tag">ICAR / ICRIER</span> 73% of Indian agricultural soils deficient in Soil Organic Carbon (&lt;0.75%)</span>
-                <span class="ticker-item"><span class="ticker-tag">EU LUCAS</span> 21,684 topsoil records benchmark continental heavy metal baselines</span>
-            </div>
-            <div class="ticker-content" aria-hidden="true">
-                <span class="ticker-item"><span class="ticker-tag">FAOSTAT 2022</span> 3.70 Million Tonnes active pesticide ingredients applied worldwide</span>
-                <span class="ticker-item"><span class="ticker-tag">WHO / IHME</span> 3.5 Million global cardiovascular deaths attributed to lead exposure</span>
-                <span class="ticker-item"><span class="ticker-tag">CPCB INDIA</span> 128 Confirmed and 320 Probable contaminated hazardous sites tracked</span>
-                <span class="ticker-item"><span class="ticker-tag">FAO 2019</span> 12.5 Million Tonnes of plastics used in agricultural value chains yearly</span>
-                <span class="ticker-item"><span class="ticker-tag">NEERI STUDY</span> 14.1 mg/kg Lead in Yamuna floodplain spinach (nearly 6x FSSAI limit of 2.5 mg/kg)</span>
-                <span class="ticker-item"><span class="ticker-tag">RANIPET NGT</span> Hexavalent Chromium in groundwater hit 277.6 mg/L (5,550x WHO drinking limit)</span>
-                <span class="ticker-item"><span class="ticker-tag">ICAR / ICRIER</span> 73% of Indian agricultural soils deficient in Soil Organic Carbon (&lt;0.75%)</span>
-                <span class="ticker-item"><span class="ticker-tag">EU LUCAS</span> 21,684 topsoil records benchmark continental heavy metal baselines</span>
-            </div>
-        </div>
-    </aside>
+
 
     <!-- 5. INTERACTIVE MYTH VS FACT SECTION -->
     <section class="section-container" id="myths-facts" aria-labelledby="myths-title">
@@ -659,27 +644,40 @@
         </div>
 
         <div class="hotspots-explorer reveal-on-scroll">
-            <!-- Tabs Navigation -->
-            <div class="hotspots-nav" role="tablist" aria-label="Contaminated Sites Selector">
-                <button class="hotspot-tab active" data-hotspot-target="ranipet" role="tab" aria-selected="true">
-                    <span class="hotspot-tab-title">Ranipet (Tamil Nadu)</span>
-                    <span class="hotspot-tab-contam">Tannery Cr(VI) Plume</span>
+            <!-- Tabs Navigation Carousel with Controls -->
+            <div class="hotspots-nav-wrapper">
+                <button type="button" class="hotspot-arrow-btn prev-btn" aria-label="Previous documented hotspot">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
                 </button>
-                <button class="hotspot-tab" data-hotspot-target="yamuna" role="tab" aria-selected="false">
-                    <span class="hotspot-tab-title">Yamuna Floodplains (Delhi)</span>
-                    <span class="hotspot-tab-contam">Lead & Cadmium in Food</span>
-                </button>
-                <button class="hotspot-tab" data-hotspot-target="jajmau" role="tab" aria-selected="false">
-                    <span class="hotspot-tab-title">Jajmau Kanpur (UP)</span>
-                    <span class="hotspot-tab-contam">Tannery Sludge Disaster</span>
-                </button>
-                <button class="hotspot-tab" data-hotspot-target="bhopal" role="tab" aria-selected="false">
-                    <span class="hotspot-tab-title">Bhopal UCIL (MP)</span>
-                    <span class="hotspot-tab-contam">Pesticide Legacy Plume</span>
-                </button>
-                <button class="hotspot-tab" data-hotspot-target="sukinda" role="tab" aria-selected="false">
-                    <span class="hotspot-tab-title">Sukinda Valley (Odisha)</span>
-                    <span class="hotspot-tab-contam">Chromite Mining Runoff</span>
+                <div class="hotspots-nav" role="tablist" aria-label="Contaminated Sites Selector">
+                    <button class="hotspot-tab active" data-hotspot-target="ranipet" role="tab" aria-selected="true">
+                        <span class="hotspot-tab-title">Ranipet (Tamil Nadu)</span>
+                        <span class="hotspot-tab-contam">Tannery Cr(VI) Plume</span>
+                        <span class="hotspot-tab-progress" aria-hidden="true"></span>
+                    </button>
+                    <button class="hotspot-tab" data-hotspot-target="yamuna" role="tab" aria-selected="false">
+                        <span class="hotspot-tab-title">Yamuna Floodplains (Delhi)</span>
+                        <span class="hotspot-tab-contam">Lead & Cadmium in Food</span>
+                        <span class="hotspot-tab-progress" aria-hidden="true"></span>
+                    </button>
+                    <button class="hotspot-tab" data-hotspot-target="jajmau" role="tab" aria-selected="false">
+                        <span class="hotspot-tab-title">Jajmau Kanpur (UP)</span>
+                        <span class="hotspot-tab-contam">Tannery Sludge Disaster</span>
+                        <span class="hotspot-tab-progress" aria-hidden="true"></span>
+                    </button>
+                    <button class="hotspot-tab" data-hotspot-target="bhopal" role="tab" aria-selected="false">
+                        <span class="hotspot-tab-title">Bhopal UCIL (MP)</span>
+                        <span class="hotspot-tab-contam">Pesticide Legacy Plume</span>
+                        <span class="hotspot-tab-progress" aria-hidden="true"></span>
+                    </button>
+                    <button class="hotspot-tab" data-hotspot-target="sukinda" role="tab" aria-selected="false">
+                        <span class="hotspot-tab-title">Sukinda Valley (Odisha)</span>
+                        <span class="hotspot-tab-contam">Chromite Mining Runoff</span>
+                        <span class="hotspot-tab-progress" aria-hidden="true"></span>
+                    </button>
+                </div>
+                <button type="button" class="hotspot-arrow-btn next-btn" aria-label="Next documented hotspot">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
                 </button>
             </div>
 
@@ -690,7 +688,10 @@
                         <span class="dossier-location-tag" id="hotspot-location">Ranipet, Tamil Nadu, India</span>
                         <h3 class="dossier-title" id="hotspot-title">Ranipet TCCL Industrial Corridor</h3>
                     </div>
-                    <span class="dossier-status-pill" id="hotspot-status">Confirmed Contaminated Site (CPCB & NGT)</span>
+                    <div class="dossier-header-actions">
+                        <span class="dossier-index-badge"><span id="hotspot-current-num">1</span> of 5</span>
+                        <span class="dossier-status-pill" id="hotspot-status">Confirmed Contaminated Site (CPCB & NGT)</span>
+                    </div>
                 </div>
 
                 <div class="dossier-metrics-grid">
@@ -1433,56 +1434,10 @@
                     </a>
                 </div>
             </div>
+        </div> <!-- /reveal-on-scroll -->
+    </section> <!-- /authorities-registry-section -->
 
-            <!-- PLATFORM COLOPHON / FOOTER SIGNATURE -->
-            <footer class="platform-colophon">
-                <div class="colophon-top-row">
-                    <div class="colophon-brand">
-                        <div class="brand-line">
-                            <span class="brand-gem">&#9670;</span>
-                            <span class="brand-text">SOILTRACE</span>
-                        </div>
-                        <p class="brand-mission">
-                            Soil Pollution Awareness with Digital Environmental Records. Preserving the living pedosphere that sustains 95% of human caloric intake.
-                        </p>
-                    </div>
-                    <div class="colophon-nav-links">
-                        <div class="colophon-col">
-                            <h5>Explore Science</h5>
-                            <a href="#why-soil-matters">Living Superpowers</a>
-                            <a href="#myths-facts">Myths vs. Facts</a>
-                            <a href="#stratigraphy">Pedosphere Horizons</a>
-                            <a href="#bioaccumulation">Food-Chain Pathways</a>
-                        </div>
-                        <div class="colophon-col">
-                            <h5>Tools &amp; Records</h5>
-                            <a href="#risk-analyzer">Live Risk Engine</a>
-                            <a href="#area-simulator">Area Simulator</a>
-                            <a href="#hotspots-dossier">National Hotspots</a>
-                            <a href="#contaminant-registry">Periodic Contaminants</a>
-                        </div>
-                        <div class="colophon-col">
-                            <h5>Citizen Radar</h5>
-                            <a href="#spot-pollution">Field Warning Signs</a>
-                            <a href="#remediation-matrix">Regenerative Solutions</a>
-                            <a href="#citizen-faq">Frequently Asked Questions</a>
-                            <a href="{{ url_for('report') }}">Report Contamination</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="colophon-bottom-row">
-                    <p class="colophon-copyright">
-                        &copy; 2026 SoilTrace &bull; Open Scientific Records Initiative. Citations referenced from FAO, UNEP, MoEFCC, CPCB, European Commission ESDAC, WHO, NEERI, and ICAR under open-access educational guidelines.
-                    </p>
-                    <a href="#main-content" class="back-to-top-btn" aria-label="Back to top of page">
-                        <span>Back to Top</span>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
-                    </a>
-                </div>
-            </footer>
-        </div>
-    </section>
-
+    {% include "footer.html" %}
 </main>
 
 <!-- RIGHT-SIDE VERTICAL SCROLL TRACKER (SEAMLESS INTEGRATION) -->

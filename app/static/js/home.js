@@ -282,7 +282,8 @@
     };
 
     // --- DOM INITIALIZATION ---
-    document.addEventListener('DOMContentLoaded', function () {
+    function initHomepage() {
+        initTypingTicker();
         initScrollProgress();
         initNumberCounters();
         initRiskAnalyzer();
@@ -293,19 +294,104 @@
         initScrollAnimations();
         initSmoothAnchors();
         initSideScrollRail();
-    });
+    }
+
+    if (document.readyState !== 'loading') {
+        initHomepage();
+    } else {
+        document.addEventListener('DOMContentLoaded', initHomepage);
+    }
+
+    // 0. TYPING TICKER (Verified Records Stream)
+    function initTypingTicker() {
+        const textElement = document.getElementById('typing-text');
+        if (!textElement) return;
+
+        const TYPING_FACTS = [
+            { tag: "FAOSTAT 2022", text: " 3.70 Million Tonnes active pesticide ingredients applied worldwide" },
+            { tag: "WHO / IHME", text: " 3.5 Million global cardiovascular deaths attributed to lead exposure" },
+            { tag: "CPCB INDIA", text: " 128 Confirmed and 320 Probable contaminated hazardous sites tracked" },
+            { tag: "FAO 2019", text: " 12.5 Million Tonnes of plastics used in agricultural value chains yearly" },
+            { tag: "NEERI STUDY", text: " 14.1 mg/kg Lead in Yamuna floodplain spinach (nearly 6x FSSAI limit of 2.5 mg/kg)" },
+            { tag: "RANIPET NGT", text: " Hexavalent Chromium in groundwater hit 277.6 mg/L (5,550x WHO drinking limit)" },
+            { tag: "ICAR / ICRIER", text: " 73% of Indian agricultural soils deficient in Soil Organic Carbon (<0.75%)" },
+            { tag: "EU LUCAS", text: " 21,684 topsoil records benchmark continental heavy metal baselines" }
+        ];
+
+        let currentFactIndex = 0;
+        let currentCharIndex = 0;
+        let isDeleting = false;
+        let isPaused = false;
+
+        function type() {
+            if (isPaused) return;
+
+            const currentFact = TYPING_FACTS[currentFactIndex];
+            const tagHTML = `<span class="ticker-tag">${currentFact.tag}</span>`;
+            
+            if (isDeleting) {
+                currentCharIndex--;
+                textElement.innerHTML = tagHTML + currentFact.text.substring(0, Math.max(0, currentCharIndex));
+            } else {
+                currentCharIndex++;
+                textElement.innerHTML = tagHTML + currentFact.text.substring(0, currentCharIndex);
+            }
+
+            let typeSpeed = isDeleting ? 30 : 60;
+
+            if (!isDeleting && currentCharIndex === currentFact.text.length) {
+                isPaused = true;
+                setTimeout(() => {
+                    isPaused = false;
+                    isDeleting = true;
+                    type();
+                }, 3000);
+                return;
+            } else if (isDeleting && currentCharIndex === 0) {
+                isDeleting = false;
+                currentFactIndex = (currentFactIndex + 1) % TYPING_FACTS.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(type, typeSpeed);
+        }
+
+        // Start typing loop
+        setTimeout(type, 1000);
+    }
 
     // 1. SCROLL PROGRESS BAR
     function initScrollProgress() {
         const progressBar = document.getElementById('scroll-progress');
         if (!progressBar) return;
 
-        window.addEventListener('scroll', function () {
-            const scrollTop = window.scrollY || document.documentElement.scrollTop;
-            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        function updateProgress() {
+            const indexPage = document.querySelector('.index-page');
+            const hasIndexScroll = indexPage && (indexPage.scrollHeight > indexPage.clientHeight) &&
+                (window.getComputedStyle(indexPage).overflowY !== 'visible' && window.getComputedStyle(indexPage).overflowY !== 'hidden');
+
+            let scrollTop = 0;
+            let scrollHeight = 0;
+
+            if (hasIndexScroll) {
+                scrollTop = indexPage.scrollTop;
+                scrollHeight = indexPage.scrollHeight - indexPage.clientHeight;
+            } else {
+                scrollTop = window.scrollY || document.documentElement.scrollTop;
+                scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            }
+
             const scrollPercentage = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
             progressBar.style.width = `${Math.min(100, Math.max(0, scrollPercentage))}%`;
-        }, { passive: true });
+        }
+
+        window.addEventListener('scroll', updateProgress, { capture: true, passive: true });
+        window.addEventListener('resize', updateProgress, { passive: true });
+        const indexPage = document.querySelector('.index-page');
+        if (indexPage) {
+            indexPage.addEventListener('scroll', updateProgress, { passive: true });
+        }
+        updateProgress();
     }
 
     // 2. NUMBER ROLL-UP COUNTER ANIMATION
@@ -552,10 +638,17 @@
         });
     }
 
-    // 6. HOTSPOTS EXPLORER
+    // 6. HOTSPOTS EXPLORER: FAST AUTO-SCROLLING, PROGRESS PAUSE ON HOVER & IMMEDIATE SCROLL
     function initHotspotsExplorer() {
-        const hotspotButtons = document.querySelectorAll('[data-hotspot-target]');
-        if (!hotspotButtons.length) return;
+        const hotspotButtons = Array.from(document.querySelectorAll('[data-hotspot-target]'));
+        const dossierCard = document.querySelector('.hotspot-dossier-card');
+        const hotspotsNav = document.querySelector('.hotspots-nav');
+        const hotspotsExplorer = document.querySelector('.hotspots-explorer');
+        const prevBtn = document.querySelector('.hotspot-arrow-btn.prev-btn');
+        const nextBtn = document.querySelector('.hotspot-arrow-btn.next-btn');
+        const currentNumEl = document.getElementById('hotspot-current-num');
+
+        if (!hotspotButtons.length || !dossierCard) return;
 
         const titleEl = document.getElementById('hotspot-title');
         const locEl = document.getElementById('hotspot-location');
@@ -566,29 +659,179 @@
         const vectorEl = document.getElementById('hotspot-vector');
         const detailsEl = document.getElementById('hotspot-details');
 
-        hotspotButtons.forEach(btn => {
-            btn.addEventListener('click', function () {
-                const targetKey = this.getAttribute('data-hotspot-target');
-                const data = HOTSPOTS_DATA[targetKey];
-                if (!data) return;
+        // Fast progression: 3 seconds per hotspot item
+        const AUTO_INTERVAL = 3000;
+        // Pause delay after a user manually clicks a tab before resuming auto-scroll
+        const REPAUSE_DELAY = 6500;
 
-                hotspotButtons.forEach(b => {
-                    b.classList.remove('active');
-                    b.setAttribute('aria-selected', 'false');
+        let currentIndex = 0;
+        let autoTimer = null;
+        let repauseTimer = null;
+        let isManuallyPaused = false;
+        let isSectionVisible = true;
+
+        // Synchronize CSS animation duration
+        document.documentElement.style.setProperty('--hotspot-duration', `${AUTO_INTERVAL}ms`);
+
+        function resetAllProgressBars() {
+            hotspotButtons.forEach(btn => {
+                const prog = btn.querySelector('.hotspot-tab-progress');
+                if (prog) {
+                    prog.classList.remove('is-animating', 'is-paused');
+                    prog.style.width = '0%';
+                    prog.style.animation = 'none';
+                }
+            });
+        }
+
+        function startProgressBar(duration = AUTO_INTERVAL) {
+            resetAllProgressBars();
+            const activeBtn = hotspotButtons[currentIndex];
+            if (!activeBtn) return;
+            const prog = activeBtn.querySelector('.hotspot-tab-progress');
+            if (prog) {
+                void prog.offsetWidth; // Force CSS reflow to restart keyframe
+                prog.style.animation = `hotspotTabProgress ${duration}ms linear forwards`;
+                prog.classList.add('is-animating');
+            }
+        }
+
+        function stopAutoScroll() {
+            if (autoTimer) {
+                clearTimeout(autoTimer);
+                autoTimer = null;
+            }
+            resetAllProgressBars();
+        }
+
+        function startAutoScroll() {
+            if (autoTimer) clearTimeout(autoTimer);
+
+            if (isManuallyPaused || !isSectionVisible) return;
+
+            startProgressBar(AUTO_INTERVAL);
+
+            autoTimer = setTimeout(() => {
+                goToHotspot((currentIndex + 1) % hotspotButtons.length, 'next', false);
+            }, AUTO_INTERVAL);
+        }
+
+        function goToHotspot(index, direction = 'next', isManual = false) {
+            if (index < 0 || index >= hotspotButtons.length) return;
+            currentIndex = index;
+            const targetBtn = hotspotButtons[index];
+            const targetKey = targetBtn.getAttribute('data-hotspot-target');
+            const data = HOTSPOTS_DATA[targetKey];
+            if (!data) return;
+
+            // Update tab button states
+            hotspotButtons.forEach(b => {
+                b.classList.remove('active');
+                b.setAttribute('aria-selected', 'false');
+            });
+            targetBtn.classList.add('active');
+            targetBtn.setAttribute('aria-selected', 'true');
+
+            // Scroll tab bar so newly active tab is centered
+            if (hotspotsNav) {
+                const offset = targetBtn.offsetLeft - (hotspotsNav.clientWidth / 2) + (targetBtn.clientWidth / 2);
+                hotspotsNav.scrollTo({
+                    left: Math.max(0, offset),
+                    behavior: 'smooth'
                 });
-                this.classList.add('active');
-                this.setAttribute('aria-selected', 'true');
+            }
 
-                if (titleEl) titleEl.textContent = data.title;
-                if (locEl) locEl.textContent = data.location;
-                if (contamEl) contamEl.textContent = data.contaminant;
-                if (peakEl) peakEl.textContent = data.peakValue;
-                if (statusEl) statusEl.textContent = data.legalStatus;
-                if (costEl) costEl.textContent = data.cost;
-                if (vectorEl) vectorEl.textContent = data.vector;
-                if (detailsEl) detailsEl.textContent = data.details;
+            // Update dossier card content
+            if (titleEl) titleEl.textContent = data.title;
+            if (locEl) locEl.textContent = data.location;
+            if (contamEl) contamEl.textContent = data.contaminant;
+            if (peakEl) peakEl.textContent = data.peakValue;
+            if (statusEl) statusEl.textContent = data.legalStatus;
+            if (costEl) costEl.textContent = data.cost;
+            if (vectorEl) vectorEl.textContent = data.vector;
+            if (detailsEl) detailsEl.textContent = data.details;
+            if (currentNumEl) currentNumEl.textContent = (index + 1);
+
+            // Trigger quick right-to-left slide animation on dossier card
+            dossierCard.classList.remove('slide-right', 'slide-left');
+            void dossierCard.offsetWidth; // Force reflow
+            dossierCard.classList.add(direction === 'next' ? 'slide-right' : 'slide-left');
+
+            if (isManual) {
+                // User manual click: pause progression and repause after delay
+                stopAutoScroll();
+                isManuallyPaused = true;
+                if (repauseTimer) {
+                    clearTimeout(repauseTimer);
+                }
+                repauseTimer = setTimeout(() => {
+                    isManuallyPaused = false;
+                    startAutoScroll(AUTO_INTERVAL);
+                }, REPAUSE_DELAY);
+            } else {
+                startAutoScroll(AUTO_INTERVAL);
+            }
+        }
+
+        // Tab click handlers (manual selection)
+        hotspotButtons.forEach((btn, idx) => {
+            btn.addEventListener('click', function () {
+                const dir = idx >= currentIndex ? 'next' : 'prev';
+                goToHotspot(idx, dir, true);
             });
         });
+
+        // Prev & Next navigation buttons
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                const prevIndex = (currentIndex - 1 + hotspotButtons.length) % hotspotButtons.length;
+                goToHotspot(prevIndex, 'prev', true);
+            });
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                const nextIndex = (currentIndex + 1) % hotspotButtons.length;
+                goToHotspot(nextIndex, 'next', true);
+            });
+        }
+
+        // Hover handling removed by user request.
+
+        // Keyboard arrow navigation support
+        if (hotspotsNav) {
+            hotspotsNav.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    const nextIndex = (currentIndex + 1) % hotspotButtons.length;
+                    goToHotspot(nextIndex, 'next', true);
+                    hotspotButtons[nextIndex].focus();
+                } else if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    const prevIndex = (currentIndex - 1 + hotspotButtons.length) % hotspotButtons.length;
+                    goToHotspot(prevIndex, 'prev', true);
+                    hotspotButtons[prevIndex].focus();
+                }
+            });
+        }
+
+        // Section visibility detection: only auto-scroll when section is in viewport
+        const dossierSection = document.getElementById('hotspots-dossier');
+        if (dossierSection && 'IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    isSectionVisible = entry.isIntersecting;
+                    if (isSectionVisible && !isManuallyPaused) {
+                        startAutoScroll();
+                    } else if (!isSectionVisible) {
+                        stopAutoScroll();
+                    }
+                });
+            }, { threshold: 0.15 });
+            observer.observe(dossierSection);
+        } else {
+            startAutoScroll();
+        }
     }
 
     // 7. FAQ ACCORDION
@@ -636,12 +879,60 @@
         revealElements.forEach(el => observer.observe(el));
     }
 
-    // 9. SMOOTH ANCHOR NAVIGATION
+    // 9. SMOOTH ANCHOR NAVIGATION & BACK TO TOP
     function initSmoothAnchors() {
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        const scrollToTop = function (e) {
+            if (e) e.preventDefault();
+            const indexPage = document.querySelector('.index-page');
+            const hero = document.getElementById('hero');
+
+            if (indexPage) {
+                // Temporarily disable scroll snapping for smooth scroll to work reliably
+                indexPage.style.scrollSnapType = 'none';
+                indexPage.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+                
+                // Re-enable after scroll completes (approximate timeout)
+                setTimeout(() => {
+                    indexPage.style.scrollSnapType = '';
+                }, 800);
+            }
+            
+            if (hero && !indexPage) {
+                hero.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+            
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+
+            if (history.pushState) {
+                history.pushState(null, '', window.location.pathname);
+            }
+        };
+
+        // Explicit listeners for Back to Top buttons
+        document.querySelectorAll('.back-to-top-btn').forEach(btn => {
+            btn.addEventListener('click', scrollToTop);
+        });
+
+        document.querySelectorAll('a[href^="#"]:not(.rail-step)').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 const targetId = this.getAttribute('href').slice(1);
                 if (!targetId) return;
+
+                // If targeting main-content, hero, or top, smoothly scroll to top of scroll container and window
+                if (targetId === 'main-content' || targetId === 'hero' || targetId === 'top' || this.classList.contains('back-to-top-btn')) {
+                    scrollToTop(e);
+                    return;
+                }
+
                 const targetElem = document.getElementById(targetId);
                 if (targetElem) {
                     e.preventDefault();
@@ -649,6 +940,9 @@
                         behavior: 'smooth',
                         block: 'start'
                     });
+                    if (history.pushState) {
+                        history.pushState(null, '', '#' + targetId);
+                    }
                 }
             });
         });
@@ -671,16 +965,37 @@
 
         if (!targetSections.length) return;
 
+        function getScrollContainer() {
+            const indexPage = document.querySelector('.index-page');
+            if (indexPage) {
+                const style = window.getComputedStyle(indexPage);
+                if ((style.overflowY === 'auto' || style.overflowY === 'scroll') && (indexPage.scrollHeight > indexPage.clientHeight)) {
+                    return indexPage;
+                }
+            }
+            return window;
+        }
+
         let isTicking = false;
 
         function updateActiveSection() {
-            const scrollY = window.scrollY || document.documentElement.scrollTop;
             const viewportHeight = window.innerHeight;
-            const scrollBottom = scrollY + viewportHeight;
-            const docHeight = document.documentElement.scrollHeight;
+            // Active trigger line: around 38% down the viewport
+            const triggerLine = viewportHeight * 0.38;
 
-            // When scrolled near the very bottom, activate the final section
-            if (scrollBottom >= docHeight - 120) {
+            const scrollContainer = getScrollContainer();
+            let isAtBottom = false;
+
+            if (scrollContainer === window) {
+                const scrollY = window.scrollY || document.documentElement.scrollTop;
+                const docHeight = document.documentElement.scrollHeight;
+                isAtBottom = (scrollY + viewportHeight) >= (docHeight - 90);
+            } else {
+                isAtBottom = (scrollContainer.scrollTop + scrollContainer.clientHeight) >= (scrollContainer.scrollHeight - 90);
+            }
+
+            // Scrolled to bottom: activate final milestone
+            if (isAtBottom) {
                 railSteps.forEach(s => s.classList.remove('active'));
                 const lastItem = targetSections[targetSections.length - 1];
                 if (lastItem) lastItem.step.classList.add('active');
@@ -688,13 +1003,15 @@
                 return;
             }
 
-            // Mid-viewport trigger line (42% down the viewport)
-            const triggerLine = scrollY + (viewportHeight * 0.42);
+            // Find active section using getBoundingClientRect()
             let activeItem = null;
 
             for (let i = 0; i < targetSections.length; i++) {
                 const item = targetSections[i];
-                if (item.elem.offsetTop <= triggerLine) {
+                const rect = item.elem.getBoundingClientRect();
+
+                // Section top is at or above the trigger line
+                if (rect.top <= triggerLine) {
                     activeItem = item;
                 }
             }
@@ -707,14 +1024,65 @@
             isTicking = false;
         }
 
-        window.addEventListener('scroll', function () {
+        function onScroll() {
             if (!isTicking) {
                 window.requestAnimationFrame(updateActiveSection);
                 isTicking = true;
             }
-        }, { passive: true });
+        }
+
+        // Listen for scroll across window, document, and container
+        window.addEventListener('scroll', onScroll, { capture: true, passive: true });
+        window.addEventListener('resize', onScroll, { passive: true });
+
+        const indexPage = document.querySelector('.index-page');
+        if (indexPage) {
+            indexPage.addEventListener('scroll', onScroll, { passive: true });
+        }
+
+        // Click handler on rail step lines
+        railSteps.forEach(step => {
+            step.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('data-target') || (this.getAttribute('href') ? this.getAttribute('href').slice(1) : '');
+                if (!targetId) return;
+                const targetElem = document.getElementById(targetId);
+                if (!targetElem) return;
+
+                e.preventDefault();
+
+                // Immediately activate clicked step
+                railSteps.forEach(s => s.classList.remove('active'));
+                this.classList.add('active');
+
+                const headerOffset = 84;
+                const rect = targetElem.getBoundingClientRect();
+                const scrollContainer = getScrollContainer();
+
+                if (scrollContainer && scrollContainer !== window) {
+                    targetElem.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                } else {
+                    const targetScrollY = (window.scrollY || document.documentElement.scrollTop) + rect.top - headerOffset;
+                    window.scrollTo({
+                        top: targetScrollY,
+                        behavior: 'smooth'
+                    });
+                }
+
+                if (history.pushState) {
+                    history.pushState(null, '', '#' + targetId);
+                }
+            });
+        });
 
         // Initial check on load
         updateActiveSection();
+    }
+    
+    // Add fallback for :has() selector in CSS to prevent body scroll
+    if (document.querySelector('.index-page')) {
+        document.body.classList.add('index-page-body');
     }
 })();
