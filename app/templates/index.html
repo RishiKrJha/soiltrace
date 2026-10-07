@@ -1437,53 +1437,7 @@
         </div> <!-- /reveal-on-scroll -->
     </section> <!-- /authorities-registry-section -->
 
-    <!-- PLATFORM COLOPHON / FOOTER SIGNATURE -->
-    <footer class="platform-colophon" style="max-width: 1180px; margin: 0 auto; padding: 2rem 2rem 4rem 2rem;">
-                <div class="colophon-top-row">
-                    <div class="colophon-brand">
-                        <div class="brand-line">
-                            <span class="brand-gem">&#9670;</span>
-                            <span class="brand-text">SOILTRACE</span>
-                        </div>
-                        <p class="brand-mission">
-                            Soil Pollution Awareness with Digital Environmental Records. Preserving the living pedosphere that sustains 95% of human caloric intake.
-                        </p>
-                    </div>
-                    <div class="colophon-nav-links">
-                        <div class="colophon-col">
-                            <h5>Explore Science</h5>
-                            <a href="#why-soil-matters">Living Superpowers</a>
-                            <a href="#myths-facts">Myths vs. Facts</a>
-                            <a href="#stratigraphy">Pedosphere Horizons</a>
-                            <a href="#bioaccumulation">Food-Chain Pathways</a>
-                        </div>
-                        <div class="colophon-col">
-                            <h5>Tools &amp; Records</h5>
-                            <a href="#risk-analyzer">Live Risk Engine</a>
-                            <a href="#area-simulator">Area Simulator</a>
-                            <a href="#hotspots-dossier">National Hotspots</a>
-                            <a href="#contaminant-registry">Periodic Contaminants</a>
-                        </div>
-                        <div class="colophon-col">
-                            <h5>Citizen Radar</h5>
-                            <a href="#spot-pollution">Field Warning Signs</a>
-                            <a href="#remediation-matrix">Regenerative Solutions</a>
-                            <a href="#citizen-faq">Frequently Asked Questions</a>
-                            <a href="{{ url_for('report') }}">Report Contamination</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="colophon-bottom-row">
-                    <p class="colophon-copyright">
-                        &copy; 2026 SoilTrace &bull; Open Scientific Records Initiative. Citations referenced from FAO, UNEP, MoEFCC, CPCB, European Commission ESDAC, WHO, NEERI, and ICAR under open-access educational guidelines.
-                    </p>
-                    <a href="#main-content" class="back-to-top-btn" aria-label="Back to top of page">
-                        <span>Back to Top</span>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
-                    </a>
-                </div>
-            </footer>
-
+    {% include "footer.html" %}
 </main>
 
 <!-- RIGHT-SIDE VERTICAL SCROLL TRACKER (SEAMLESS INTEGRATION) -->

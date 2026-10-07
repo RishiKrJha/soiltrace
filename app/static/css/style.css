@@ -4205,3 +4205,16 @@ body:has(.index-page), body.index-page-body {
     justify-content: center;
     overflow-y: auto; /* Let tall sections scroll internally */
 }
+
+/* Global scroll snapping for footer */
+html {
+    scroll-snap-type: y proximity;
+}
+
+.platform-colophon {
+    min-height: calc(100vh - 78px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    scroll-snap-align: end;
+}
