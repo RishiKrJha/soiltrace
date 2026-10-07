@@ -282,7 +282,7 @@
     };
 
     // --- DOM INITIALIZATION ---
-    document.addEventListener('DOMContentLoaded', function () {
+    function initHomepage() {
         initScrollProgress();
         initNumberCounters();
         initRiskAnalyzer();
@@ -293,19 +293,46 @@
         initScrollAnimations();
         initSmoothAnchors();
         initSideScrollRail();
-    });
+    }
+
+    if (document.readyState !== 'loading') {
+        initHomepage();
+    } else {
+        document.addEventListener('DOMContentLoaded', initHomepage);
+    }
 
     // 1. SCROLL PROGRESS BAR
     function initScrollProgress() {
         const progressBar = document.getElementById('scroll-progress');
         if (!progressBar) return;
 
-        window.addEventListener('scroll', function () {
-            const scrollTop = window.scrollY || document.documentElement.scrollTop;
-            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        function updateProgress() {
+            const indexPage = document.querySelector('.index-page');
+            const hasIndexScroll = indexPage && (indexPage.scrollHeight > indexPage.clientHeight) &&
+                (window.getComputedStyle(indexPage).overflowY !== 'visible' && window.getComputedStyle(indexPage).overflowY !== 'hidden');
+
+            let scrollTop = 0;
+            let scrollHeight = 0;
+
+            if (hasIndexScroll) {
+                scrollTop = indexPage.scrollTop;
+                scrollHeight = indexPage.scrollHeight - indexPage.clientHeight;
+            } else {
+                scrollTop = window.scrollY || document.documentElement.scrollTop;
+                scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            }
+
             const scrollPercentage = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
             progressBar.style.width = `${Math.min(100, Math.max(0, scrollPercentage))}%`;
-        }, { passive: true });
+        }
+
+        window.addEventListener('scroll', updateProgress, { capture: true, passive: true });
+        window.addEventListener('resize', updateProgress, { passive: true });
+        const indexPage = document.querySelector('.index-page');
+        if (indexPage) {
+            indexPage.addEventListener('scroll', updateProgress, { passive: true });
+        }
+        updateProgress();
     }
 
     // 2. NUMBER ROLL-UP COUNTER ANIMATION
@@ -638,7 +665,7 @@
 
     // 9. SMOOTH ANCHOR NAVIGATION
     function initSmoothAnchors() {
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        document.querySelectorAll('a[href^="#"]:not(.rail-step)').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 const targetId = this.getAttribute('href').slice(1);
                 if (!targetId) return;
@@ -649,6 +676,9 @@
                         behavior: 'smooth',
                         block: 'start'
                     });
+                    if (history.pushState) {
+                        history.pushState(null, '', '#' + targetId);
+                    }
                 }
             });
         });
@@ -671,16 +701,37 @@
 
         if (!targetSections.length) return;
 
+        function getScrollContainer() {
+            const indexPage = document.querySelector('.index-page');
+            if (indexPage) {
+                const style = window.getComputedStyle(indexPage);
+                if ((style.overflowY === 'auto' || style.overflowY === 'scroll') && (indexPage.scrollHeight > indexPage.clientHeight)) {
+                    return indexPage;
+                }
+            }
+            return window;
+        }
+
         let isTicking = false;
 
         function updateActiveSection() {
-            const scrollY = window.scrollY || document.documentElement.scrollTop;
             const viewportHeight = window.innerHeight;
-            const scrollBottom = scrollY + viewportHeight;
-            const docHeight = document.documentElement.scrollHeight;
+            // Active trigger line: around 38% down the viewport
+            const triggerLine = viewportHeight * 0.38;
 
-            // When scrolled near the very bottom, activate the final section
-            if (scrollBottom >= docHeight - 120) {
+            const scrollContainer = getScrollContainer();
+            let isAtBottom = false;
+
+            if (scrollContainer === window) {
+                const scrollY = window.scrollY || document.documentElement.scrollTop;
+                const docHeight = document.documentElement.scrollHeight;
+                isAtBottom = (scrollY + viewportHeight) >= (docHeight - 90);
+            } else {
+                isAtBottom = (scrollContainer.scrollTop + scrollContainer.clientHeight) >= (scrollContainer.scrollHeight - 90);
+            }
+
+            // Scrolled to bottom: activate final milestone
+            if (isAtBottom) {
                 railSteps.forEach(s => s.classList.remove('active'));
                 const lastItem = targetSections[targetSections.length - 1];
                 if (lastItem) lastItem.step.classList.add('active');
@@ -688,13 +739,15 @@
                 return;
             }
 
-            // Mid-viewport trigger line (42% down the viewport)
-            const triggerLine = scrollY + (viewportHeight * 0.42);
+            // Find active section using getBoundingClientRect()
             let activeItem = null;
 
             for (let i = 0; i < targetSections.length; i++) {
                 const item = targetSections[i];
-                if (item.elem.offsetTop <= triggerLine) {
+                const rect = item.elem.getBoundingClientRect();
+
+                // Section top is at or above the trigger line
+                if (rect.top <= triggerLine) {
                     activeItem = item;
                 }
             }
@@ -707,12 +760,58 @@
             isTicking = false;
         }
 
-        window.addEventListener('scroll', function () {
+        function onScroll() {
             if (!isTicking) {
                 window.requestAnimationFrame(updateActiveSection);
                 isTicking = true;
             }
-        }, { passive: true });
+        }
+
+        // Listen for scroll across window, document, and container
+        window.addEventListener('scroll', onScroll, { capture: true, passive: true });
+        window.addEventListener('resize', onScroll, { passive: true });
+
+        const indexPage = document.querySelector('.index-page');
+        if (indexPage) {
+            indexPage.addEventListener('scroll', onScroll, { passive: true });
+        }
+
+        // Click handler on rail step lines
+        railSteps.forEach(step => {
+            step.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('data-target') || (this.getAttribute('href') ? this.getAttribute('href').slice(1) : '');
+                if (!targetId) return;
+                const targetElem = document.getElementById(targetId);
+                if (!targetElem) return;
+
+                e.preventDefault();
+
+                // Immediately activate clicked step
+                railSteps.forEach(s => s.classList.remove('active'));
+                this.classList.add('active');
+
+                const headerOffset = 84;
+                const rect = targetElem.getBoundingClientRect();
+                const scrollContainer = getScrollContainer();
+
+                if (scrollContainer && scrollContainer !== window) {
+                    targetElem.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                } else {
+                    const targetScrollY = (window.scrollY || document.documentElement.scrollTop) + rect.top - headerOffset;
+                    window.scrollTo({
+                        top: targetScrollY,
+                        behavior: 'smooth'
+                    });
+                }
+
+                if (history.pushState) {
+                    history.pushState(null, '', '#' + targetId);
+                }
+            });
+        });
 
         // Initial check on load
         updateActiveSection();

@@ -1262,7 +1262,7 @@ body:has(.home-page-master) .navbar-toggler span {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    padding: 0.35rem 0.25rem;
+    padding: 0.4rem 0.35rem;
     text-decoration: none;
     cursor: pointer;
     background: transparent;
@@ -1271,30 +1271,32 @@ body:has(.home-page-master) .navbar-toggler span {
 /* The Horizontal Line / Dash */
 .rail-bar {
     display: block;
-    width: 14px;
-    height: 2px;
-    border-radius: 2px;
-    background: rgba(15, 23, 42, 0.16);
+    width: 16px;
+    height: 3px;
+    border-radius: 3px;
+    background: rgba(15, 23, 42, 0.22);
     transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
-                background-color 0.25s ease;
+                background-color 0.25s ease,
+                box-shadow 0.25s ease;
 }
 
 /* Hover: Subtle lengthening */
 .rail-step:hover .rail-bar {
-    width: 20px;
-    background: rgba(245, 158, 11, 0.65);
+    width: 24px;
+    background: #f59e0b;
 }
 
-/* Active State: Clean, quiet elongation without aggressive glow */
+/* Active State: Clean, prominent elongation with active color and soft glow */
 .rail-step.active .rail-bar {
-    width: 24px;
+    width: 32px;
     background: #0284c7;
+    box-shadow: 0 0 10px rgba(2, 132, 199, 0.4);
 }
 
 /* Subtle, unobtrusive label on hover only */
 .rail-tooltip {
     position: absolute;
-    right: calc(100% + 10px);
+    right: calc(100% + 12px);
     top: 50%;
     transform: translateY(-50%) translateX(6px);
     opacity: 0;
@@ -1302,12 +1304,13 @@ body:has(.home-page-master) .navbar-toggler span {
     pointer-events: none;
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
-    padding: 0.25rem 0.55rem;
-    background: rgba(15, 23, 42, 0.9);
-    border: 1px solid rgba(15, 23, 42, 0.08);
+    gap: 0.45rem;
+    padding: 0.3rem 0.65rem;
+    background: rgba(15, 23, 42, 0.94);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 6px;
     white-space: nowrap;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
     transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
 }
 
@@ -1320,16 +1323,16 @@ body:has(.home-page-master) .navbar-toggler span {
 
 .rail-step-num {
     font-family: monospace;
-    font-size: 0.65rem;
-    font-weight: 600;
-    color: #0284c7;
-    opacity: 0.85;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #38bdf8;
+    opacity: 0.95;
 }
 
 .rail-step-title {
-    font-size: 0.72rem;
-    font-weight: 500;
-    color: #1e293b;
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: #f8fafc;
     letter-spacing: 0.01em;
 }
 
@@ -3892,6 +3895,7 @@ body:has(.index-page) {
     overflow-y: auto;
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
+    overscroll-behavior-y: contain;
 }
 
 .index-page > * {
