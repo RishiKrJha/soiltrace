@@ -1,16 +1,16 @@
 :root {
-    --primary-color: #ffffff;
-    --primary-hover: #102d26;
+    --primary-color: #f8fafc;
+    --primary-hover: #38bdf8;
     --accent-color: #b4532f;
     --accent-hover: #963f23;
-    --text-color: #1a2e26;
-    --text-light: #5f7067;
-    --bg-color: #fdfcf7;
-    --border-color: #dfe5de;
-    --border-light: rgba(23, 63, 53, 0.09);
-    --shadow-sm: 0 1px 3px rgba(23, 63, 53, 0.05);
-    --shadow: 0 4px 16px rgba(23, 63, 53, 0.07);
-    --shadow-hover: 0 12px 28px rgba(23, 63, 53, 0.12);
+    --text-color: #f8fafc;
+    --text-light: #94a3b8;
+    --bg-color: #020617;
+    --border-color: rgba(255, 255, 255, 0.08);
+    --border-light: rgba(255, 255, 255, 0.05);
+    --shadow-sm: 0 1px 3px rgba(30, 41, 59, 0.05);
+    --shadow: 0 4px 16px rgba(30, 41, 59, 0.07);
+    --shadow-hover: 0 12px 28px rgba(30, 41, 59, 0.12);
     --font-heading: 'Newsreader', Georgia, 'Times New Roman', serif;
     --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
 }
@@ -62,13 +62,13 @@ body {
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border-light);
-    box-shadow: 0 1px 3px rgba(23, 63, 53, 0.03), 0 4px 20px rgba(23, 63, 53, 0.03);
+    box-shadow: 0 1px 3px rgba(30, 41, 59, 0.03), 0 4px 20px rgba(30, 41, 59, 0.03);
     transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 /* Home Page Header Adaptation */
 body:has(.home-page-master) .site-header {
-    background: rgba(7, 21, 17, 0.88);
+    background: rgba(2, 6, 23, 0.88);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
 }
@@ -78,23 +78,23 @@ body:has(.home-page-master) .brand-name {
 }
 
 body:has(.home-page-master) .brand-sub {
-    color: #34d399;
+    color: #38bdf8;
 }
 
 body:has(.home-page-master) .nav-link {
-    color: #b5ccc1;
+    color: #cbd5e1;
 }
 
 body:has(.home-page-master) .nav-link:hover,
 body:has(.home-page-master) .nav-link.active {
-    color: #34d399;
-    background: rgba(52, 211, 153, 0.12);
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.12);
 }
 
 body:has(.home-page-master) .nav-pill-badge {
-    background: rgba(52, 211, 153, 0.2);
-    color: #34d399;
-    border: 1px solid rgba(52, 211, 153, 0.35);
+    background: rgba(56, 189, 248, 0.2);
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.35);
 }
 
 body:has(.home-page-master) .navbar-toggler span {
@@ -212,13 +212,13 @@ body:has(.home-page-master) .navbar-toggler span {
 
 .nav-link:hover {
     color: var(--primary-color);
-    background-color: rgba(23, 63, 53, 0.06);
+    background-color: rgba(30, 41, 59, 0.06);
 }
 
 .nav-link.active {
     color: var(--primary-color);
-    background-color: #e8eee8;
-    box-shadow: inset 0 0 0 1px rgba(23, 63, 53, 0.12);
+    background-color: #f1f5f9;
+    box-shadow: inset 0 0 0 1px rgba(30, 41, 59, 0.12);
 }
 
 /* Live pill badge next to Dashboard */
@@ -231,7 +231,7 @@ body:has(.home-page-master) .navbar-toggler span {
     letter-spacing: 0.05em;
     text-transform: uppercase;
     color: var(--primary-color);
-    background: #d8e6da;
+    background: #e2e8f0;
     border-radius: 20px;
     line-height: 1;
 }
@@ -292,7 +292,7 @@ body:has(.home-page-master) .navbar-toggler span {
 .navbar-toggler {
     display: none;
     background: transparent;
-    border: 1px solid rgba(23, 63, 53, 0.18);
+    border: 1px solid rgba(30, 41, 59, 0.18);
     border-radius: 8px;
     cursor: pointer;
     padding: 0.5rem;
@@ -305,8 +305,8 @@ body:has(.home-page-master) .navbar-toggler span {
 }
 
 .navbar-toggler:hover {
-    background-color: rgba(23, 63, 53, 0.05);
-    border-color: rgba(23, 63, 53, 0.32);
+    background-color: rgba(30, 41, 59, 0.05);
+    border-color: rgba(30, 41, 59, 0.32);
 }
 
 .navbar-toggler span {
@@ -343,7 +343,7 @@ body:has(.home-page-master) .navbar-toggler span {
         right: 0;
         background: #fdfcf7;
         border-bottom: 1px solid var(--border-light);
-        box-shadow: 0 16px 36px rgba(23, 63, 53, 0.1);
+        box-shadow: 0 16px 36px rgba(30, 41, 59, 0.1);
         padding: 1.25rem 1.25rem 1.5rem;
         display: none;
         animation: navSlideDown 0.22s ease-out forwards;
@@ -376,7 +376,7 @@ body:has(.home-page-master) .navbar-toggler span {
         margin-left: 0;
         margin-top: 0.5rem;
         padding-top: 0.75rem;
-        border-top: 1px solid rgba(23, 63, 53, 0.08);
+        border-top: 1px solid rgba(30, 41, 59, 0.08);
     }
 
     .nav-link-cta {
@@ -421,10 +421,10 @@ body:has(.home-page-master) .navbar-toggler span {
 }
 
 .flash-message.success {
-    background: #f0f7f2;
-    border-color: #d1e4d5;
-    border-left-color: #327050;
-    color: #173f35;
+    background: #f8fafc;
+    border-color: #e2e8f0;
+    border-left-color: #475569;
+    color: #1e293b;
 }
 
 .flash-message.info {
@@ -446,10 +446,10 @@ body:has(.home-page-master) .navbar-toggler span {
     left: 0;
     height: 3px;
     width: 0%;
-    background: linear-gradient(90deg, #34d399 0%, #10b981 50%, #f59e0b 80%, #cf5b32 100%);
+    background: linear-gradient(90deg, #38bdf8 0%, #0ea5e9 50%, #f59e0b 80%, #cf5b32 100%);
     z-index: 99999;
     transition: width 0.1s ease-out;
-    box-shadow: 0 0 10px rgba(52, 211, 153, 0.7);
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.7);
 }
 
 /* Ambient Aurora Glow Orbs */
@@ -473,7 +473,7 @@ body:has(.home-page-master) .navbar-toggler span {
 .orb-1 {
     width: 550px;
     height: 550px;
-    background: #34d399;
+    background: #38bdf8;
     top: -100px;
     left: 15%;
 }
@@ -508,15 +508,15 @@ body:has(.home-page-master) .navbar-toggler span {
     color-scheme: dark;
     position: relative;
     min-height: calc(100vh - 78px);
-    background: radial-gradient(circle at 50% 0%, #15392e 0%, #0c201a 45%, #071511 100%);
-    color: #e5ede8;
+    background: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 45%, #020617 100%);
+    color: #f8fafc;
     overflow-x: hidden;
     z-index: 1;
 }
 
 /* Glassmorphic Panel Primitive */
 .glass-panel {
-    background: rgba(18, 48, 38, 0.65);
+    background: rgba(30, 41, 59, 0.65);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.09);
@@ -526,7 +526,7 @@ body:has(.home-page-master) .navbar-toggler span {
 }
 
 .glass-panel:hover {
-    border-color: rgba(74, 222, 128, 0.25);
+    border-color: rgba(56, 189, 248, 0.25);
     box-shadow: 0 20px 44px rgba(0, 0, 0, 0.35);
 }
 
@@ -567,7 +567,7 @@ body:has(.home-page-master) .navbar-toggler span {
 
 .btn-secondary {
     background: rgba(255, 255, 255, 0.08);
-    color: #e5ede8;
+    color: #f8fafc;
     border: 1px solid rgba(255, 255, 255, 0.16);
     backdrop-filter: blur(8px);
 }
@@ -581,15 +581,15 @@ body:has(.home-page-master) .navbar-toggler span {
 
 .btn-accent-ghost {
     background: transparent;
-    color: #34d399;
-    border: 1px solid rgba(52, 211, 153, 0.35);
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.35);
 }
 
 .btn-accent-ghost:hover {
-    background: rgba(52, 211, 153, 0.12);
-    border-color: #34d399;
+    background: rgba(56, 189, 248, 0.12);
+    border-color: #38bdf8;
     transform: translateY(-2px);
-    color: #6ee7b7;
+    color: #7dd3fc;
 }
 
 /* 1. Hero Section */
@@ -597,7 +597,7 @@ body:has(.home-page-master) .navbar-toggler span {
     position: relative;
     padding: 6.5rem 2rem 5rem;
     text-align: center;
-    background: radial-gradient(ellipse at 50% 20%, rgba(52, 211, 153, 0.12) 0%, transparent 70%);
+    background: radial-gradient(ellipse at 50% 20%, rgba(56, 189, 248, 0.12) 0%, transparent 70%);
 }
 
 .hero-container {
@@ -610,12 +610,12 @@ body:has(.home-page-master) .navbar-toggler span {
     align-items: center;
     gap: 0.65rem;
     padding: 0.45rem 1.15rem;
-    background: rgba(20, 56, 44, 0.85);
-    border: 1px solid rgba(52, 211, 153, 0.28);
+    background: rgba(30, 41, 59, 0.85);
+    border: 1px solid rgba(56, 189, 248, 0.28);
     border-radius: 999px;
     font-size: 0.85rem;
     font-weight: 600;
-    color: #a7f3d0;
+    color: #bae6fd;
     margin-bottom: 2rem;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
 }
@@ -624,8 +624,8 @@ body:has(.home-page-master) .navbar-toggler span {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: #34d399;
-    box-shadow: 0 0 10px #34d399;
+    background: #38bdf8;
+    box-shadow: 0 0 10px #38bdf8;
     animation: pulseGlow 2s infinite ease-in-out;
 }
 
@@ -640,12 +640,12 @@ body:has(.home-page-master) .navbar-toggler span {
     font-weight: 500;
     line-height: 1.05;
     letter-spacing: -0.03em;
-    color: #f7faf8;
+    color: #f8fafc;
     margin-bottom: 1.6rem;
 }
 
 .hero-headline-accent {
-    background: linear-gradient(135deg, #a7f3d0 0%, #34d399 45%, #e07a5f 100%);
+    background: linear-gradient(135deg, #bae6fd 0%, #38bdf8 45%, #e07a5f 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -656,11 +656,11 @@ body:has(.home-page-master) .navbar-toggler span {
     margin: 0 auto 2.75rem;
     font-size: clamp(1.05rem, 1.8vw, 1.25rem);
     line-height: 1.7;
-    color: #a3bfb2;
+    color: #94a3b8;
 }
 
 .hero-lead strong {
-    color: #f1f7f3;
+    color: #f8fafc;
 }
 
 .hero-actions-group {
@@ -680,7 +680,7 @@ body:has(.home-page-master) .navbar-toggler span {
 
 .stat-pill-card {
     padding: 1.6rem 1.2rem;
-    background: rgba(14, 38, 30, 0.7);
+    background: rgba(15, 23, 42, 0.7);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 12px;
     text-align: left;
@@ -689,7 +689,7 @@ body:has(.home-page-master) .navbar-toggler span {
 
 .stat-pill-card:hover {
     transform: translateY(-3px);
-    border-color: rgba(52, 211, 153, 0.3);
+    border-color: rgba(56, 189, 248, 0.3);
 }
 
 .stat-pill-number {
@@ -703,20 +703,20 @@ body:has(.home-page-master) .navbar-toggler span {
 
 .stat-unit {
     font-size: 1.35rem;
-    color: #34d399;
+    color: #38bdf8;
     margin-left: 0.15rem;
 }
 
 .stat-pill-label {
     font-size: 0.92rem;
     font-weight: 700;
-    color: #e5ede8;
+    color: #f8fafc;
     margin-bottom: 0.25rem;
 }
 
 .stat-pill-sub {
     font-size: 0.75rem;
-    color: #7d968b;
+    color: #94a3b8;
     line-height: 1.35;
 }
 
@@ -724,7 +724,7 @@ body:has(.home-page-master) .navbar-toggler span {
 .research-ticker-bar {
     width: 100%;
     overflow: hidden;
-    background: #06120e;
+    background: #020617;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     padding: 0.85rem 0;
@@ -753,18 +753,18 @@ body:has(.home-page-master) .navbar-toggler span {
     align-items: center;
     gap: 0.65rem;
     font-size: 0.86rem;
-    color: #b5ccc1;
+    color: #cbd5e1;
     margin-right: 3.5rem;
 }
 
 .ticker-tag {
     padding: 0.2rem 0.55rem;
-    background: rgba(52, 211, 153, 0.15);
-    border: 1px solid rgba(52, 211, 153, 0.35);
+    background: rgba(56, 189, 248, 0.15);
+    border: 1px solid rgba(56, 189, 248, 0.35);
     border-radius: 4px;
     font-size: 0.68rem;
     font-weight: 800;
-    color: #34d399;
+    color: #38bdf8;
     letter-spacing: 0.04em;
 }
 
@@ -792,7 +792,7 @@ body:has(.home-page-master) .navbar-toggler span {
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: #34d399;
+    color: #38bdf8;
     margin-bottom: 0.85rem;
 }
 
@@ -802,14 +802,14 @@ body:has(.home-page-master) .navbar-toggler span {
     font-weight: 500;
     letter-spacing: -0.02em;
     line-height: 1.15;
-    color: #f7faf8;
+    color: #f8fafc;
     margin-bottom: 1.1rem;
 }
 
 .section-lead {
     font-size: 1.05rem;
     line-height: 1.65;
-    color: #9ab4a7;
+    color: #94a3b8;
 }
 
 /* ==========================================================================
@@ -837,9 +837,9 @@ body:has(.home-page-master) .navbar-toggler span {
     width: 52px;
     height: 52px;
     border-radius: 12px;
-    background: rgba(52, 211, 153, 0.15);
-    border: 1px solid rgba(52, 211, 153, 0.35);
-    color: #34d399;
+    background: rgba(56, 189, 248, 0.15);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    color: #38bdf8;
     margin-bottom: 1.25rem;
 }
 
@@ -854,7 +854,7 @@ body:has(.home-page-master) .navbar-toggler span {
 .superpower-card p {
     font-size: 0.88rem;
     line-height: 1.6;
-    color: #b5ccc1;
+    color: #cbd5e1;
     margin-bottom: 1.25rem;
     flex-grow: 1;
 }
@@ -864,12 +864,12 @@ body:has(.home-page-master) .navbar-toggler span {
     align-items: center;
     gap: 0.45rem;
     padding: 0.4rem 0.85rem;
-    background: rgba(14, 38, 30, 0.7);
-    border: 1px solid rgba(52, 211, 153, 0.25);
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid rgba(56, 189, 248, 0.25);
     border-radius: 6px;
     font-size: 0.75rem;
     font-weight: 700;
-    color: #a7f3d0;
+    color: #bae6fd;
 }
 
 /* Living Soil vs Degraded Dirt Contrast */
@@ -878,7 +878,7 @@ body:has(.home-page-master) .navbar-toggler span {
     grid-template-columns: 1fr 1fr;
     gap: 1.75rem;
     padding: 2.25rem;
-    background: rgba(10, 28, 22, 0.75);
+    background: rgba(2, 6, 23, 0.75);
     border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     margin-top: 2rem;
@@ -890,8 +890,8 @@ body:has(.home-page-master) .navbar-toggler span {
 }
 
 .contrast-col.col-healthy {
-    background: rgba(52, 211, 153, 0.08);
-    border: 1px solid rgba(52, 211, 153, 0.3);
+    background: rgba(56, 189, 248, 0.08);
+    border: 1px solid rgba(56, 189, 248, 0.3);
 }
 
 .contrast-col.col-degraded {
@@ -908,7 +908,7 @@ body:has(.home-page-master) .navbar-toggler span {
     margin-bottom: 1rem;
 }
 
-.col-healthy h4 { color: #34d399; }
+.col-healthy h4 { color: #38bdf8; }
 .col-degraded h4 { color: #f87171; }
 
 .contrast-list {
@@ -917,7 +917,7 @@ body:has(.home-page-master) .navbar-toggler span {
     flex-direction: column;
     gap: 0.75rem;
     font-size: 0.88rem;
-    color: #cbdad2;
+    color: #cbd5e1;
 }
 
 .contrast-list li {
@@ -965,18 +965,18 @@ body:has(.home-page-master) .navbar-toggler span {
 .culprit-card p {
     font-size: 0.88rem;
     line-height: 1.6;
-    color: #b5ccc1;
+    color: #cbd5e1;
     margin-bottom: 1.25rem;
     flex-grow: 1;
 }
 
 .culprit-stat-pill {
     padding: 0.65rem 0.85rem;
-    background: rgba(7, 21, 17, 0.6);
+    background: rgba(2, 6, 23, 0.6);
     border-radius: 6px;
     font-size: 0.78rem;
-    color: #d1e2da;
-    border-left: 3px solid #34d399;
+    color: #f1f5f9;
+    border-left: 3px solid #38bdf8;
 }
 
 .culprit-stat-pill strong {
@@ -1015,7 +1015,7 @@ body:has(.home-page-master) .navbar-toggler span {
 .warning-card p {
     font-size: 0.88rem;
     line-height: 1.6;
-    color: #b5ccc1;
+    color: #cbd5e1;
 }
 
 .warning-card .warning-hint {
@@ -1046,12 +1046,12 @@ body:has(.home-page-master) .navbar-toggler span {
     width: 38px;
     height: 38px;
     border-radius: 50%;
-    background: rgba(52, 211, 153, 0.15);
-    border: 1px solid #34d399;
+    background: rgba(56, 189, 248, 0.15);
+    border: 1px solid #38bdf8;
     font-family: var(--font-heading);
     font-size: 1.1rem;
     font-weight: 700;
-    color: #34d399;
+    color: #38bdf8;
     margin-bottom: 1.25rem;
 }
 
@@ -1065,7 +1065,7 @@ body:has(.home-page-master) .navbar-toggler span {
 .action-card p {
     font-size: 0.88rem;
     line-height: 1.6;
-    color: #b5ccc1;
+    color: #cbd5e1;
     flex-grow: 1;
 }
 
@@ -1073,8 +1073,8 @@ body:has(.home-page-master) .navbar-toggler span {
 .plain-english-callout {
     margin-top: 1.75rem;
     padding: 1.25rem 1.5rem;
-    background: rgba(52, 211, 153, 0.08);
-    border: 1px solid rgba(52, 211, 153, 0.25);
+    background: rgba(56, 189, 248, 0.08);
+    border: 1px solid rgba(56, 189, 248, 0.25);
     border-radius: 10px;
     display: flex;
     gap: 1rem;
@@ -1085,7 +1085,7 @@ body:has(.home-page-master) .navbar-toggler span {
     flex-shrink: 0;
     width: 24px;
     height: 24px;
-    color: #34d399;
+    color: #38bdf8;
     margin-top: 2px;
 }
 
@@ -1094,14 +1094,14 @@ body:has(.home-page-master) .navbar-toggler span {
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    color: #34d399;
+    color: #38bdf8;
     margin-bottom: 0.25rem;
 }
 
 .callout-text p {
     font-size: 0.88rem;
     line-height: 1.55;
-    color: #d1e2da;
+    color: #f1f5f9;
 }
 
 /* Myth vs Fact Section */
@@ -1155,10 +1155,10 @@ body:has(.home-page-master) .navbar-toggler span {
     align-items: center;
     gap: 0.45rem;
     padding: 0.35rem 0.8rem;
-    background: rgba(52, 211, 153, 0.15);
-    border: 1px solid rgba(52, 211, 153, 0.35);
+    background: rgba(56, 189, 248, 0.15);
+    border: 1px solid rgba(56, 189, 248, 0.35);
     border-radius: 999px;
-    color: #34d399;
+    color: #38bdf8;
     font-size: 0.76rem;
     font-weight: 800;
     text-transform: uppercase;
@@ -1169,7 +1169,7 @@ body:has(.home-page-master) .navbar-toggler span {
 .fact-explanation {
     font-size: 0.92rem;
     line-height: 1.65;
-    color: #b5ccc1;
+    color: #cbd5e1;
 }
 
 /* Citizen Area Simulator */
@@ -1186,7 +1186,7 @@ body:has(.home-page-master) .navbar-toggler span {
 
 .simulator-result-card {
     padding: 2.5rem;
-    border-left: 4px solid #34d399;
+    border-left: 4px solid #38bdf8;
     transition: all 0.25s ease;
 }
 
@@ -1194,12 +1194,12 @@ body:has(.home-page-master) .navbar-toggler span {
     display: inline-block;
     padding: 0.35rem 0.85rem;
     border-radius: 999px;
-    background: rgba(52, 211, 153, 0.15);
-    border: 1px solid rgba(52, 211, 153, 0.35);
+    background: rgba(56, 189, 248, 0.15);
+    border: 1px solid rgba(56, 189, 248, 0.35);
     font-size: 0.76rem;
     font-weight: 800;
     text-transform: uppercase;
-    color: #34d399;
+    color: #38bdf8;
     margin-bottom: 1rem;
 }
 
@@ -1219,14 +1219,14 @@ body:has(.home-page-master) .navbar-toggler span {
     font-size: 0.78rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: #34d399;
+    color: #38bdf8;
     margin-bottom: 0.35rem;
 }
 
 .sim-detail-block p {
     font-size: 0.92rem;
     line-height: 1.6;
-    color: #b5ccc1;
+    color: #cbd5e1;
 }
 
 /* Citizen FAQ Accordion */
@@ -1263,7 +1263,7 @@ body:has(.home-page-master) .navbar-toggler span {
 }
 
 .faq-question-btn:hover {
-    color: #34d399;
+    color: #38bdf8;
 }
 
 .faq-icon-arrow {
@@ -1271,7 +1271,7 @@ body:has(.home-page-master) .navbar-toggler span {
     height: 22px;
     flex-shrink: 0;
     transition: transform 0.25s ease;
-    color: #34d399;
+    color: #38bdf8;
 }
 
 .faq-item.active .faq-icon-arrow {
@@ -1293,7 +1293,7 @@ body:has(.home-page-master) .navbar-toggler span {
 .faq-answer p {
     font-size: 0.94rem;
     line-height: 1.7;
-    color: #b5ccc1;
+    color: #cbd5e1;
 }
 
 /* Right-Side Vertical Scroll Tracker (Seamless Background Integration) */
@@ -1343,13 +1343,13 @@ body:has(.home-page-master) .navbar-toggler span {
 /* Hover: Subtle lengthening */
 .rail-step:hover .rail-bar {
     width: 20px;
-    background: rgba(52, 211, 153, 0.65);
+    background: rgba(56, 189, 248, 0.65);
 }
 
 /* Active State: Clean, quiet elongation without aggressive glow */
 .rail-step.active .rail-bar {
     width: 24px;
-    background: #34d399;
+    background: #38bdf8;
 }
 
 /* Subtle, unobtrusive label on hover only */
@@ -1365,7 +1365,7 @@ body:has(.home-page-master) .navbar-toggler span {
     align-items: center;
     gap: 0.4rem;
     padding: 0.25rem 0.55rem;
-    background: rgba(7, 21, 17, 0.9);
+    background: rgba(2, 6, 23, 0.9);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 6px;
     white-space: nowrap;
@@ -1383,14 +1383,14 @@ body:has(.home-page-master) .navbar-toggler span {
     font-family: monospace;
     font-size: 0.65rem;
     font-weight: 600;
-    color: #34d399;
+    color: #38bdf8;
     opacity: 0.85;
 }
 
 .rail-step-title {
     font-size: 0.72rem;
     font-weight: 500;
-    color: #b5ccc1;
+    color: #cbd5e1;
     letter-spacing: 0.01em;
 }
 
@@ -1466,14 +1466,14 @@ body:has(.home-page-master) .navbar-toggler span {
     display: flex;
     align-items: center;
     padding: 0 1.25rem;
-    background: rgba(7, 21, 17, 0.45);
+    background: rgba(2, 6, 23, 0.45);
     border-left: 4px solid transparent;
     transition: background 0.25s ease, border-color 0.25s ease;
 }
 
 .stratum-layer.stratum-highlighted {
-    background: rgba(52, 211, 153, 0.2);
-    border-left-color: #34d399;
+    background: rgba(56, 189, 248, 0.2);
+    border-left-color: #38bdf8;
 }
 
 .stratum-label {
@@ -1491,10 +1491,10 @@ body:has(.home-page-master) .navbar-toggler span {
 .horizon-btn {
     flex: 1;
     padding: 0.75rem 0.5rem;
-    background: rgba(18, 48, 38, 0.6);
+    background: rgba(30, 41, 59, 0.6);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
-    color: #9ab4a7;
+    color: #94a3b8;
     font-family: var(--font-sans);
     font-size: 0.84rem;
     font-weight: 700;
@@ -1503,15 +1503,15 @@ body:has(.home-page-master) .navbar-toggler span {
 }
 
 .horizon-btn:hover {
-    background: rgba(26, 68, 54, 0.8);
+    background: rgba(30, 41, 59, 0.8);
     color: #ffffff;
 }
 
 .horizon-btn.active {
-    background: #174b3a;
-    border-color: #34d399;
-    color: #34d399;
-    box-shadow: 0 4px 12px rgba(52, 211, 153, 0.2);
+    background: #334155;
+    border-color: #38bdf8;
+    color: #38bdf8;
+    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
 }
 
 .stratigraphy-card {
@@ -1529,17 +1529,17 @@ body:has(.home-page-master) .navbar-toggler span {
 .tag-badge {
     padding: 0.3rem 0.75rem;
     border-radius: 999px;
-    background: rgba(52, 211, 153, 0.15);
-    border: 1px solid rgba(52, 211, 153, 0.35);
+    background: rgba(56, 189, 248, 0.15);
+    border: 1px solid rgba(56, 189, 248, 0.35);
     font-size: 0.74rem;
     font-weight: 800;
-    color: #34d399;
+    color: #38bdf8;
     text-transform: uppercase;
 }
 
 .depth-indicator {
     font-size: 0.82rem;
-    color: #7d968b;
+    color: #94a3b8;
 }
 
 .horizon-heading {
@@ -1558,14 +1558,14 @@ body:has(.home-page-master) .navbar-toggler span {
     font-size: 0.82rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: #34d399;
+    color: #38bdf8;
     margin-bottom: 0.4rem;
 }
 
 .horizon-spec-block p {
     font-size: 0.94rem;
     line-height: 1.6;
-    color: #b5ccc1;
+    color: #cbd5e1;
 }
 
 .horizon-alert-box {
@@ -1605,17 +1605,17 @@ body:has(.home-page-master) .navbar-toggler span {
     display: block;
     font-size: 0.86rem;
     font-weight: 700;
-    color: #d1e2da;
+    color: #f1f5f9;
     margin-bottom: 0.65rem;
 }
 
 .custom-select {
     width: 100%;
     padding: 0.85rem 1rem;
-    background: #0d2820;
+    background: #0f172a;
     border: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: 8px;
-    color: #f1f7f3;
+    color: #f8fafc;
     font-family: var(--font-sans);
     font-size: 0.95rem;
     outline: none;
@@ -1624,7 +1624,7 @@ body:has(.home-page-master) .navbar-toggler span {
 }
 
 .custom-select:focus {
-    border-color: #34d399;
+    border-color: #38bdf8;
 }
 
 .landuse-pills {
@@ -1638,28 +1638,28 @@ body:has(.home-page-master) .navbar-toggler span {
     align-items: center;
     gap: 0.75rem;
     padding: 0.7rem 1rem;
-    background: rgba(13, 40, 32, 0.6);
+    background: rgba(15, 23, 42, 0.6);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 8px;
     cursor: pointer;
     font-size: 0.88rem;
-    color: #b5ccc1;
+    color: #cbd5e1;
     transition: all 0.2s ease;
 }
 
 .radio-pill:hover {
-    background: rgba(22, 64, 51, 0.8);
+    background: rgba(30, 41, 59, 0.8);
     color: #ffffff;
 }
 
 .radio-pill input[type="radio"] {
-    accent-color: #34d399;
+    accent-color: #38bdf8;
 }
 
 .radio-pill:has(input[type="radio"]:checked) {
-    background: rgba(52, 211, 153, 0.12);
-    border-color: #34d399;
-    color: #34d399;
+    background: rgba(56, 189, 248, 0.12);
+    border-color: #38bdf8;
+    color: #38bdf8;
     font-weight: 700;
 }
 
@@ -1674,7 +1674,7 @@ body:has(.home-page-master) .navbar-toggler span {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    background: #0d2820;
+    background: #0f172a;
     border: 1px solid rgba(255, 255, 255, 0.12);
     padding: 0.35rem 0.65rem;
     border-radius: 6px;
@@ -1684,7 +1684,7 @@ body:has(.home-page-master) .navbar-toggler span {
     width: 70px;
     background: transparent;
     border: none;
-    color: #34d399;
+    color: #38bdf8;
     font-family: var(--font-heading);
     font-size: 1.3rem;
     font-weight: 700;
@@ -1695,16 +1695,16 @@ body:has(.home-page-master) .navbar-toggler span {
 .unit-tag {
     font-size: 0.78rem;
     font-weight: 700;
-    color: #7d968b;
+    color: #94a3b8;
 }
 
 .custom-slider {
     width: 100%;
     height: 7px;
     border-radius: 5px;
-    background: #091a15;
+    background: #020617;
     outline: none;
-    accent-color: #34d399;
+    accent-color: #38bdf8;
     cursor: pointer;
 }
 
@@ -1712,7 +1712,7 @@ body:has(.home-page-master) .navbar-toggler span {
     display: flex;
     justify-content: space-between;
     font-size: 0.72rem;
-    color: #6a8277;
+    color: #475569;
     margin-top: 0.45rem;
 }
 
@@ -1721,7 +1721,7 @@ body:has(.home-page-master) .navbar-toggler span {
     align-items: center;
     gap: 0.6rem;
     font-size: 0.76rem;
-    color: #7d968b;
+    color: #94a3b8;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
     padding-top: 1.25rem;
     margin-top: 1rem;
@@ -1750,9 +1750,9 @@ body:has(.home-page-master) .navbar-toggler span {
 }
 
 .status-safe {
-    background: rgba(52, 211, 153, 0.2);
-    border: 1px solid #34d399;
-    color: #34d399;
+    background: rgba(56, 189, 248, 0.2);
+    border: 1px solid #38bdf8;
+    color: #38bdf8;
 }
 
 .status-caution {
@@ -1780,7 +1780,7 @@ body:has(.home-page-master) .navbar-toggler span {
 .cutoff-label {
     display: block;
     font-size: 0.75rem;
-    color: #7d968b;
+    color: #94a3b8;
 }
 
 .cutoff-value {
@@ -1795,7 +1795,7 @@ body:has(.home-page-master) .navbar-toggler span {
 .gauge-bar-bg {
     width: 100%;
     height: 10px;
-    background: #091a15;
+    background: #020617;
     border-radius: 999px;
     overflow: hidden;
     margin-bottom: 0.85rem;
@@ -1807,7 +1807,7 @@ body:has(.home-page-master) .navbar-toggler span {
     transition: width 0.3s ease, background-color 0.3s ease;
 }
 
-.gauge-progress.status-safe { background: #34d399; }
+.gauge-progress.status-safe { background: #38bdf8; }
 .gauge-progress.status-caution { background: #f59e0b; }
 .gauge-progress.status-warning { background: #f97316; }
 .gauge-progress.status-danger { background: #ef4444; }
@@ -1815,7 +1815,7 @@ body:has(.home-page-master) .navbar-toggler span {
 .status-summary-text {
     font-size: 0.95rem;
     line-height: 1.55;
-    color: #d1e2da;
+    color: #f1f5f9;
 }
 
 .benchmark-grid {
@@ -1832,14 +1832,14 @@ body:has(.home-page-master) .navbar-toggler span {
     display: block;
     font-size: 0.74rem;
     text-transform: uppercase;
-    color: #7d968b;
+    color: #94a3b8;
     margin-bottom: 0.25rem;
 }
 
 .benchmark-text {
     font-size: 0.88rem;
     font-weight: 600;
-    color: #e5ede8;
+    color: #f8fafc;
 }
 
 .impact-cards-group {
@@ -1851,8 +1851,8 @@ body:has(.home-page-master) .navbar-toggler span {
 .impact-card {
     padding: 1.15rem;
     border-radius: 10px;
-    background: rgba(14, 38, 30, 0.5);
-    border-left: 3px solid #34d399;
+    background: rgba(15, 23, 42, 0.5);
+    border-left: 3px solid #38bdf8;
 }
 
 .impact-card h5 {
@@ -1861,21 +1861,21 @@ body:has(.home-page-master) .navbar-toggler span {
     gap: 0.55rem;
     font-size: 0.84rem;
     font-weight: 700;
-    color: #34d399;
+    color: #38bdf8;
     margin-bottom: 0.45rem;
 }
 
 .impact-card p {
     font-size: 0.88rem;
     line-height: 1.55;
-    color: #b5ccc1;
+    color: #cbd5e1;
 }
 
 .impact-card.health-impact { border-left-color: #ef4444; }
 .impact-card.health-impact h5 { color: #f87171; }
 .impact-card.agri-impact { border-left-color: #f59e0b; }
 .impact-card.agri-impact h5 { color: #fbbf24; }
-.impact-card.remedy-impact { border-left-color: #34d399; }
+.impact-card.remedy-impact { border-left-color: #38bdf8; }
 
 /* 5. Food-Chain Bioaccumulation Stepper */
 .bioaccum-layout {
@@ -1939,7 +1939,7 @@ body:has(.home-page-master) .navbar-toggler span {
     display: flex;
     gap: 1.25rem;
     padding: 1.35rem 1.5rem;
-    background: rgba(18, 48, 38, 0.6);
+    background: rgba(30, 41, 59, 0.6);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 12px;
     transition: transform 0.2s ease, border-color 0.2s ease;
@@ -1947,7 +1947,7 @@ body:has(.home-page-master) .navbar-toggler span {
 
 .step-card:hover {
     transform: translateX(4px);
-    border-color: rgba(52, 211, 153, 0.3);
+    border-color: rgba(56, 189, 248, 0.3);
 }
 
 .step-marker {
@@ -1956,13 +1956,13 @@ body:has(.home-page-master) .navbar-toggler span {
     width: 42px;
     height: 42px;
     flex-shrink: 0;
-    background: rgba(52, 211, 153, 0.15);
-    border: 1px solid #34d399;
+    background: rgba(56, 189, 248, 0.15);
+    border: 1px solid #38bdf8;
     border-radius: 50%;
     font-family: var(--font-heading);
     font-size: 1.15rem;
     font-weight: 700;
-    color: #34d399;
+    color: #38bdf8;
 }
 
 .step-content h3 {
@@ -1975,7 +1975,7 @@ body:has(.home-page-master) .navbar-toggler span {
 .step-content p {
     font-size: 0.88rem;
     line-height: 1.55;
-    color: #b5ccc1;
+    color: #cbd5e1;
 }
 
 /* 6. Verified Contamination Hotspots Dossier */
@@ -1997,7 +1997,7 @@ body:has(.home-page-master) .navbar-toggler span {
     flex-direction: column;
     align-items: flex-start;
     padding: 1rem 1.35rem;
-    background: rgba(18, 48, 38, 0.55);
+    background: rgba(30, 41, 59, 0.55);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 10px;
     cursor: pointer;
@@ -2007,13 +2007,13 @@ body:has(.home-page-master) .navbar-toggler span {
 }
 
 .hotspot-tab:hover {
-    background: rgba(26, 68, 54, 0.8);
+    background: rgba(30, 41, 59, 0.8);
 }
 
 .hotspot-tab.active {
-    background: #174b3a;
-    border-color: #34d399;
-    box-shadow: 0 4px 16px rgba(52, 211, 153, 0.2);
+    background: #334155;
+    border-color: #38bdf8;
+    box-shadow: 0 4px 16px rgba(56, 189, 248, 0.2);
 }
 
 .hotspot-tab-title {
@@ -2024,12 +2024,12 @@ body:has(.home-page-master) .navbar-toggler span {
 }
 
 .hotspot-tab.active .hotspot-tab-title {
-    color: #34d399;
+    color: #38bdf8;
 }
 
 .hotspot-tab-contam {
     font-size: 0.75rem;
-    color: #7d968b;
+    color: #94a3b8;
 }
 
 .hotspot-dossier-card {
@@ -2051,7 +2051,7 @@ body:has(.home-page-master) .navbar-toggler span {
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: #34d399;
+    color: #38bdf8;
     margin-bottom: 0.4rem;
 }
 
@@ -2086,7 +2086,7 @@ body:has(.home-page-master) .navbar-toggler span {
     display: block;
     font-size: 0.74rem;
     text-transform: uppercase;
-    color: #7d968b;
+    color: #94a3b8;
     margin-bottom: 0.4rem;
 }
 
@@ -2108,14 +2108,14 @@ body:has(.home-page-master) .navbar-toggler span {
     font-size: 0.84rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: #34d399;
+    color: #38bdf8;
     margin-bottom: 0.5rem;
 }
 
 .narrative-block p {
     font-size: 0.94rem;
     line-height: 1.65;
-    color: #b5ccc1;
+    color: #cbd5e1;
 }
 
 /* 7. Contaminant Periodic Registry */
@@ -2144,15 +2144,15 @@ body:has(.home-page-master) .navbar-toggler span {
     width: 60px;
     height: 60px;
     border-radius: 12px;
-    background: #092019;
-    border: 2px solid #34d399;
-    box-shadow: 0 4px 14px rgba(52, 211, 153, 0.25);
+    background: #020617;
+    border: 2px solid #38bdf8;
+    box-shadow: 0 4px 14px rgba(56, 189, 248, 0.25);
 }
 
 .elem-atomic {
     font-size: 0.68rem;
     font-weight: 700;
-    color: #7d968b;
+    color: #94a3b8;
     line-height: 1;
 }
 
@@ -2160,7 +2160,7 @@ body:has(.home-page-master) .navbar-toggler span {
     font-family: var(--font-heading);
     font-size: 1.6rem;
     font-weight: 700;
-    color: #34d399;
+    color: #38bdf8;
     line-height: 1.1;
 }
 
@@ -2185,7 +2185,7 @@ body:has(.home-page-master) .navbar-toggler span {
 
 .elem-class {
     font-size: 0.74rem;
-    color: #7d968b;
+    color: #94a3b8;
     text-transform: uppercase;
 }
 
@@ -2195,13 +2195,13 @@ body:has(.home-page-master) .navbar-toggler span {
     flex-direction: column;
     gap: 0.65rem;
     font-size: 0.85rem;
-    color: #b5ccc1;
+    color: #cbd5e1;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
     padding-top: 1rem;
 }
 
 .element-specs strong {
-    color: #f1f7f3;
+    color: #f8fafc;
 }
 
 /* 8. Scientific Hierarchy of Evidence */
@@ -2218,8 +2218,8 @@ body:has(.home-page-master) .navbar-toggler span {
 }
 
 .hierarchy-card.highlight-border {
-    border-color: #34d399;
-    box-shadow: 0 16px 36px rgba(52, 211, 153, 0.15);
+    border-color: #38bdf8;
+    box-shadow: 0 16px 36px rgba(56, 189, 248, 0.15);
 }
 
 .hierarchy-level-tag {
@@ -2227,12 +2227,12 @@ body:has(.home-page-master) .navbar-toggler span {
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: #7d968b;
+    color: #94a3b8;
     margin-bottom: 0.85rem;
 }
 
 .level-certified {
-    color: #34d399;
+    color: #38bdf8;
 }
 
 .hierarchy-card h3 {
@@ -2246,7 +2246,7 @@ body:has(.home-page-master) .navbar-toggler span {
 .hierarchy-desc {
     font-size: 0.92rem;
     line-height: 1.65;
-    color: #b5ccc1;
+    color: #cbd5e1;
     margin-bottom: 1.75rem;
     flex-grow: 1;
 }
@@ -2254,13 +2254,13 @@ body:has(.home-page-master) .navbar-toggler span {
 .hierarchy-meta {
     font-size: 0.78rem;
     line-height: 1.55;
-    color: #7d968b;
+    color: #94a3b8;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
     padding-top: 1rem;
 }
 
 .hierarchy-meta strong {
-    color: #d1e2da;
+    color: #f1f5f9;
 }
 
 /* 9. Remediation & Regenerative Solutions Matrix */
@@ -2291,8 +2291,8 @@ body:has(.home-page-master) .navbar-toggler span {
     left: 1.25rem;
     right: 1.25rem;
     padding: 1.4rem;
-    background: rgba(7, 21, 17, 0.85);
-    border: 1px solid rgba(52, 211, 153, 0.3);
+    background: rgba(2, 6, 23, 0.85);
+    border: 1px solid rgba(56, 189, 248, 0.3);
 }
 
 .remedy-stat-num {
@@ -2300,14 +2300,14 @@ body:has(.home-page-master) .navbar-toggler span {
     font-family: var(--font-heading);
     font-size: 2.2rem;
     font-weight: 700;
-    color: #34d399;
+    color: #38bdf8;
     line-height: 1;
     margin-bottom: 0.35rem;
 }
 
 .remedy-stat-txt {
     font-size: 0.84rem;
-    color: #e5ede8;
+    color: #f8fafc;
     line-height: 1.4;
 }
 
@@ -2330,9 +2330,9 @@ body:has(.home-page-master) .navbar-toggler span {
     height: 48px;
     flex-shrink: 0;
     border-radius: 10px;
-    background: rgba(52, 211, 153, 0.12);
-    border: 1px solid rgba(52, 211, 153, 0.3);
-    color: #34d399;
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    color: #38bdf8;
 }
 
 .remedy-method-card h3 {
@@ -2345,15 +2345,15 @@ body:has(.home-page-master) .navbar-toggler span {
 .remedy-method-card p {
     font-size: 0.88rem;
     line-height: 1.55;
-    color: #b5ccc1;
+    color: #cbd5e1;
 }
 
 /* 10. Community Radar Call to Action */
 .community-cta-box {
     padding: 4.5rem 3rem;
     text-align: center;
-    background: radial-gradient(circle at 50% 0%, rgba(52, 211, 153, 0.15) 0%, rgba(14, 38, 30, 0.8) 70%);
-    border: 1px solid rgba(52, 211, 153, 0.3);
+    background: radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.15) 0%, rgba(15, 23, 42, 0.8) 70%);
+    border: 1px solid rgba(56, 189, 248, 0.3);
 }
 
 .cta-kicker {
@@ -2362,7 +2362,7 @@ body:has(.home-page-master) .navbar-toggler span {
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: #34d399;
+    color: #38bdf8;
     margin-bottom: 0.85rem;
 }
 
@@ -2378,7 +2378,7 @@ body:has(.home-page-master) .navbar-toggler span {
 .cta-body {
     font-size: 1.1rem;
     line-height: 1.7;
-    color: #b5ccc1;
+    color: #cbd5e1;
     max-width: 720px;
     margin: 0 auto 2.5rem;
 }
@@ -2403,8 +2403,8 @@ body:has(.home-page-master) .navbar-toggler span {
     gap: 1.5rem;
     padding: 1.75rem 2.25rem;
     margin: 2.75rem 0 3.5rem;
-    background: linear-gradient(135deg, rgba(14, 38, 30, 0.75) 0%, rgba(7, 21, 17, 0.85) 100%);
-    border: 1px solid rgba(52, 211, 153, 0.22);
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.75) 0%, rgba(2, 6, 23, 0.85) 100%);
+    border: 1px solid rgba(56, 189, 248, 0.22);
     border-radius: 16px;
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
     backdrop-filter: blur(12px);
@@ -2431,7 +2431,7 @@ body:has(.home-page-master) .navbar-toggler span {
     font-family: var(--font-heading);
     font-size: 2.2rem;
     font-weight: 700;
-    color: #34d399;
+    color: #38bdf8;
     line-height: 1.1;
     margin-bottom: 0.25rem;
     letter-spacing: -0.02em;
@@ -2442,7 +2442,7 @@ body:has(.home-page-master) .navbar-toggler span {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: #9ab4a7;
+    color: #94a3b8;
     line-height: 1.35;
 }
 
@@ -2459,7 +2459,7 @@ body:has(.home-page-master) .navbar-toggler span {
     flex-direction: column;
     padding: 1.85rem;
     border-radius: 16px;
-    background: linear-gradient(145deg, rgba(13, 34, 27, 0.78) 0%, rgba(7, 21, 17, 0.88) 100%);
+    background: linear-gradient(145deg, rgba(15, 23, 42, 0.78) 0%, rgba(2, 6, 23, 0.88) 100%);
     border: 1px solid rgba(255, 255, 255, 0.08);
     position: relative;
     overflow: hidden;
@@ -2480,7 +2480,7 @@ body:has(.home-page-master) .navbar-toggler span {
 .auth-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 16px 38px rgba(0, 0, 0, 0.45);
-    border-color: rgba(52, 211, 153, 0.35);
+    border-color: rgba(56, 189, 248, 0.35);
 }
 
 .auth-card:hover::before {
@@ -2490,9 +2490,9 @@ body:has(.home-page-master) .navbar-toggler span {
 
 /* Authority Card Color Themes */
 .auth-card-sky::before { background: linear-gradient(90deg, #38bdf8 0%, rgba(56, 189, 248, 0.2) 100%); }
-.auth-card-emerald::before { background: linear-gradient(90deg, #34d399 0%, rgba(52, 211, 153, 0.2) 100%); }
+.auth-card-emerald::before { background: linear-gradient(90deg, #38bdf8 0%, rgba(56, 189, 248, 0.2) 100%); }
 .auth-card-indigo::before { background: linear-gradient(90deg, #818cf8 0%, rgba(129, 140, 248, 0.2) 100%); }
-.auth-card-teal::before { background: linear-gradient(90deg, #2dd4bf 0%, rgba(45, 212, 191, 0.2) 100%); }
+.auth-card-teal::before { background: linear-gradient(90deg, #38bdf8 0%, rgba(56, 189, 248, 0.2) 100%); }
 .auth-card-amber::before { background: linear-gradient(90deg, #f59e0b 0%, rgba(245, 158, 11, 0.2) 100%); }
 .auth-card-copper::before { background: linear-gradient(90deg, #fb923c 0%, rgba(251, 146, 60, 0.2) 100%); }
 
@@ -2524,9 +2524,9 @@ body:has(.home-page-master) .navbar-toggler span {
 }
 
 .auth-card-emerald .auth-insignia {
-    background: rgba(52, 211, 153, 0.12);
-    color: #34d399;
-    border: 1px solid rgba(52, 211, 153, 0.35);
+    background: rgba(56, 189, 248, 0.12);
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.35);
 }
 
 .auth-card-indigo .auth-insignia {
@@ -2536,9 +2536,9 @@ body:has(.home-page-master) .navbar-toggler span {
 }
 
 .auth-card-teal .auth-insignia {
-    background: rgba(45, 212, 191, 0.12);
-    color: #2dd4bf;
-    border: 1px solid rgba(45, 212, 191, 0.35);
+    background: rgba(56, 189, 248, 0.12);
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.35);
 }
 
 .auth-card-amber .auth-insignia {
@@ -2577,9 +2577,9 @@ body:has(.home-page-master) .navbar-toggler span {
 }
 
 .pill-statutory {
-    background: rgba(52, 211, 153, 0.12);
-    color: #6ee7b7;
-    border: 1px solid rgba(52, 211, 153, 0.25);
+    background: rgba(56, 189, 248, 0.12);
+    color: #7dd3fc;
+    border: 1px solid rgba(56, 189, 248, 0.25);
 }
 
 .pill-continental {
@@ -2589,9 +2589,9 @@ body:has(.home-page-master) .navbar-toggler span {
 }
 
 .pill-health {
-    background: rgba(45, 212, 191, 0.12);
-    color: #5eead4;
-    border: 1px solid rgba(45, 212, 191, 0.25);
+    background: rgba(56, 189, 248, 0.12);
+    color: #7dd3fc;
+    border: 1px solid rgba(56, 189, 248, 0.25);
 }
 
 .pill-field {
@@ -2612,11 +2612,11 @@ body:has(.home-page-master) .navbar-toggler span {
     gap: 0.32rem;
     font-size: 0.7rem;
     font-weight: 600;
-    color: #34d399;
-    background: rgba(52, 211, 153, 0.08);
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.08);
     padding: 0.18rem 0.55rem;
     border-radius: 6px;
-    border: 1px solid rgba(52, 211, 153, 0.2);
+    border: 1px solid rgba(56, 189, 248, 0.2);
 }
 
 .auth-verified-chip.chip-law {
@@ -2650,7 +2650,7 @@ body:has(.home-page-master) .navbar-toggler span {
     font-family: var(--font-sans);
     font-size: 0.72rem;
     font-weight: 600;
-    color: #9ab4a7;
+    color: #94a3b8;
     background: rgba(255, 255, 255, 0.06);
     padding: 0.18rem 0.5rem;
     border-radius: 4px;
@@ -2659,19 +2659,19 @@ body:has(.home-page-master) .navbar-toggler span {
 
 .auth-org-name {
     font-size: 0.8rem;
-    color: #8ba89b;
+    color: #64748b;
     margin-bottom: 0.95rem;
     line-height: 1.45;
 }
 
 .auth-pub-quote {
-    background: rgba(7, 21, 17, 0.65);
-    border-left: 3px solid #34d399;
+    background: rgba(2, 6, 23, 0.65);
+    border-left: 3px solid #38bdf8;
     padding: 0.75rem 0.95rem;
     border-radius: 0 8px 8px 0;
     font-size: 0.82rem;
     line-height: 1.5;
-    color: #d1e2da;
+    color: #f1f5f9;
     margin-bottom: 1.15rem;
     position: relative;
     display: flex;
@@ -2683,12 +2683,12 @@ body:has(.home-page-master) .navbar-toggler span {
     flex-shrink: 0;
     margin-top: 0.15rem;
     opacity: 0.6;
-    color: #34d399;
+    color: #38bdf8;
 }
 
 .auth-pub-quote em {
     font-style: italic;
-    color: #ecfdf5;
+    color: #f8fafc;
 }
 
 .auth-extract-box {
@@ -2706,7 +2706,7 @@ body:has(.home-page-master) .navbar-toggler span {
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: #6ee7b7;
+    color: #7dd3fc;
     margin-bottom: 0.55rem;
 }
 
@@ -2722,7 +2722,7 @@ body:has(.home-page-master) .navbar-toggler span {
 .auth-extract-list li {
     font-size: 0.78rem;
     line-height: 1.45;
-    color: #a3bfb2;
+    color: #94a3b8;
     position: relative;
     padding-left: 1rem;
 }
@@ -2731,14 +2731,14 @@ body:has(.home-page-master) .navbar-toggler span {
     content: '•';
     position: absolute;
     left: 0;
-    color: #34d399;
+    color: #38bdf8;
     font-weight: bold;
     font-size: 0.9rem;
     line-height: 1;
 }
 
 .auth-extract-list strong {
-    color: #f0fdf4;
+    color: #f8fafc;
     font-weight: 600;
 }
 
@@ -2770,7 +2770,7 @@ body:has(.home-page-master) .navbar-toggler span {
 .auth-module-chip {
     font-size: 0.7rem;
     font-weight: 600;
-    color: #8ba89b;
+    color: #64748b;
     background: rgba(255, 255, 255, 0.05);
     padding: 0.22rem 0.55rem;
     border-radius: 6px;
@@ -2782,8 +2782,8 @@ body:has(.home-page-master) .navbar-toggler span {
     align-items: center;
     gap: 1.75rem;
     padding: 2.25rem 2.5rem;
-    background: linear-gradient(135deg, rgba(14, 38, 30, 0.92) 0%, rgba(7, 21, 17, 0.95) 100%);
-    border: 1px solid rgba(52, 211, 153, 0.3);
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.92) 0%, rgba(2, 6, 23, 0.95) 100%);
+    border: 1px solid rgba(56, 189, 248, 0.3);
     border-radius: 16px;
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
     margin-bottom: 4.5rem;
@@ -2793,9 +2793,9 @@ body:has(.home-page-master) .navbar-toggler span {
     width: 56px;
     height: 56px;
     border-radius: 14px;
-    background: rgba(52, 211, 153, 0.12);
-    border: 1px solid rgba(52, 211, 153, 0.3);
-    color: #34d399;
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    color: #38bdf8;
     display: grid;
     place-items: center;
     flex-shrink: 0;
@@ -2816,12 +2816,12 @@ body:has(.home-page-master) .navbar-toggler span {
 .transparency-content p {
     font-size: 0.88rem;
     line-height: 1.65;
-    color: #a3bfb2;
+    color: #94a3b8;
     margin: 0;
 }
 
 .transparency-content strong {
-    color: #34d399;
+    color: #38bdf8;
     font-weight: 600;
 }
 
@@ -2855,7 +2855,7 @@ body:has(.home-page-master) .navbar-toggler span {
 }
 
 .colophon-brand .brand-gem {
-    color: #34d399;
+    color: #38bdf8;
     font-size: 1rem;
 }
 
@@ -2870,7 +2870,7 @@ body:has(.home-page-master) .navbar-toggler span {
 .colophon-brand .brand-mission {
     font-size: 0.85rem;
     line-height: 1.6;
-    color: #7d968b;
+    color: #94a3b8;
     margin: 0;
 }
 
@@ -2887,21 +2887,21 @@ body:has(.home-page-master) .navbar-toggler span {
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: #d1e2da;
+    color: #f1f5f9;
     margin-bottom: 1.1rem;
 }
 
 .colophon-col a {
     display: block;
     font-size: 0.82rem;
-    color: #7d968b;
+    color: #94a3b8;
     text-decoration: none;
     margin-bottom: 0.65rem;
     transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .colophon-col a:hover {
-    color: #34d399;
+    color: #38bdf8;
     transform: translateX(3px);
 }
 
@@ -2917,7 +2917,7 @@ body:has(.home-page-master) .navbar-toggler span {
 .colophon-copyright {
     font-size: 0.78rem;
     line-height: 1.55;
-    color: #5f756b;
+    color: #475569;
     margin: 0;
     max-width: 780px;
 }
@@ -2928,9 +2928,9 @@ body:has(.home-page-master) .navbar-toggler span {
     gap: 0.45rem;
     font-size: 0.8rem;
     font-weight: 600;
-    color: #34d399;
-    background: rgba(52, 211, 153, 0.08);
-    border: 1px solid rgba(52, 211, 153, 0.22);
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.08);
+    border: 1px solid rgba(56, 189, 248, 0.22);
     padding: 0.45rem 1rem;
     border-radius: 999px;
     text-decoration: none;
@@ -2938,9 +2938,9 @@ body:has(.home-page-master) .navbar-toggler span {
 }
 
 .back-to-top-btn:hover {
-    background: rgba(52, 211, 153, 0.2);
+    background: rgba(56, 189, 248, 0.2);
     color: #ffffff;
-    border-color: rgba(52, 211, 153, 0.45);
+    border-color: rgba(56, 189, 248, 0.45);
     transform: translateY(-2px);
 }
 
@@ -3119,7 +3119,7 @@ body:has(.home-page-master) .navbar-toggler span {
 
 .report-intro > p:last-child {
     margin-top: 1.25rem;
-    color: #b5ccc1;
+    color: #cbd5e1;
     font-size: 1.1rem;
 }
 
@@ -3134,7 +3134,7 @@ body:has(.home-page-master) .navbar-toggler span {
     position: sticky;
     top: 7rem;
     padding-top: 0.25rem;
-    color: #d1e2da;
+    color: #f1f5f9;
 }
 
 .report-aside h2 {
@@ -3148,14 +3148,14 @@ body:has(.home-page-master) .navbar-toggler span {
 .report-aside p {
     max-width: 260px;
     margin-top: 1.25rem;
-    color: #b5ccc1;
+    color: #cbd5e1;
     font-size: 0.95rem;
 }
 
 .report-aside .aside-note {
     padding-top: 1.25rem;
     border-top: 1px solid rgba(255, 255, 255, 0.15);
-    color: #d1e2da;
+    color: #f1f5f9;
     font-size: 0.82rem;
 }
 
@@ -3163,7 +3163,7 @@ body:has(.home-page-master) .navbar-toggler span {
     padding: 2rem clamp(1.25rem, 4vw, 3.5rem) 2.5rem;
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 8px;
-    background: rgba(18, 48, 38, 0.65);
+    background: rgba(30, 41, 59, 0.65);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     box-shadow: 0 16px 36px rgba(0, 0, 0, 0.28);
@@ -3204,7 +3204,7 @@ body:has(.home-page-master) .navbar-toggler span {
 .legend-optional,
 .optional {
     display: block;
-    color: #7d968b;
+    color: #94a3b8;
     font-family: 'Trebuchet MS', sans-serif;
     font-size: 0.7rem;
     font-weight: 400;
@@ -3222,13 +3222,13 @@ body:has(.home-page-master) .navbar-toggler span {
 }
 
 .character-count {
-    color: #7d968b;
+    color: #94a3b8;
     font-size: 0.75rem;
     text-align: right;
 }
 
 .location-status {
-    color: #b5ccc1;
+    color: #cbd5e1;
     font-size: 0.75rem;
 }
 
@@ -3246,7 +3246,7 @@ body:has(.home-page-master) .navbar-toggler span {
     align-items: flex-start;
     gap: 0.65rem;
     margin: 0 0 1.5rem;
-    color: #b5ccc1;
+    color: #cbd5e1;
     font-size: 0.85rem;
 }
 
@@ -3257,7 +3257,7 @@ body:has(.home-page-master) .navbar-toggler span {
 
 .field-group label,
 .field-label {
-    color: #d1e2da;
+    color: #f1f5f9;
     font-size: 0.82rem;
     font-weight: 700;
 }
@@ -3274,8 +3274,8 @@ body:has(.home-page-master) .navbar-toggler span {
     padding: 0.85rem 0.95rem;
     border: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: 4px;
-    background: rgba(13, 40, 32, 0.6);
-    color: #f1f7f3;
+    background: rgba(15, 23, 42, 0.6);
+    color: #f8fafc;
     font: inherit;
     font-size: 0.95rem;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
@@ -3288,14 +3288,14 @@ body:has(.home-page-master) .navbar-toggler span {
 
 .observation-form input::placeholder,
 .observation-form textarea::placeholder {
-    color: #7d968b;
+    color: #94a3b8;
 }
 
 .observation-form input:focus,
 .observation-form textarea:focus {
-    border-color: #34d399;
+    border-color: #38bdf8;
     outline: none;
-    box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.2);
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
 }
 
 .compact-field {
@@ -3316,15 +3316,15 @@ body:has(.home-page-master) .navbar-toggler span {
     padding: 0.75rem 0.85rem;
     border: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: 4px;
-    color: #b5ccc1;
+    color: #cbd5e1;
     cursor: pointer;
     font-size: 0.88rem;
     transition: border-color 0.2s ease, background 0.2s ease;
 }
 
 .choice-card:has(input:checked) {
-    border-color: #34d399;
-    background: rgba(52, 211, 153, 0.12);
+    border-color: #38bdf8;
+    background: rgba(56, 189, 248, 0.12);
     color: #ffffff;
 }
 
@@ -3337,14 +3337,14 @@ body:has(.home-page-master) .navbar-toggler span {
     align-items: center;
     gap: 1rem;
     padding: 1rem;
-    border: 1px dashed rgba(52, 211, 153, 0.35);
+    border: 1px dashed rgba(56, 189, 248, 0.35);
     border-radius: 4px;
-    color: #d1e2da;
+    color: #f1f5f9;
     cursor: pointer;
 }
 
 .upload-box:hover {
-    background: rgba(52, 211, 153, 0.1);
+    background: rgba(56, 189, 248, 0.1);
 }
 
 .upload-icon {
@@ -3353,7 +3353,7 @@ body:has(.home-page-master) .navbar-toggler span {
     height: 2.5rem;
     place-items: center;
     border-radius: 50%;
-    background: rgba(52, 211, 153, 0.15);
+    background: rgba(56, 189, 248, 0.15);
     color: #b4532f;
     font-size: 1.5rem;
     line-height: 1;
@@ -3370,7 +3370,7 @@ body:has(.home-page-master) .navbar-toggler span {
 
 .upload-box small {
     margin-top: 0.2rem;
-    color: #7d968b;
+    color: #94a3b8;
     font-size: 0.75rem;
 }
 
@@ -3383,7 +3383,7 @@ body:has(.home-page-master) .navbar-toggler span {
 
 .file-name {
     margin-top: 0.55rem;
-    color: #34d399;
+    color: #38bdf8;
     font-size: 0.8rem;
 }
 
@@ -3427,8 +3427,8 @@ body:has(.home-page-master) .navbar-toggler span {
     height: 2.75rem;
     place-items: center;
     border-radius: 50%;
-    background: rgba(18, 48, 38, 0.6);
-    color: #34d399;
+    background: rgba(30, 41, 59, 0.6);
+    color: #38bdf8;
     font-size: 1.25rem;
 }
 
@@ -3441,7 +3441,7 @@ body:has(.home-page-master) .navbar-toggler span {
 
 .success-message p {
     margin-top: 0.35rem;
-    color: #b5ccc1;
+    color: #cbd5e1;
 }
 
 .new-observation {
@@ -3490,7 +3490,7 @@ body:has(.home-page-master) .navbar-toggler span {
 .location-filter {
     margin-bottom: 1.5rem;
     padding: 0.85rem 1.2rem;
-    background: rgba(18, 48, 38, 0.6);
+    background: rgba(30, 41, 59, 0.6);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 8px;
 }
@@ -3505,7 +3505,7 @@ body:has(.home-page-master) .navbar-toggler span {
 .location-filter-controls label {
     font-size: 0.8rem;
     font-weight: 600;
-    color: #d1e2da;
+    color: #f1f5f9;
     white-space: nowrap;
 }
 
@@ -3513,37 +3513,37 @@ body:has(.home-page-master) .navbar-toggler span {
     padding: 0.35rem 0.6rem;
     border: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: 5px;
-    background: rgba(13, 40, 32, 0.6);
-    color: #f1f7f3;
+    background: rgba(15, 23, 42, 0.6);
+    color: #f8fafc;
     font-size: 0.85rem;
     cursor: pointer;
 }
 
 .location-filter-controls select:focus {
-    outline: 2px solid #34d399;
+    outline: 2px solid #38bdf8;
     outline-offset: 1px;
 }
 
 .filter-no-regions {
     font-size: 0.8rem;
-    color: #7d968b;
+    color: #94a3b8;
     font-style: italic;
 }
 
 .filter-clear {
     margin-left: auto;
     font-size: 0.8rem;
-    color: #34d399;
+    color: #38bdf8;
     text-decoration: none;
     white-space: nowrap;
 }
 
-.filter-clear:hover { color: #6ee7b7; text-decoration: underline; }
+.filter-clear:hover { color: #7dd3fc; text-decoration: underline; }
 
 .filter-active-label {
     margin-top: 0.5rem;
     font-size: 0.8rem;
-    color: #d1e2da;
+    color: #f1f5f9;
 }
 
 .filter-active-label strong { color: #ffffff; }
@@ -3568,7 +3568,7 @@ body:has(.home-page-master) .navbar-toggler span {
 .dashboard-heading > p:last-child {
     margin: 0;
     padding-bottom: 0.3rem;
-    color: #b5ccc1;
+    color: #cbd5e1;
     font-size: 0.98rem;
 }
 
@@ -3587,7 +3587,7 @@ body:has(.home-page-master) .navbar-toggler span {
 .dashboard-card {
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 10px;
-    background: rgba(18, 48, 38, 0.65);
+    background: rgba(30, 41, 59, 0.65);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     box-shadow: 0 16px 36px rgba(0, 0, 0, 0.28);
@@ -3624,7 +3624,7 @@ body:has(.home-page-master) .navbar-toggler span {
 }
 
 .metric-card small {
-    color: #7d968b;
+    color: #94a3b8;
     font-size: 0.78rem;
 }
 
@@ -3649,7 +3649,7 @@ body:has(.home-page-master) .navbar-toggler span {
 
 .card-heading > p {
     margin: 0.2rem 0 0;
-    color: #7d968b;
+    color: #94a3b8;
     font-size: 0.78rem;
 }
 
@@ -3672,7 +3672,7 @@ body:has(.home-page-master) .navbar-toggler span {
     margin-top: 1.7rem;
     padding: 0 0.3rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    background: repeating-linear-gradient(to bottom, transparent 0, transparent 62px, rgba(13, 40, 32, 0.6) 63px, transparent 64px);
+    background: repeating-linear-gradient(to bottom, transparent 0, transparent 62px, rgba(15, 23, 42, 0.6) 63px, transparent 64px);
 }
 
 .trend-column {
@@ -3687,7 +3687,7 @@ body:has(.home-page-master) .navbar-toggler span {
 
 .trend-value {
     justify-self: center;
-    color: #b5ccc1;
+    color: #cbd5e1;
     font-size: 0.73rem;
     font-weight: 700;
 }
@@ -3706,7 +3706,7 @@ body:has(.home-page-master) .navbar-toggler span {
 .trend-label {
     align-self: end;
     justify-self: center;
-    color: #7d968b;
+    color: #94a3b8;
     font-size: 0.67rem;
     white-space: nowrap;
 }
@@ -3738,7 +3738,7 @@ body:has(.home-page-master) .navbar-toggler span {
     height: 100px;
     place-content: center;
     border-radius: 50%;
-    background: rgba(13, 40, 32, 0.6);
+    background: rgba(15, 23, 42, 0.6);
     text-align: center;
 }
 
@@ -3752,7 +3752,7 @@ body:has(.home-page-master) .navbar-toggler span {
 
 .donut small {
     margin-top: 0.2rem;
-    color: #7d968b;
+    color: #94a3b8;
     font-size: 0.67rem;
 }
 
@@ -3770,21 +3770,21 @@ body:has(.home-page-master) .navbar-toggler span {
     align-items: center;
     gap: 0.55rem;
     padding: 0.42rem 0;
-    border-bottom: 1px solid rgba(13, 40, 32, 0.6);
-    color: #d1e2da;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.6);
+    color: #f1f5f9;
     font-size: 0.77rem;
 }
 
 .category-legend li:last-child { border-bottom: 0; }
 .category-legend strong { color: #ffffff; font-size: 0.77rem; }
-.category-legend small { color: #7d968b; font-size: 0.7rem; text-align: right; }
+.category-legend small { color: #94a3b8; font-size: 0.7rem; text-align: right; }
 .legend-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--category-color); }
 
 .ranking-list { margin-top: 1.35rem; }
 
 .ranking-empty {
     margin-top: 1.35rem;
-    color: #7d968b;
+    color: #94a3b8;
     font-size: 0.85rem;
     line-height: 1.55;
 }
@@ -3794,15 +3794,15 @@ body:has(.home-page-master) .navbar-toggler span {
     grid-template-columns: 1.7rem minmax(0, 1fr);
     gap: 0.5rem;
     padding: 0.72rem 0;
-    border-bottom: 1px solid rgba(13, 40, 32, 0.6);
+    border-bottom: 1px solid rgba(15, 23, 42, 0.6);
 }
 
 .ranking-list li:last-child { border-bottom: 0; }
 .rank { color: #b4532f; font-family: var(--font-heading); font-size: 1.25rem; }
-.ranking-place > div { display: flex; justify-content: space-between; gap: 1rem; color: #6ee7b7; font-size: 0.88rem; }
-.ranking-place strong { color: #7d968b; font-size: 0.7rem; font-weight: 700; white-space: nowrap; }
+.ranking-place > div { display: flex; justify-content: space-between; gap: 1rem; color: #7dd3fc; font-size: 0.88rem; }
+.ranking-place strong { color: #94a3b8; font-size: 0.7rem; font-weight: 700; white-space: nowrap; }
 .ranking-bar { display: block; height: 5px; margin-top: 0.52rem; overflow: hidden; border-radius: 5px; background: rgba(255, 255, 255, 0.1); }
-.ranking-bar span { display: block; width: max(4px, var(--ranking-width)); height: 100%; border-radius: inherit; background: #34d399; }
+.ranking-bar span { display: block; width: max(4px, var(--ranking-width)); height: 100%; border-radius: inherit; background: #38bdf8; }
 
 .recent-card,
 .empty-state {
@@ -3825,21 +3825,21 @@ body:has(.home-page-master) .navbar-toggler span {
     width: fit-content;
     padding: 0.28rem 0.45rem;
     border-radius: 3px;
-    background: rgba(52, 211, 153, 0.12);
-    color: #b5ccc1;
+    background: rgba(56, 189, 248, 0.12);
+    color: #cbd5e1;
     font-size: 0.68rem;
     font-weight: 800;
     line-height: 1.2;
 }
 
 .activity-item h3 { color: #ffffff; font-family: var(--font-heading); font-size: 1.05rem; font-weight: 500; }
-.activity-item p { display: -webkit-box; margin-top: 0.25rem; overflow: hidden; color: #7d968b; font-size: 0.83rem; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; }
-.activity-item time { color: #7d968b; font-size: 0.75rem; text-align: right; }
+.activity-item p { display: -webkit-box; margin-top: 0.25rem; overflow: hidden; color: #94a3b8; font-size: 0.83rem; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; }
+.activity-item time { color: #94a3b8; font-size: 0.75rem; text-align: right; }
 
 .empty-state p {
     max-width: 520px;
     margin: 0.6rem 0 1.25rem;
-    color: #7d968b;
+    color: #94a3b8;
 }
 
 @media (max-width: 800px) {
@@ -3912,12 +3912,12 @@ body:has(.home-page-master) .navbar-toggler span {
 .observation-form textarea:disabled {
     opacity: 0.6;
     cursor: not-allowed;
-    background: rgba(13, 40, 32, 0.3);
-    color: #7d968b;
+    background: rgba(15, 23, 42, 0.3);
+    color: #94a3b8;
 }
 
 body:has(.home-page-master) .navbar-collapse {
-    background: #071511;
+    background: #020617;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
 }
