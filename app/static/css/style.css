@@ -2563,7 +2563,7 @@ body:has(.home-page-master) .navbar-toggler span {
     position: relative;
     background: #0f172a;
     border-radius: 24px;
-    margin: 3rem 0;
+    margin: 3rem auto;
     box-shadow: 0 24px 48px rgba(15, 23, 42, 0.2);
 }
 
