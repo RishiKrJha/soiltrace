@@ -70,7 +70,7 @@ body {
 body:has(.home-page-master) .site-header {
     background: rgba(248, 250, 252, 0.92);
     border-bottom: 1px solid rgba(15, 23, 42, 0.08);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03), 0 4px 16px rgba(15, 23, 42, 0.03);
 }
 
 body:has(.home-page-master) .brand-name {
@@ -341,9 +341,11 @@ body:has(.home-page-master) .navbar-toggler span {
         top: 100%;
         left: 0;
         right: 0;
-        background: #f8fafc;
+        background: rgba(248, 250, 252, 0.98);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
         border-bottom: 1px solid var(--border-light);
-        box-shadow: 0 16px 36px rgba(241, 245, 249, 0.1);
+        box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
         padding: 1.25rem 1.25rem 1.5rem;
         display: none;
         animation: navSlideDown 0.22s ease-out forwards;
@@ -3910,12 +3912,6 @@ body:has(.home-page-master) .navbar-toggler span {
     cursor: not-allowed;
     background: rgba(248, 250, 252, 0.3);
     color: #334155;
-}
-
-body:has(.home-page-master) .navbar-collapse {
-    background: #ffffff;
-    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
-    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
 }
 
 /* PRESENTATION SCROLL SNAPPING */
