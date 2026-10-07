@@ -579,11 +579,12 @@
         });
     }
 
-    // 6. HOTSPOTS EXPLORER: RIGHT-TO-LEFT AUTO-SCROLLING & MANUAL SELECTION WITH REPAUSE DELAY
+    // 6. HOTSPOTS EXPLORER: FAST AUTO-SCROLLING, PROGRESS PAUSE ON HOVER & IMMEDIATE SCROLL
     function initHotspotsExplorer() {
         const hotspotButtons = Array.from(document.querySelectorAll('[data-hotspot-target]'));
         const dossierCard = document.querySelector('.hotspot-dossier-card');
         const hotspotsNav = document.querySelector('.hotspots-nav');
+        const hotspotsExplorer = document.querySelector('.hotspots-explorer');
         const prevBtn = document.querySelector('.hotspot-arrow-btn.prev-btn');
         const nextBtn = document.querySelector('.hotspot-arrow-btn.next-btn');
         const currentNumEl = document.getElementById('hotspot-current-num');
@@ -599,57 +600,59 @@
         const vectorEl = document.getElementById('hotspot-vector');
         const detailsEl = document.getElementById('hotspot-details');
 
-        const AUTO_INTERVAL = 5500; // 5.5s per hotspot during auto-advance
-        const REPAUSE_DELAY = 8500; // 8.5s pause after manual selection before re-triggering auto-scroll
+        // Fast progression: 3 seconds per hotspot item
+        const AUTO_INTERVAL = 3000;
+        // Pause delay after a user manually clicks a tab before resuming auto-scroll
+        const REPAUSE_DELAY = 6500;
 
         let currentIndex = 0;
         let autoTimer = null;
         let repauseTimer = null;
-        let isHovered = false;
         let isManuallyPaused = false;
         let isSectionVisible = true;
 
-        // Synchronize CSS animation variable for the tab progress indicator
+        // Synchronize CSS animation duration
         document.documentElement.style.setProperty('--hotspot-duration', `${AUTO_INTERVAL}ms`);
 
         function resetAllProgressBars() {
             hotspotButtons.forEach(btn => {
                 const prog = btn.querySelector('.hotspot-tab-progress');
                 if (prog) {
-                    prog.classList.remove('is-animating');
+                    prog.classList.remove('is-animating', 'is-paused');
                     prog.style.width = '0%';
                 }
             });
         }
 
-        function startActiveProgressBar() {
+        function startProgressBar(duration = AUTO_INTERVAL) {
             resetAllProgressBars();
-            if (isManuallyPaused || isHovered || !isSectionVisible) return;
             const activeBtn = hotspotButtons[currentIndex];
             if (!activeBtn) return;
             const prog = activeBtn.querySelector('.hotspot-tab-progress');
             if (prog) {
                 void prog.offsetWidth; // Force CSS reflow to restart keyframe
+                prog.style.animation = `hotspotTabProgress ${duration}ms linear forwards`;
                 prog.classList.add('is-animating');
             }
         }
 
         function stopAutoScroll() {
             if (autoTimer) {
-                clearInterval(autoTimer);
+                clearTimeout(autoTimer);
                 autoTimer = null;
             }
             resetAllProgressBars();
         }
 
         function startAutoScroll() {
-            stopAutoScroll();
-            if (isManuallyPaused || isHovered || !isSectionVisible) return;
+            if (autoTimer) clearTimeout(autoTimer);
 
-            startActiveProgressBar();
-            autoTimer = setInterval(() => {
-                const nextIndex = (currentIndex + 1) % hotspotButtons.length;
-                goToHotspot(nextIndex, 'next', false);
+            if (isManuallyPaused || !isSectionVisible) return;
+
+            startProgressBar(AUTO_INTERVAL);
+
+            autoTimer = setTimeout(() => {
+                goToHotspot((currentIndex + 1) % hotspotButtons.length, 'next', false);
             }, AUTO_INTERVAL);
         }
 
@@ -661,7 +664,7 @@
             const data = HOTSPOTS_DATA[targetKey];
             if (!data) return;
 
-            // Update active state on tab buttons
+            // Update tab button states
             hotspotButtons.forEach(b => {
                 b.classList.remove('active');
                 b.setAttribute('aria-selected', 'false');
@@ -669,7 +672,7 @@
             targetBtn.classList.add('active');
             targetBtn.setAttribute('aria-selected', 'true');
 
-            // Scroll horizontal tab navigation bar so the active tab is centered and in view
+            // Scroll tab bar so newly active tab is centered
             if (hotspotsNav) {
                 const offset = targetBtn.offsetLeft - (hotspotsNav.clientWidth / 2) + (targetBtn.clientWidth / 2);
                 hotspotsNav.scrollTo({
@@ -678,7 +681,7 @@
                 });
             }
 
-            // Update card textual details
+            // Update dossier card content
             if (titleEl) titleEl.textContent = data.title;
             if (locEl) locEl.textContent = data.location;
             if (contamEl) contamEl.textContent = data.contaminant;
@@ -689,13 +692,13 @@
             if (detailsEl) detailsEl.textContent = data.details;
             if (currentNumEl) currentNumEl.textContent = (index + 1);
 
-            // Animate card with smooth slide (next = right-to-left, prev = left-to-right)
+            // Trigger quick right-to-left slide animation on dossier card
             dossierCard.classList.remove('slide-right', 'slide-left');
             void dossierCard.offsetWidth; // Force reflow
             dossierCard.classList.add(direction === 'next' ? 'slide-right' : 'slide-left');
 
             if (isManual) {
-                // Manual selection: stop auto-scroll immediately, then repause for delay
+                // User manual click: pause progression and repause after delay
                 stopAutoScroll();
                 isManuallyPaused = true;
                 if (repauseTimer) {
@@ -703,10 +706,10 @@
                 }
                 repauseTimer = setTimeout(() => {
                     isManuallyPaused = false;
-                    startAutoScroll();
+                    startAutoScroll(AUTO_INTERVAL);
                 }, REPAUSE_DELAY);
             } else {
-                startActiveProgressBar();
+                startAutoScroll(AUTO_INTERVAL);
             }
         }
 
@@ -733,21 +736,7 @@
             });
         }
 
-        // Pause on mouse hover over card or nav bar; resume on mouse leave
-        const interactiveContainers = [dossierCard, hotspotsNav];
-        interactiveContainers.forEach(container => {
-            if (!container) return;
-            container.addEventListener('mouseenter', () => {
-                isHovered = true;
-                stopAutoScroll();
-            });
-            container.addEventListener('mouseleave', () => {
-                isHovered = false;
-                if (!isManuallyPaused) {
-                    startAutoScroll();
-                }
-            });
-        });
+        // Hover handling removed by user request.
 
         // Keyboard arrow navigation support
         if (hotspotsNav) {
@@ -772,9 +761,9 @@
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     isSectionVisible = entry.isIntersecting;
-                    if (isSectionVisible && !isManuallyPaused && !isHovered) {
+                    if (isSectionVisible && !isManuallyPaused) {
                         startAutoScroll();
-                    } else {
+                    } else if (!isSectionVisible) {
                         stopAutoScroll();
                     }
                 });
@@ -1021,5 +1010,10 @@
 
         // Initial check on load
         updateActiveSection();
+    }
+    
+    // Add fallback for :has() selector in CSS to prevent body scroll
+    if (document.querySelector('.index-page')) {
+        document.body.classList.add('index-page-body');
     }
 })();

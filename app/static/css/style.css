@@ -454,18 +454,18 @@ body:has(.home-page-master) .navbar-toggler span {
 
 /* Glassmorphic Panel Primitive */
 .glass-panel {
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(15, 23, 42, 0.09);
     border-radius: 16px;
-    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.28);
+    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.04);
     transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .glass-panel:hover {
-    border-color: rgba(245, 158, 11, 0.25);
-    box-shadow: 0 20px 44px rgba(0, 0, 0, 0.35);
+    border-color: rgba(2, 132, 199, 0.25);
+    box-shadow: 0 20px 44px rgba(15, 23, 42, 0.08);
 }
 
 /* Shared Buttons & Enhancements */
@@ -2097,14 +2097,19 @@ body:has(.home-page-master) .navbar-toggler span {
     position: absolute;
     bottom: 0;
     left: 0;
-    height: 3px;
+    height: 3.5px;
     width: 0%;
     background: linear-gradient(90deg, #0284c7 0%, #38bdf8 100%);
     border-radius: 0 2px 2px 0;
+    pointer-events: none;
 }
 
 .hotspot-tab.active .hotspot-tab-progress.is-animating {
-    animation: hotspotTabProgress var(--hotspot-duration, 5500ms) linear forwards;
+    animation: hotspotTabProgress var(--hotspot-duration, 3000ms) linear forwards;
+}
+
+.hotspot-tab.active .hotspot-tab-progress.is-paused {
+    animation-play-state: paused !important;
 }
 
 @keyframes hotspotTabProgress {
@@ -2123,11 +2128,11 @@ body:has(.home-page-master) .navbar-toggler span {
 }
 
 .hotspot-dossier-card.slide-right {
-    animation: hotspotSlideRight 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: hotspotSlideRight 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .hotspot-dossier-card.slide-left {
-    animation: hotspotSlideLeft 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: hotspotSlideLeft 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes hotspotSlideRight {
@@ -4168,8 +4173,8 @@ html {
 
 .metric-card:hover, .dashboard-card:hover, .glass-panel:hover {
     transform: translateY(-4px) scale(1.01);
-    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(245, 158, 11, 0.1) inset;
-    border-color: rgba(245, 158, 11, 0.3);
+    box-shadow: 0 24px 48px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(2, 132, 199, 0.1) inset;
+    border-color: rgba(2, 132, 199, 0.3);
 }
 
 .metric-card strong {
@@ -4182,7 +4187,7 @@ html {
 }
 
 /* INDEX PAGE PRESENTATION SCROLLING */
-body:has(.index-page) {
+body:has(.index-page), body.index-page-body {
     overflow: hidden; /* Prevent body scroll */
 }
 
