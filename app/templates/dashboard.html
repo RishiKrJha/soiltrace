@@ -1,7 +1,15 @@
 {% extends "base.html" %}
 {% block title %}Dashboard{% endblock %}
 {% block content %}
-<main class="dashboard-page" id="main-content">
+<!-- 0. SCROLL PROGRESS BAR & AMBIENT AURORA GLOW -->
+<div id="scroll-progress" aria-hidden="true"></div>
+<div class="ambient-glow-wrapper" aria-hidden="true">
+    <div class="ambient-glow-orb orb-1"></div>
+    <div class="ambient-glow-orb orb-2"></div>
+    <div class="ambient-glow-orb orb-3"></div>
+</div>
+
+<main class="home-page-master dashboard-page" id="main-content">
     <section class="dashboard-heading" aria-labelledby="dashboard-title">
         <div>
             <p class="eyebrow">Community signal tracker</p>

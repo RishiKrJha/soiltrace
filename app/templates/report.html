@@ -1,7 +1,15 @@
 {% extends "base.html" %}
 {% block title %}Report an Observation{% endblock %}
 {% block content %}
-<main class="report-page" id="main-content">
+<!-- 0. SCROLL PROGRESS BAR & AMBIENT AURORA GLOW -->
+<div id="scroll-progress" aria-hidden="true"></div>
+<div class="ambient-glow-wrapper" aria-hidden="true">
+    <div class="ambient-glow-orb orb-1"></div>
+    <div class="ambient-glow-orb orb-2"></div>
+    <div class="ambient-glow-orb orb-3"></div>
+</div>
+
+<main class="home-page-master report-page" id="main-content">
     <section class="report-intro" aria-labelledby="report-title">
         <p class="eyebrow">SoilTrace field notes</p>
         <h1 id="report-title">Report a Soil Pollution Observation</h1>
