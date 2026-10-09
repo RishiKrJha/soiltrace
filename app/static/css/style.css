@@ -764,18 +764,25 @@ body:has(.home-page-master) .navbar-toggler span {
    Plain-language explanations, living superpowers, warning signs, action guide
    ========================================================================== */
 
-/* Superpowers Grid */
+/* Superpowers Grid - 2 cards in a row on desktop for spacious, balanced layout */
 .awareness-superpowers-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
-    margin-bottom: 3.5rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.75rem;
+    margin-bottom: 0;
 }
 
 .superpower-card {
-    padding: 2rem 1.75rem;
+    padding: 2.25rem 2rem;
     display: flex;
     flex-direction: column;
+    border-radius: 16px;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.superpower-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 32px rgba(15, 23, 42, 0.08);
 }
 
 .superpower-icon-box {
@@ -929,17 +936,24 @@ body:has(.home-page-master) .navbar-toggler span {
     border: 1px solid #fecdd3;
 }
 
-/* Everyday Culprits Grid */
+/* Everyday Culprits Grid - 2 cards in a row on desktop for spacious layout and stat clarity */
 .daily-culprits-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.75rem;
 }
 
 .culprit-card {
-    padding: 2rem 1.6rem;
+    padding: 2.25rem 2rem;
     display: flex;
     flex-direction: column;
+    border-radius: 16px;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.culprit-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 32px rgba(15, 23, 42, 0.08);
 }
 
 .culprit-badge {
@@ -959,28 +973,29 @@ body:has(.home-page-master) .navbar-toggler span {
 .badge-ewaste { background: rgba(168, 85, 247, 0.15); border: 1px solid rgba(168, 85, 247, 0.35); color: #c084fc; }
 
 .culprit-card h3 {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: 700;
     color: #0f172a;
-    margin-bottom: 0.65rem;
+    margin-bottom: 0.75rem;
 }
 
 .culprit-card p {
-    font-size: 0.88rem;
-    line-height: 1.6;
+    font-size: 0.92rem;
+    line-height: 1.65;
     color: #1e293b;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
     flex-grow: 1;
 }
 
 .culprit-stat-pill {
-    padding: 0.65rem 0.85rem;
+    padding: 0.75rem 1rem;
     background: #f8fafc;
-    border-radius: 6px;
-    font-size: 0.78rem;
+    border-radius: 8px;
+    font-size: 0.82rem;
     color: #475569;
     border: 1px solid #e2e8f0;
-    border-left: 3px solid #0284c7;
+    border-left: 4px solid #0284c7;
+    margin-top: auto;
 }
 
 .culprit-stat-pill strong {
@@ -2486,6 +2501,7 @@ body:has(.home-page-master) .navbar-toggler span {
 
 .remediation-methods-grid {
     display: flex;
+    flex-direction: column;
     gap: 1.15rem;
 }
 
@@ -4300,10 +4316,10 @@ html {
         display: flex !important;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
-        scroll-behavior: smooth;
         flex-wrap: nowrap !important;
         gap: 1.5rem;
-        padding: 1rem 0 2rem 0;
+        padding: 1rem 7.5vw 2rem 7.5vw !important;
+        scroll-padding: 0 7.5vw;
         scrollbar-width: none; /* Firefox */
         -webkit-overflow-scrolling: touch;
     }
@@ -4312,12 +4328,10 @@ html {
         display: none; /* Chrome/Safari */
     }
 
-    .mobile-carousel {
-        padding: 1rem 1rem 2rem 1rem !important; /* Add horizontal padding so cards don't touch screen edges */
-    }
     .mobile-carousel > * {
         flex: 0 0 85vw !important; /* 85% width so next card peeks */
         scroll-snap-align: center;
+        scroll-snap-stop: always;
         max-width: none !important;
     }
 }
@@ -4325,12 +4339,12 @@ html {
 /* Desktop View Defaults (min-width: 1024px) */
 @media (min-width: 1024px) {
     /* Hide buttons by default on desktop unless it's a desktop carousel */
-    .mobile-carousel-wrapper:not(.desktop-coverflow):not(.desktop-y-carousel) .mobile-carousel-btn {
+    .mobile-carousel-wrapper:not(.desktop-coverflow) .mobile-carousel-btn {
         display: none;
     }
 
     /* Reset normal grids on desktop so they just display as they used to */
-    .mobile-carousel:not(.coverflow-track):not(.desktop-y-track) > * {
+    .mobile-carousel:not(.coverflow-track) > * {
         flex: auto;
         scroll-snap-align: none;
     }
@@ -4351,9 +4365,9 @@ html {
         display: flex !important;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
-        scroll-behavior: smooth;
         gap: 2rem;
-        padding: 2rem 50px;
+        padding: 2rem 30%;
+        scroll-padding: 0 30%;
         scrollbar-width: none;
     }
     
@@ -4364,6 +4378,7 @@ html {
     .coverflow-track > * {
         flex: 0 0 40% !important; /* Center card width */
         scroll-snap-align: center;
+        scroll-snap-stop: always;
         transition: transform 0.4s ease, opacity 0.4s ease, filter 0.4s ease;
         opacity: 0.6;
         transform: scale(0.85);
@@ -4371,8 +4386,7 @@ html {
         pointer-events: none; /* Disable hover on inactive cards */
     }
 
-    /* We will use JS or scroll snapping intersection to add active class. 
-       But CSS scroll snapping natively centers. We rely on an IntersectionObserver in JS to toggle .coverflow-active */
+    /* CSS scroll snapping natively centers. We rely on an IntersectionObserver in JS to toggle .coverflow-active */
     .coverflow-track > *.coverflow-active {
         opacity: 1;
         transform: scale(1);
@@ -4388,89 +4402,4 @@ html {
     }
     .desktop-coverflow .mobile-carousel-btn.prev { left: 10%; } 
     .desktop-coverflow .mobile-carousel-btn.next { right: 10%; }
-}
-
-/* ==========================================================================
-   DESKTOP: HOPE & SCIENCE VERTICAL SCROLL SNAP
-   ========================================================================== */
-@media (min-width: 1024px) {
-    .remediation-feature-layout {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 3rem;
-        align-items: stretch;
-        /* Constrain layout height to the image height so the right side scrolls */
-        
-    }
-
-    .remediation-image-column {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-    }
-    .remediation-image-column img {
-        flex-grow: 1;
-        object-fit: cover;
-        border-radius: 8px;
-        min-height: 0;
-    }
-
-    .remediation-feature-layout {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 2rem;
-        align-items: stretch;
-        max-height: 75vh; /* Fit on one screen */
-    }
-
-    .remediation-feature-layout > .mobile-carousel-wrapper {
-        min-width: 0; /* Let grid shrink */
-    }
-
-    .desktop-x-carousel {
-        height: 100%;
-        overflow: hidden;
-        position: relative;
-    }
-
-    .desktop-x-track {
-        display: flex !important;
-        flex-direction: row;
-        overflow-x: auto;
-        overflow-y: hidden;
-        scroll-snap-type: x mandatory;
-        scroll-behavior: smooth;
-        height: 100%;
-        gap: 1.5rem;
-        padding: 0;
-        scrollbar-width: none;
-        align-items: center;
-    }
-    
-    .desktop-x-track::-webkit-scrollbar {
-        display: none;
-    }
-
-    .desktop-x-track > * {
-        flex: 0 0 80% !important; 
-        scroll-snap-align: center;
-        height: max-content; /* Let it shrink to its content */
-        display: flex;
-        flex-direction: row; /* Icon and text side-by-side */
-        align-items: center; /* Vertically center icon and text */
-        padding: 2rem;
-    }
-
-    /* Show buttons for this desktop carousel */
-    .desktop-x-carousel .mobile-carousel-btn {
-        display: flex !important;
-        top: 50%;
-        transform: translateY(-50%);
-    }
-    .desktop-x-carousel .mobile-carousel-btn.prev {
-        left: 0px;
-    }
-    .desktop-x-carousel .mobile-carousel-btn.next {
-        right: 0px;
-    }
 }
