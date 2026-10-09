@@ -871,7 +871,7 @@
                 });
             },
             {
-                threshold: 0.12,
+                threshold: 0.02,
                 rootMargin: '0px 0px -40px 0px'
             }
         );
