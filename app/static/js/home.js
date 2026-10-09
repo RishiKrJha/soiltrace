@@ -1085,4 +1085,140 @@
     if (document.querySelector('.index-page')) {
         document.body.classList.add('index-page-body');
     }
+    window.scrollCarousel = function(wrapperId, direction, isVertical) {
+        const wrapper = document.getElementById(wrapperId);
+        if (!wrapper) return;
+        const track = wrapper.querySelector('.carousel-track');
+        if (!track) return;
+        
+        // Gap handling
+        const gap = parseInt(window.getComputedStyle(track).gap) || 0;
+        
+        if (isVertical) {
+            const cardHeight = track.firstElementChild.offsetHeight + gap;
+            track.scrollBy({ top: direction * cardHeight, behavior: 'smooth' });
+        } else {
+            const cardWidth = track.firstElementChild.offsetWidth + gap;
+            track.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
+        }
+        
+        // Pause auto-scroll on manual interaction
+        if (window.carouselTimers && window.carouselTimers[wrapperId]) {
+            clearInterval(window.carouselTimers[wrapperId]);
+            window.carouselTimers[wrapperId] = null;
+        }
+    };
+
+    function initCarousels() {
+        const tracks = document.querySelectorAll('.carousel-track');
+        window.carouselTimers = {};
+
+        tracks.forEach(track => {
+            const wrapper = track.closest('.mobile-carousel-wrapper');
+            const wrapperId = wrapper.id;
+            
+            // 1. Coverflow Active State Observer (Desktop)
+            if (wrapper.classList.contains('desktop-coverflow')) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('coverflow-active');
+                        } else {
+                            entry.target.classList.remove('coverflow-active');
+                        }
+                    });
+                }, {
+                    root: track,
+                    rootMargin: '0px -30% 0px -30%', // Only active when intersecting the middle 40% of the track
+                    threshold: 0.1 
+                });
+                
+                Array.from(track.children).forEach(card => observer.observe(card));
+            }
+
+            // Infinite Scroll DOM Swapping
+            let isAdjusting = false;
+            const handleInfiniteScroll = () => {
+                if (isAdjusting) return;
+                
+                const gap = parseInt(window.getComputedStyle(track).gap) || 0;
+                const cardWidth = track.firstElementChild.offsetWidth + gap;
+                
+                if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 10) {
+                    isAdjusting = true;
+                    const originalSnap = track.style.scrollSnapType;
+                    track.style.scrollSnapType = 'none';
+                    track.style.scrollBehavior = 'auto';
+                    
+                    track.appendChild(track.firstElementChild);
+                    track.scrollLeft -= cardWidth;
+                    
+                    void track.offsetWidth;
+                    track.style.scrollSnapType = originalSnap;
+                    track.style.scrollBehavior = '';
+                    setTimeout(() => isAdjusting = false, 50);
+                } else if (track.scrollLeft <= 10) {
+                    isAdjusting = true;
+                    const originalSnap = track.style.scrollSnapType;
+                    track.style.scrollSnapType = 'none';
+                    track.style.scrollBehavior = 'auto';
+                    
+                    track.insertBefore(track.lastElementChild, track.firstElementChild);
+                    track.scrollLeft += cardWidth;
+                    
+                    void track.offsetWidth;
+                    track.style.scrollSnapType = originalSnap;
+                    track.style.scrollBehavior = '';
+                    setTimeout(() => isAdjusting = false, 50);
+                }
+            };
+
+            if ('onscrollend' in window) {
+                track.addEventListener('scrollend', handleInfiniteScroll);
+            } else {
+                let scrollTimeout;
+                track.addEventListener('scroll', () => {
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(handleInfiniteScroll, 100);
+                });
+            }
+            
+            setTimeout(() => {
+                if (track.scrollLeft <= 10) handleInfiniteScroll();
+            }, 300);
+
+            // 2. Auto-scroll Logic
+            if (wrapper.classList.contains('auto-carousel')) {
+                const startAutoScroll = () => {
+                    window.carouselTimers[wrapperId] = setInterval(() => {
+                        if (window.innerWidth >= 1024 && !wrapper.classList.contains('desktop-coverflow') && !wrapper.classList.contains('desktop-x-carousel')) {
+                            return; // Do nothing on desktop for mobile-only carousels
+                        }
+                        window.scrollCarousel(wrapperId, 1, false);
+                    }, 4000);
+                };
+                
+                startAutoScroll();
+                
+                track.addEventListener('touchstart', () => {
+                    if (window.carouselTimers[wrapperId]) {
+                        clearInterval(window.carouselTimers[wrapperId]);
+                        window.carouselTimers[wrapperId] = null;
+                    }
+                }, { passive: true });
+                track.addEventListener('mousedown', () => {
+                    if (window.carouselTimers[wrapperId]) {
+                        clearInterval(window.carouselTimers[wrapperId]);
+                        window.carouselTimers[wrapperId] = null;
+                    }
+                }, { passive: true });
+            }
+        });
+    }
+
+    if (document.readyState !== 'loading') {
+        initCarousels();
+    } else {
+        document.addEventListener('DOMContentLoaded', initCarousels);
+    }
 })();

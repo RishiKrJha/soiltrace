@@ -2473,7 +2473,6 @@ body:has(.home-page-master) .navbar-toggler span {
 
 .remediation-methods-grid {
     display: flex;
-    flex-direction: column;
     gap: 1.15rem;
 }
 
@@ -4242,5 +4241,223 @@ html {
     
     .observation-panel {
         padding: 1.5rem 1rem;
+    }
+}
+
+/* ==========================================================================
+   NATIVE CSS CAROUSEL FOR MOBILE & DESKTOP (NO EXTERNAL LIBRARIES)
+   ========================================================================== */
+
+/* Wrapper and Buttons (Shared) */
+.mobile-carousel-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.mobile-carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    cursor: pointer;
+    color: #1e293b;
+    transition: all 0.2s ease;
+}
+
+.mobile-carousel-btn:hover {
+    background: #fff;
+    transform: translateY(-50%) scale(1.05);
+}
+
+.mobile-carousel-btn.prev { left: 5px; }
+.mobile-carousel-btn.next { right: 5px; }
+
+/* Mobile View (max-width: 1023px) */
+@media (max-width: 1023px) {
+    .mobile-carousel {
+        display: flex !important;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        flex-wrap: nowrap !important;
+        gap: 1.5rem;
+        padding: 1rem 0 2rem 0;
+        scrollbar-width: none; /* Firefox */
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .mobile-carousel::-webkit-scrollbar {
+        display: none; /* Chrome/Safari */
+    }
+
+    .mobile-carousel {
+        padding: 1rem 1rem 2rem 1rem !important; /* Add horizontal padding so cards don't touch screen edges */
+    }
+    .mobile-carousel > * {
+        flex: 0 0 85vw !important; /* 85% width so next card peeks */
+        scroll-snap-align: center;
+        max-width: none !important;
+    }
+}
+
+/* Desktop View Defaults (min-width: 1024px) */
+@media (min-width: 1024px) {
+    /* Hide buttons by default on desktop unless it's a desktop carousel */
+    .mobile-carousel-wrapper:not(.desktop-coverflow):not(.desktop-y-carousel) .mobile-carousel-btn {
+        display: none;
+    }
+
+    /* Reset normal grids on desktop so they just display as they used to */
+    .mobile-carousel:not(.coverflow-track):not(.desktop-y-track) > * {
+        flex: auto;
+        scroll-snap-align: none;
+    }
+}
+
+/* ==========================================================================
+   DESKTOP: COVERFLOW STYLE FOR CITIZEN FIELD GUIDE
+   ========================================================================== */
+@media (min-width: 1024px) {
+    .desktop-coverflow {
+        padding: 2rem 0;
+        margin: 0 auto;
+        max-width: 100vw;
+        overflow: hidden;
+    }
+
+    .coverflow-track {
+        display: flex !important;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        gap: 2rem;
+        padding: 2rem 50px;
+        scrollbar-width: none;
+    }
+    
+    .coverflow-track::-webkit-scrollbar {
+        display: none;
+    }
+
+    .coverflow-track > * {
+        flex: 0 0 40% !important; /* Center card width */
+        scroll-snap-align: center;
+        transition: transform 0.4s ease, opacity 0.4s ease, filter 0.4s ease;
+        opacity: 0.6;
+        transform: scale(0.85);
+        filter: grayscale(40%);
+        pointer-events: none; /* Disable hover on inactive cards */
+    }
+
+    /* We will use JS or scroll snapping intersection to add active class. 
+       But CSS scroll snapping natively centers. We rely on an IntersectionObserver in JS to toggle .coverflow-active */
+    .coverflow-track > *.coverflow-active {
+        opacity: 1;
+        transform: scale(1);
+        filter: grayscale(0%);
+        z-index: 5;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        pointer-events: auto; /* Re-enable for active card */
+    }
+
+    .desktop-coverflow .mobile-carousel-btn {
+        width: 50px;
+        height: 50px;
+    }
+    .desktop-coverflow .mobile-carousel-btn.prev { left: 10%; } 
+    .desktop-coverflow .mobile-carousel-btn.next { right: 10%; }
+}
+
+/* ==========================================================================
+   DESKTOP: HOPE & SCIENCE VERTICAL SCROLL SNAP
+   ========================================================================== */
+@media (min-width: 1024px) {
+    .remediation-feature-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: stretch;
+        /* Constrain layout height to the image height so the right side scrolls */
+        
+    }
+
+    .remediation-image-column {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .remediation-image-column img {
+        flex-grow: 1;
+        object-fit: cover;
+        border-radius: 8px;
+        min-height: 0;
+    }
+
+    .remediation-feature-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        align-items: stretch;
+        max-height: 75vh; /* Fit on one screen */
+    }
+
+    .remediation-feature-layout > .mobile-carousel-wrapper {
+        min-width: 0; /* Let grid shrink */
+    }
+
+    .desktop-x-carousel {
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .desktop-x-track {
+        display: flex !important;
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        height: 100%;
+        gap: 1.5rem;
+        padding: 0;
+        scrollbar-width: none;
+        align-items: center;
+    }
+    
+    .desktop-x-track::-webkit-scrollbar {
+        display: none;
+    }
+
+    .desktop-x-track > * {
+        flex: 0 0 80% !important; 
+        scroll-snap-align: center;
+        height: max-content; /* Let it shrink to its content */
+        display: flex;
+        flex-direction: row; /* Icon and text side-by-side */
+        align-items: center; /* Vertically center icon and text */
+        padding: 2rem;
+    }
+
+    /* Show buttons for this desktop carousel */
+    .desktop-x-carousel .mobile-carousel-btn {
+        display: flex !important;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    .desktop-x-carousel .mobile-carousel-btn.prev {
+        left: 0px;
+    }
+    .desktop-x-carousel .mobile-carousel-btn.next {
+        right: 0px;
     }
 }
