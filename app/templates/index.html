@@ -204,36 +204,40 @@
             </p>
         </div>
 
-        <div class="myths-grid reveal-on-scroll">
-            <article class="myth-card glass-panel">
-                <span class="myth-label">Myth 01</span>
-                <p class="myth-quote">"If a vegetable looks crisp and green at the market, the soil it grew in must be clean."</p>
-                <div class="fact-divider"></div>
-                <span class="fact-label">The Scientific Fact</span>
-                <p class="fact-explanation">
-                    Plants absorb toxic heavy metals through their roots invisibly. NEERI’s laboratory tests on Yamuna floodplains found crisp, green spinach containing <strong>14.1 mg/kg of lead</strong>—nearly 6 times the legal safety limit. Produce looks completely normal even when carrying hazardous toxins.
-                </p>
-            </article>
+        <div class="mobile-carousel-wrapper auto-carousel" id="carousel-myths">
+            <button class="mobile-carousel-btn prev" aria-label="Previous" onclick="scrollCarousel('carousel-myths', -1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <div class="mobile-carousel carousel-track myths-grid reveal-on-scroll">
+                <article class="myth-card glass-panel">
+                    <span class="myth-label">Myth 01</span>
+                    <p class="myth-quote">"If a vegetable looks crisp and green at the market, the soil it grew in must be clean."</p>
+                    <div class="fact-divider"></div>
+                    <span class="fact-label">The Scientific Fact</span>
+                    <p class="fact-explanation">
+                        Plants absorb toxic heavy metals through their roots invisibly. NEERI’s laboratory tests on Yamuna floodplains found crisp, green spinach containing <strong>14.1 mg/kg of lead</strong>—nearly 6 times the legal safety limit. Produce looks completely normal even when carrying hazardous toxins.
+                    </p>
+                </article>
 
-            <article class="myth-card glass-panel">
-                <span class="myth-label">Myth 02</span>
-                <p class="myth-quote">"Washing and boiling vegetables removes any chemical contamination from soil."</p>
-                <div class="fact-divider"></div>
-                <span class="fact-label">The Scientific Fact</span>
-                <p class="fact-explanation">
-                    Washing only removes surface dirt. Heavy metals such as Cadmium, Lead, and Arsenic are translocated into the plant's inner cellular structure. Boiling or peeling will not remove systemic heavy metals stored inside leaf tissues or grains.
-                </p>
-            </article>
+                <article class="myth-card glass-panel">
+                    <span class="myth-label">Myth 02</span>
+                    <p class="myth-quote">"Washing and boiling vegetables removes any chemical contamination from soil."</p>
+                    <div class="fact-divider"></div>
+                    <span class="fact-label">The Scientific Fact</span>
+                    <p class="fact-explanation">
+                        Washing only removes surface dirt. Heavy metals such as Cadmium, Lead, and Arsenic are translocated into the plant's inner cellular structure. Boiling or peeling will not remove systemic heavy metals stored inside leaf tissues or grains.
+                    </p>
+                </article>
 
-            <article class="myth-card glass-panel">
-                <span class="myth-label">Myth 03</span>
-                <p class="myth-quote">"Chemical fertilizers just feed plants and leave no lasting harm in the ground."</p>
-                <div class="fact-divider"></div>
-                <span class="fact-label">The Scientific Fact</span>
-                <p class="fact-explanation">
-                    Synthetic fertilizers introduce natural Cadmium impurities (present in mined rock phosphate). Over decades, continuous application acidifies soil, burns away living organic carbon (now deficient in 73% of Indian soils), and kills beneficial earthworms.
-                </p>
-            </article>
+                <article class="myth-card glass-panel">
+                    <span class="myth-label">Myth 03</span>
+                    <p class="myth-quote">"Chemical fertilizers just feed plants and leave no lasting harm in the ground."</p>
+                    <div class="fact-divider"></div>
+                    <span class="fact-label">The Scientific Fact</span>
+                    <p class="fact-explanation">
+                        Synthetic fertilizers introduce natural Cadmium impurities (present in mined rock phosphate). Over decades, continuous application acidifies soil, burns away living organic carbon (now deficient in 73% of Indian soils), and kills beneficial earthworms.
+                    </p>
+                </article>
+            </div>
+            <button class="mobile-carousel-btn next" aria-label="Next" onclick="scrollCarousel('carousel-myths', 1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
         </div>
     </section>
 
@@ -713,9 +717,9 @@
             </p>
         </div>
 
-        <div class="mobile-carousel-wrapper auto-carousel desktop-coverflow" id="carousel-field-guide">
-            <button class="mobile-carousel-btn prev coverflow-btn" aria-label="Previous" onclick="scrollCarousel('carousel-field-guide', -1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
-            <div class="mobile-carousel carousel-track coverflow-track warning-signs-grid reveal-on-scroll">
+        <div class="mobile-carousel-wrapper auto-carousel" id="carousel-field-guide">
+            <button class="mobile-carousel-btn prev" aria-label="Previous" onclick="scrollCarousel('carousel-field-guide', -1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <div class="mobile-carousel carousel-track warning-signs-grid reveal-on-scroll">
             <article class="warning-card glass-panel">
                 <span class="warning-num-tag">Warning Sign 01</span>
                 <h3>Stunted Crops & Yellowing Leaves</h3>
@@ -758,7 +762,7 @@
                 <div class="warning-hint">Look for: Disintegrating plastic shreds mixed into farm soil.</div>
             </article>
    </div>
-            <button class="mobile-carousel-btn next coverflow-btn" aria-label="Next" onclick="scrollCarousel('carousel-field-guide', 1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+            <button class="mobile-carousel-btn next" aria-label="Next" onclick="scrollCarousel('carousel-field-guide', 1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
         </div>
     </section>
 

@@ -4281,6 +4281,8 @@ html {
 .mobile-carousel-wrapper {
     position: relative;
     width: 100%;
+    min-width: 0;
+    max-width: 100%;
 }
 
 .mobile-carousel-btn {
@@ -4314,6 +4316,7 @@ html {
 @media (max-width: 1023px) {
     .mobile-carousel {
         display: flex !important;
+        flex-direction: row !important;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
         flex-wrap: nowrap !important;
@@ -4333,73 +4336,89 @@ html {
         scroll-snap-align: center;
         scroll-snap-stop: always;
         max-width: none !important;
+        box-sizing: border-box;
+    }
+
+    .remediation-methods-grid.mobile-carousel {
+        flex-direction: row !important;
     }
 }
 
 /* Desktop View Defaults (min-width: 1024px) */
 @media (min-width: 1024px) {
-    /* Hide buttons by default on desktop unless it's a desktop carousel */
-    .mobile-carousel-wrapper:not(.desktop-coverflow) .mobile-carousel-btn {
-        display: none;
+    /* Hide buttons on desktop for other carousels */
+    .mobile-carousel-wrapper:not(#carousel-field-guide) .mobile-carousel-btn {
+        display: none !important;
     }
 
     /* Reset normal grids on desktop so they just display as they used to */
-    .mobile-carousel:not(.coverflow-track) > * {
+    .mobile-carousel:not(#carousel-field-guide .carousel-track) > * {
         flex: auto;
         scroll-snap-align: none;
     }
 }
 
 /* ==========================================================================
-   DESKTOP: COVERFLOW STYLE FOR CITIZEN FIELD GUIDE
+   DESKTOP: CITIZEN FIELD GUIDE CARD SCROLLING FORMAT
    ========================================================================== */
 @media (min-width: 1024px) {
-    .desktop-coverflow {
-        padding: 2rem 0;
-        margin: 0 auto;
-        max-width: 100vw;
-        overflow: hidden;
+    #carousel-field-guide {
+        position: relative;
+        width: 100%;
+        overflow: visible;
     }
 
-    .coverflow-track {
+    #carousel-field-guide .carousel-track {
         display: flex !important;
+        flex-direction: row !important;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
-        gap: 2rem;
-        padding: 2rem 30%;
-        scroll-padding: 0 30%;
+        gap: 1.5rem;
+        padding: 0.75rem 0 1.25rem 0;
         scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
     }
-    
-    .coverflow-track::-webkit-scrollbar {
+
+    #carousel-field-guide .carousel-track::-webkit-scrollbar {
         display: none;
     }
 
-    .coverflow-track > * {
-        flex: 0 0 40% !important; /* Center card width */
-        scroll-snap-align: center;
-        scroll-snap-stop: always;
-        transition: transform 0.4s ease, opacity 0.4s ease, filter 0.4s ease;
-        opacity: 0.6;
-        transform: scale(0.85);
-        filter: grayscale(40%);
-        pointer-events: none; /* Disable hover on inactive cards */
+    #carousel-field-guide .warning-card {
+        flex: 0 0 calc((100% - 3rem) / 3) !important;
+        max-width: calc((100% - 3rem) / 3) !important;
+        min-width: calc((100% - 3rem) / 3) !important;
+        scroll-snap-align: start;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        box-sizing: border-box;
     }
 
-    /* CSS scroll snapping natively centers. We rely on an IntersectionObserver in JS to toggle .coverflow-active */
-    .coverflow-track > *.coverflow-active {
-        opacity: 1;
-        transform: scale(1);
-        filter: grayscale(0%);
-        z-index: 5;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-        pointer-events: auto; /* Re-enable for active card */
+    #carousel-field-guide .mobile-carousel-btn {
+        display: flex !important;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 44px;
+        height: 44px;
+        background: #ffffff;
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+        color: #1e293b;
+        z-index: 10;
+        cursor: pointer;
     }
 
-    .desktop-coverflow .mobile-carousel-btn {
-        width: 50px;
-        height: 50px;
+    #carousel-field-guide .mobile-carousel-btn:hover {
+        background: #ffffff;
+        transform: translateY(-50%) scale(1.08);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
     }
-    .desktop-coverflow .mobile-carousel-btn.prev { left: 10%; } 
-    .desktop-coverflow .mobile-carousel-btn.next { right: 10%; }
+
+    #carousel-field-guide .mobile-carousel-btn.prev {
+        left: -22px;
+    }
+
+    #carousel-field-guide .mobile-carousel-btn.next {
+        right: -22px;
+    }
 }

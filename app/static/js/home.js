@@ -1100,7 +1100,26 @@
             window.carouselTimers[wrapperId] = null;
         }
 
-        // Determine currently active card based on track center
+        // Desktop handling for multi-card scrolling carousels
+        if (window.innerWidth >= 1024) {
+            const gap = parseFloat(window.getComputedStyle(track).gap) || 0;
+            const cardWidth = cards[0].offsetWidth + gap;
+            const isAtEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 15;
+            const isAtStart = track.scrollLeft <= 15;
+
+            if (direction > 0 && isAtEnd) {
+                track.scrollTo({ left: 0, behavior: 'smooth' });
+                return;
+            }
+            if (direction < 0 && isAtStart) {
+                track.scrollTo({ left: track.scrollWidth, behavior: 'smooth' });
+                return;
+            }
+            track.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
+            return;
+        }
+
+        // Mobile: determine currently active card based on track center
         const trackCenter = track.scrollLeft + (track.clientWidth / 2);
         let currentIndex = 0;
         let minDistance = Infinity;
@@ -1141,26 +1160,7 @@
             if (!wrapper) return;
             const wrapperId = wrapper.id;
             
-            // 1. Coverflow Active State Observer (Desktop)
-            if (wrapper.classList.contains('desktop-coverflow')) {
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('coverflow-active');
-                        } else {
-                            entry.target.classList.remove('coverflow-active');
-                        }
-                    });
-                }, {
-                    root: track,
-                    rootMargin: '0px -30% 0px -30%', // Active when in center 40% of track
-                    threshold: 0.1 
-                });
-                
-                Array.from(track.children).forEach(card => observer.observe(card));
-            }
-
-            // 2. Pause auto-scroll on direct user interaction (swipe, touch, drag, wheel)
+            // 1. Pause auto-scroll on direct user interaction (swipe, touch, drag, wheel, mouseenter)
             const pauseAuto = () => {
                 if (window.carouselTimers && window.carouselTimers[wrapperId]) {
                     clearInterval(window.carouselTimers[wrapperId]);
@@ -1168,20 +1168,21 @@
                 }
             };
 
+            track.addEventListener('mouseenter', pauseAuto);
             track.addEventListener('touchstart', pauseAuto, { passive: true });
             track.addEventListener('mousedown', pauseAuto, { passive: true });
             track.addEventListener('pointerdown', pauseAuto, { passive: true });
             track.addEventListener('wheel', pauseAuto, { passive: true });
 
-            // 3. Auto-scroll Logic
+            // 2. Auto-scroll Logic (Mobile Only, plus carousel-field-guide on desktop)
             if (wrapper.classList.contains('auto-carousel')) {
                 const startAutoScroll = () => {
                     window.carouselTimers[wrapperId] = setInterval(() => {
-                        if (window.innerWidth >= 1024 && !wrapper.classList.contains('desktop-coverflow')) {
-                            return; // Do nothing on desktop for mobile-only carousels
+                        if (window.innerWidth >= 1024 && wrapperId !== 'carousel-field-guide') {
+                            return; // Do nothing on desktop for other carousels
                         }
                         window.scrollCarousel(wrapperId, 1, true);
-                    }, 4000);
+                    }, 4500);
                 };
                 
                 startAutoScroll();
