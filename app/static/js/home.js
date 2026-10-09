@@ -1085,4 +1085,152 @@
     if (document.querySelector('.index-page')) {
         document.body.classList.add('index-page-body');
     }
+    window.scrollCarousel = function(wrapperId, direction, isAuto = false) {
+        const wrapper = document.getElementById(wrapperId);
+        if (!wrapper) return;
+        const track = wrapper.querySelector('.carousel-track');
+        if (!track) return;
+        
+        const cards = Array.from(track.children);
+        if (!cards.length) return;
+
+        // Pause auto-scroll on manual button click
+        if (!isAuto && window.carouselTimers && window.carouselTimers[wrapperId]) {
+            clearInterval(window.carouselTimers[wrapperId]);
+            window.carouselTimers[wrapperId] = null;
+        }
+
+        // Determine currently active card based on track center
+        const trackCenter = track.scrollLeft + (track.clientWidth / 2);
+        let currentIndex = 0;
+        let minDistance = Infinity;
+
+        cards.forEach((card, idx) => {
+            const cardCenter = card.offsetLeft + (card.offsetWidth / 2);
+            const distance = Math.abs(cardCenter - trackCenter);
+            if (distance < minDistance) {
+                minDistance = distance;
+                currentIndex = idx;
+            }
+        });
+
+        let targetIndex = currentIndex + direction;
+
+        if (targetIndex >= cards.length) {
+            targetIndex = 0; // Wrap around to start
+        } else if (targetIndex < 0) {
+            targetIndex = cards.length - 1; // Wrap around to end
+        }
+
+        const targetCard = cards[targetIndex];
+        if (targetCard) {
+            const targetScrollLeft = targetCard.offsetLeft - (track.clientWidth - targetCard.offsetWidth) / 2;
+            track.scrollTo({
+                left: Math.max(0, targetScrollLeft),
+                behavior: 'smooth'
+            });
+        }
+    };
+
+    function initCarousels() {
+        const tracks = document.querySelectorAll('.carousel-track');
+        window.carouselTimers = {};
+
+        tracks.forEach(track => {
+            const wrapper = track.closest('.mobile-carousel-wrapper');
+            if (!wrapper) return;
+            const wrapperId = wrapper.id;
+            const cards = Array.from(track.children);
+            
+            // 1. Center card tracking for desktop Citizen Field Guide
+            if (wrapperId === 'carousel-field-guide') {
+                const updateActiveCard = () => {
+                    if (window.innerWidth < 1024) {
+                        cards.forEach(c => c.classList.remove('is-center-active'));
+                        return;
+                    }
+                    const trackCenter = track.scrollLeft + (track.clientWidth / 2);
+                    let closestCard = null;
+                    let minDistance = Infinity;
+
+                    cards.forEach(card => {
+                        const cardCenter = card.offsetLeft + (card.offsetWidth / 2);
+                        const distance = Math.abs(cardCenter - trackCenter);
+                        if (distance < minDistance) {
+                            minDistance = distance;
+                            closestCard = card;
+                        }
+                    });
+
+                    cards.forEach(card => {
+                        if (card === closestCard) {
+                            card.classList.add('is-center-active');
+                        } else {
+                            card.classList.remove('is-center-active');
+                        }
+                    });
+                };
+
+                let isScrolling = false;
+                track.addEventListener('scroll', () => {
+                    if (!isScrolling) {
+                        window.requestAnimationFrame(() => {
+                            updateActiveCard();
+                            isScrolling = false;
+                        });
+                        isScrolling = true;
+                    }
+                }, { passive: true });
+
+                cards.forEach(card => {
+                    card.addEventListener('click', () => {
+                        if (window.innerWidth >= 1024) {
+                            const targetScrollLeft = card.offsetLeft - (track.clientWidth - card.offsetWidth) / 2;
+                            track.scrollTo({
+                                left: Math.max(0, targetScrollLeft),
+                                behavior: 'smooth'
+                            });
+                        }
+                    });
+                });
+
+                window.addEventListener('resize', updateActiveCard, { passive: true });
+                setTimeout(updateActiveCard, 100);
+            }
+
+            // 2. Pause auto-scroll on direct user interaction (swipe, touch, drag, wheel, mouseenter)
+            const pauseAuto = () => {
+                if (window.carouselTimers && window.carouselTimers[wrapperId]) {
+                    clearInterval(window.carouselTimers[wrapperId]);
+                    window.carouselTimers[wrapperId] = null;
+                }
+            };
+
+            track.addEventListener('mouseenter', pauseAuto);
+            track.addEventListener('touchstart', pauseAuto, { passive: true });
+            track.addEventListener('mousedown', pauseAuto, { passive: true });
+            track.addEventListener('pointerdown', pauseAuto, { passive: true });
+            track.addEventListener('wheel', pauseAuto, { passive: true });
+
+            // 3. Auto-scroll Logic (Mobile Only, plus carousel-field-guide on desktop)
+            if (wrapper.classList.contains('auto-carousel')) {
+                const startAutoScroll = () => {
+                    window.carouselTimers[wrapperId] = setInterval(() => {
+                        if (window.innerWidth >= 1024 && wrapperId !== 'carousel-field-guide') {
+                            return; // Do nothing on desktop for other carousels
+                        }
+                        window.scrollCarousel(wrapperId, 1, true);
+                    }, 4500);
+                };
+                
+                startAutoScroll();
+            }
+        });
+    }
+
+    if (document.readyState !== 'loading') {
+        initCarousels();
+    } else {
+        document.addEventListener('DOMContentLoaded', initCarousels);
+    }
 })();

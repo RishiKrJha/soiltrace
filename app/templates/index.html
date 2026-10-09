@@ -97,19 +97,21 @@
         <div class="section-header reveal-on-scroll">
             <span class="section-kicker">Awareness Foundation</span>
             <h2 id="matters-title">Soil is Alive: The 4 Living Superpowers of Healthy Earth</h2>
-            <p class="section-lead">
+            <p class="section-lead narrator-script" data-narrator-script="true" aria-hidden="true">
                 Most people view soil as empty dirt beneath their shoes. In reality, healthy topsoil is a thriving, living universe. A single tablespoon of fertile earth contains billions of beneficial bacteria, fungi, and earthworms that keep human civilization alive.
             </p>
         </div>
 
-        <div class="awareness-superpowers-grid reveal-on-scroll">
+        <div class="mobile-carousel-wrapper auto-carousel" id="carousel-awareness">
+            <button class="mobile-carousel-btn prev" aria-label="Previous" onclick="scrollCarousel('carousel-awareness', -1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <div class="mobile-carousel carousel-track awareness-superpowers-grid reveal-on-scroll">
             <article class="superpower-card glass-panel">
                 <div class="superpower-icon-box">
                     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
                 </div>
                 <h3>1. The Global Breadbasket</h3>
                 <p>Over <strong>95% of all human food calories</strong> originate directly or indirectly in topsoil. When soil is healthy, crops are rich in zinc, iron, and protein. When soil is poisoned, food crops absorb toxic lead and cadmium instead.</p>
-                <span class="why-matters-pill">Why it matters: What enters the soil enters your body.</span>
+                <span class="why-matters-pill narrator-script" data-narrator-script="true" aria-hidden="true">Why it matters: What enters the soil enters your body.</span>
             </article>
 
             <article class="superpower-card glass-panel">
@@ -118,7 +120,7 @@
                 </div>
                 <h3>2. Nature’s Giant Water Filter</h3>
                 <p>Living soil acts as the planet’s primary water purifier. It traps sediment, neutralizes pathogens, and stores up to <strong>600 liters of water per cubic meter</strong>, slowly recharging clean underground aquifers.</p>
-                <span class="why-matters-pill">Why it matters: Polluted soil means polluted drinking wells.</span>
+                <span class="why-matters-pill narrator-script" data-narrator-script="true" aria-hidden="true">Why it matters: Polluted soil means polluted drinking wells.</span>
             </article>
 
             <article class="superpower-card glass-panel">
@@ -127,7 +129,7 @@
                 </div>
                 <h3>3. The Earth’s Carbon Sponge</h3>
                 <p>Soil stores more organic carbon than the entire Earth’s atmosphere and all living plant life combined. Healthy soil actively locks away atmospheric carbon, cooling the planet and buffering against droughts.</p>
-                <span class="why-matters-pill">Why it matters: Degraded soil releases carbon, worsening climate extremes.</span>
+                <span class="why-matters-pill narrator-script" data-narrator-script="true" aria-hidden="true">Why it matters: Degraded soil releases carbon, worsening climate extremes.</span>
             </article>
 
             <article class="superpower-card glass-panel">
@@ -136,38 +138,12 @@
                 </div>
                 <h3>4. The Foundation of Biodiversity</h3>
                 <p>More than <strong>25% of all living species on Earth</strong> make their home inside the soil matrix. Earthworms, nematodes, and mycorrhizal fungi break down organic matter into life-giving plant nutrients.</p>
-                <span class="why-matters-pill">Why it matters: Chemical poisons kill earthworms first, collapsing fertility.</span>
+                <span class="why-matters-pill narrator-script" data-narrator-script="true" aria-hidden="true">Why it matters: Chemical poisons kill earthworms first, collapsing fertility.</span>
             </article>
+   </div>
+            <button class="mobile-carousel-btn next" aria-label="Next" onclick="scrollCarousel('carousel-awareness', 1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
         </div>
 
-        <!-- Living Soil vs Degraded Dirt Contrast Banner -->
-        <div class="soil-contrast-banner glass-panel reveal-on-scroll">
-            <div class="contrast-col col-healthy">
-                <h4>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                    <span>Healthy Living Soil</span>
-                </h4>
-                <ul class="contrast-list">
-                    <li>🌱 Rich, dark crumbly texture full of decomposed organic humus.</li>
-                    <li>🪱 Teeming with earthworms, mycorrhizal fungi, and beneficial bacteria.</li>
-                    <li>💧 Absorbs heavy monsoon rain like a sponge, preventing destructive floods.</li>
-                    <li>🥗 Produces clean, nutrient-dense crops free from heavy metals.</li>
-                </ul>
-            </div>
-
-            <div class="contrast-col col-degraded">
-                <h4>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
-                    <span>Chemically Polluted & Degraded Soil</span>
-                </h4>
-                <ul class="contrast-list">
-                    <li>☠️ Compacted, cracked, or discolored with chemical sheens and salt crusts.</li>
-                    <li>🚫 Devoid of earthworms; microbial respiration (dehydrogenase) collapsed.</li>
-                    <li>🌊 Repels water or washes away easily into rivers, accelerating erosion.</li>
-                    <li>🥬 Passes lead, cadmium, and pesticide residues directly into the food chain.</li>
-                </ul>
-            </div>
-        </div>
     </section>
 
     <!-- 3. AWARENESS PILLAR 2: DEMYSTIFYING THE CRISIS -->
@@ -175,7 +151,7 @@
         <div class="section-header reveal-on-scroll">
             <span class="section-kicker">Core Understanding</span>
             <h2 id="demystify-title">What is Soil Pollution? Why is It Called "The Hidden Crisis"?</h2>
-            <p class="section-lead">
+            <p class="section-lead narrator-script" data-narrator-script="true" aria-hidden="true">
                 Unlike thick black smog in city skies or plastic bottles floating down a river, soil pollution is completely invisible to the human eye. You can walk across a severely contaminated field, and to your eyes, the grass may look green—even while the earth is laced with lethal poisons.
             </p>
         </div>
@@ -223,41 +199,45 @@
         <div class="section-header reveal-on-scroll">
             <span class="section-kicker">Public Misconceptions</span>
             <h2 id="myths-title">Busting Common Soil Pollution Myths</h2>
-            <p class="section-lead">
+            <p class="section-lead narrator-script" data-narrator-script="true" aria-hidden="true">
                 Widespread misunderstandings keep soil pollution invisible. Here is what science and laboratory testing actually reveal:
             </p>
         </div>
 
-        <div class="myths-grid reveal-on-scroll">
-            <article class="myth-card glass-panel">
-                <span class="myth-label">Myth 01</span>
-                <p class="myth-quote">"If a vegetable looks crisp and green at the market, the soil it grew in must be clean."</p>
-                <div class="fact-divider"></div>
-                <span class="fact-label">The Scientific Fact</span>
-                <p class="fact-explanation">
-                    Plants absorb toxic heavy metals through their roots invisibly. NEERI’s laboratory tests on Yamuna floodplains found crisp, green spinach containing <strong>14.1 mg/kg of lead</strong>—nearly 6 times the legal safety limit. Produce looks completely normal even when carrying hazardous toxins.
-                </p>
-            </article>
+        <div class="mobile-carousel-wrapper auto-carousel" id="carousel-myths">
+            <button class="mobile-carousel-btn prev" aria-label="Previous" onclick="scrollCarousel('carousel-myths', -1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <div class="mobile-carousel carousel-track myths-grid reveal-on-scroll">
+                <article class="myth-card glass-panel">
+                    <span class="myth-label">Myth 01</span>
+                    <p class="myth-quote">"If a vegetable looks crisp and green at the market, the soil it grew in must be clean."</p>
+                    <div class="fact-divider"></div>
+                    <span class="fact-label">The Scientific Fact</span>
+                    <p class="fact-explanation">
+                        Plants absorb toxic heavy metals through their roots invisibly. NEERI’s laboratory tests on Yamuna floodplains found crisp, green spinach containing <strong>14.1 mg/kg of lead</strong>—nearly 6 times the legal safety limit. Produce looks completely normal even when carrying hazardous toxins.
+                    </p>
+                </article>
 
-            <article class="myth-card glass-panel">
-                <span class="myth-label">Myth 02</span>
-                <p class="myth-quote">"Washing and boiling vegetables removes any chemical contamination from soil."</p>
-                <div class="fact-divider"></div>
-                <span class="fact-label">The Scientific Fact</span>
-                <p class="fact-explanation">
-                    Washing only removes surface dirt. Heavy metals such as Cadmium, Lead, and Arsenic are translocated into the plant's inner cellular structure. Boiling or peeling will not remove systemic heavy metals stored inside leaf tissues or grains.
-                </p>
-            </article>
+                <article class="myth-card glass-panel">
+                    <span class="myth-label">Myth 02</span>
+                    <p class="myth-quote">"Washing and boiling vegetables removes any chemical contamination from soil."</p>
+                    <div class="fact-divider"></div>
+                    <span class="fact-label">The Scientific Fact</span>
+                    <p class="fact-explanation">
+                        Washing only removes surface dirt. Heavy metals such as Cadmium, Lead, and Arsenic are translocated into the plant's inner cellular structure. Boiling or peeling will not remove systemic heavy metals stored inside leaf tissues or grains.
+                    </p>
+                </article>
 
-            <article class="myth-card glass-panel">
-                <span class="myth-label">Myth 03</span>
-                <p class="myth-quote">"Chemical fertilizers just feed plants and leave no lasting harm in the ground."</p>
-                <div class="fact-divider"></div>
-                <span class="fact-label">The Scientific Fact</span>
-                <p class="fact-explanation">
-                    Synthetic fertilizers introduce natural Cadmium impurities (present in mined rock phosphate). Over decades, continuous application acidifies soil, burns away living organic carbon (now deficient in 73% of Indian soils), and kills beneficial earthworms.
-                </p>
-            </article>
+                <article class="myth-card glass-panel">
+                    <span class="myth-label">Myth 03</span>
+                    <p class="myth-quote">"Chemical fertilizers just feed plants and leave no lasting harm in the ground."</p>
+                    <div class="fact-divider"></div>
+                    <span class="fact-label">The Scientific Fact</span>
+                    <p class="fact-explanation">
+                        Synthetic fertilizers introduce natural Cadmium impurities (present in mined rock phosphate). Over decades, continuous application acidifies soil, burns away living organic carbon (now deficient in 73% of Indian soils), and kills beneficial earthworms.
+                    </p>
+                </article>
+            </div>
+            <button class="mobile-carousel-btn next" aria-label="Next" onclick="scrollCarousel('carousel-myths', 1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
         </div>
     </section>
 
@@ -266,7 +246,7 @@
         <div class="section-header reveal-on-scroll">
             <span class="section-kicker">Geological Exploration</span>
             <h2 id="stratigraphy-title">Journey Underground: How Toxins Infiltrate Soil Horizons</h2>
-            <p class="section-lead">
+            <p class="section-lead narrator-script" data-narrator-script="true" aria-hidden="true">
                 Soil is divided into natural layers called "horizons." How long a pollutant survives, whether plant roots absorb it, and whether it leaches into your drinking water depends entirely on how deep it travels.
             </p>
         </div>
@@ -342,12 +322,14 @@
         <div class="section-header reveal-on-scroll">
             <span class="section-kicker">Everyday Awareness</span>
             <h2 id="culprits-title">How Soil Gets Poisoned Around You: The 4 Daily Culprits</h2>
-            <p class="section-lead">
+            <p class="section-lead narrator-script" data-narrator-script="true" aria-hidden="true">
                 Soil pollution doesn't just come from far-off factories. Common farming methods, discarded household plastics, and poorly managed city garbage poison our land every single day.
             </p>
         </div>
 
-        <div class="daily-culprits-grid reveal-on-scroll">
+        <div class="mobile-carousel-wrapper auto-carousel" id="carousel-everyday">
+            <button class="mobile-carousel-btn prev" aria-label="Previous" onclick="scrollCarousel('carousel-everyday', -1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <div class="mobile-carousel carousel-track daily-culprits-grid reveal-on-scroll">
             <article class="culprit-card glass-panel">
                 <span class="culprit-badge badge-plastic">1. The Plastic Trap</span>
                 <h3>Agricultural Plasticulture</h3>
@@ -383,6 +365,8 @@
                     <strong>Over 3,000 legacy waste dumps</strong> currently sit unlined across Indian cities.
                 </div>
             </article>
+   </div>
+            <button class="mobile-carousel-btn next" aria-label="Next" onclick="scrollCarousel('carousel-everyday', 1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
         </div>
     </section>
 
@@ -391,7 +375,7 @@
         <div class="section-header reveal-on-scroll">
             <span class="section-kicker">Food Safety Reality</span>
             <h2 id="bioaccum-title">From Poisoned Soil to Your Plate: The Food-Chain Journey</h2>
-            <p class="section-lead">
+            <p class="section-lead narrator-script" data-narrator-script="true" aria-hidden="true">
                 Toxic chemicals in the ground don’t stay buried. They are absorbed by crops, sold in city wholesale markets, and eaten by families every day. Here is the step-by-step biological journey:
             </p>
         </div>
@@ -455,7 +439,7 @@
         <div class="section-header reveal-on-scroll">
             <span class="section-kicker">Interactive Awareness Tool</span>
             <h2 id="analyzer-title">Live Soil Risk & Threshold Analyzer</h2>
-            <p class="section-lead">
+            <p class="section-lead narrator-script" data-narrator-script="true" aria-hidden="true">
                 Got numbers from a soil test report? Or curious how much contamination is legal? Test any value against official Indian statutory screening limits (MoEFCC 2015) and European Union benchmarks.
             </p>
         </div>
@@ -578,7 +562,7 @@
         <div class="section-header reveal-on-scroll">
             <span class="section-kicker">Interactive Scenario Checker</span>
             <h2 id="sim-title">What’s the Soil Threat in Your Area?</h2>
-            <p class="section-lead">
+            <p class="section-lead narrator-script" data-narrator-script="true" aria-hidden="true">
                 Every region faces different environmental pressures. Select your local geography and water source to identify the primary soil toxins you should be aware of:
             </p>
         </div>
@@ -638,7 +622,7 @@
         <div class="section-header reveal-on-scroll">
             <span class="section-kicker">Digital Records Archive</span>
             <h2 id="hotspots-title">Documented Contamination Hotspots: Lessons from the Ground</h2>
-            <p class="section-lead">
+            <p class="section-lead narrator-script" data-narrator-script="true" aria-hidden="true">
                 These are not hypothetical statistics. These are real-world environmental contamination crises documented in official court orders from the National Green Tribunal (NGT) and Central Pollution Control Board (CPCB) surveys.
             </p>
         </div>
@@ -728,12 +712,14 @@
         <div class="section-header reveal-on-scroll">
             <span class="section-kicker">Citizen Field Guide</span>
             <h2 id="spot-title">How to Spot Soil Pollution with Your Own Eyes</h2>
-            <p class="section-lead">
+            <p class="section-lead narrator-script" data-narrator-script="true" aria-hidden="true">
                 You don’t need an advanced laboratory degree to notice when land is dying. If you notice these five sensory and environmental warning signs in your area, the soil may be chemically compromised.
             </p>
         </div>
 
-        <div class="warning-signs-grid reveal-on-scroll">
+        <div class="mobile-carousel-wrapper auto-carousel" id="carousel-field-guide">
+            <button class="mobile-carousel-btn prev" aria-label="Previous" onclick="scrollCarousel('carousel-field-guide', -1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <div class="mobile-carousel carousel-track warning-signs-grid reveal-on-scroll">
             <article class="warning-card glass-panel">
                 <span class="warning-num-tag">Warning Sign 01</span>
                 <h3>Stunted Crops & Yellowing Leaves</h3>
@@ -775,6 +761,8 @@
                 <p>Layers of brittle, weathered black or clear plastic films tilled repeatedly into the ground. These never rot—they fragment into trillions of microscopic shards that plants choke on.</p>
                 <div class="warning-hint">Look for: Disintegrating plastic shreds mixed into farm soil.</div>
             </article>
+   </div>
+            <button class="mobile-carousel-btn next" aria-label="Next" onclick="scrollCarousel('carousel-field-guide', 1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
         </div>
     </section>
 
@@ -783,12 +771,14 @@
         <div class="section-header reveal-on-scroll">
             <span class="section-kicker">Chemical Encyclopedia</span>
             <h2 id="registry-title">The Contaminant Registry: Know Your Toxins</h2>
-            <p class="section-lead">
+            <p class="section-lead narrator-script" data-narrator-script="true" aria-hidden="true">
                 What are these chemicals, where do they come from, and what do they do to the human body? An everyday breakdown of major terrestrial pollutants.
             </p>
         </div>
 
-        <div class="registry-grid reveal-on-scroll">
+        <div class="mobile-carousel-wrapper auto-carousel" id="carousel-registry">
+            <button class="mobile-carousel-btn prev" aria-label="Previous" onclick="scrollCarousel('carousel-registry', -1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <div class="mobile-carousel carousel-track registry-grid reveal-on-scroll">
             <!-- Card Pb -->
             <article class="element-card glass-panel">
                 <div class="element-header">
@@ -908,6 +898,8 @@
                     <li><strong>Trade Impact:</strong> Export crops rejected at borders (e.g. EU rice caps)</li>
                 </ul>
             </article>
+   </div>
+            <button class="mobile-carousel-btn next" aria-label="Next" onclick="scrollCarousel('carousel-registry', 1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
         </div>
     </section>
 
@@ -916,7 +908,7 @@
         <div class="section-header reveal-on-scroll">
             <span class="section-kicker">Hope & Science</span>
             <h2 id="remedy-title">Restoring the Earth: How Science Heals Damaged Soil</h2>
-            <p class="section-lead">
+            <p class="section-lead narrator-script" data-narrator-script="true" aria-hidden="true">
                 Soil damage is serious, but nature and environmental engineering have developed astonishing methods to lock away toxins, clean polluted earth, and bring dead soil back to life.
             </p>
         </div>
@@ -930,7 +922,9 @@
                 </div>
             </div>
 
-            <div class="remediation-methods-grid">
+            <div class="mobile-carousel-wrapper auto-carousel" id="carousel-hope">
+            <button class="mobile-carousel-btn prev" aria-label="Previous" onclick="scrollCarousel('carousel-hope', -1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <div class="remediation-methods-grid mobile-carousel carousel-track reveal-on-scroll">
                 <article class="remedy-method-card glass-panel">
                     <div class="remedy-icon-box">
                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
@@ -971,6 +965,8 @@
                     </div>
                 </article>
             </div>
+            <button class="mobile-carousel-btn next" aria-label="Next" onclick="scrollCarousel('carousel-hope', 1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+        </div>
         </div>
     </section>
 
@@ -979,7 +975,7 @@
         <div class="section-header reveal-on-scroll">
             <span class="section-kicker">Empowerment</span>
             <h2 id="actions-title">What You Can Do Today: 4 Everyday Actions</h2>
-            <p class="section-lead">
+            <p class="section-lead narrator-script" data-narrator-script="true" aria-hidden="true">
                 Protecting the soil isn’t just a task for scientists and governments. Every gardener, consumer, farmer, and student can take immediate steps to keep the earth clean.
             </p>
         </div>
@@ -1016,7 +1012,7 @@
         <div class="section-header reveal-on-scroll">
             <span class="section-kicker">Citizen Questions</span>
             <h2 id="faq-heading">Frequently Asked Questions About Soil Pollution</h2>
-            <p class="section-lead">
+            <p class="section-lead narrator-script" data-narrator-script="true" aria-hidden="true">
                 Simple answers to the questions families, students, and community gardeners ask most often:
             </p>
         </div>
@@ -1069,7 +1065,7 @@
         <div class="section-header reveal-on-scroll">
             <span class="section-kicker">Data Integrity</span>
             <h2 id="hierarchy-title">How We Handle Data: The Epistemic Hierarchy</h2>
-            <p class="section-lead">
+            <p class="section-lead narrator-script" data-narrator-script="true" aria-hidden="true">
                 To prevent false alarms and ensure scientific credibility, SoilTrace clearly separates everyday citizen observations from legally binding laboratory test proofs.
             </p>
         </div>
@@ -1150,7 +1146,7 @@
                     <span>Official Scientific &amp; Legal Register</span>
                 </span>
                 <h2 id="citations-heading" class="section-title">Statutory &amp; Research Authorities Referenced</h2>
-                <p class="section-subtitle">
+                <p class="section-subtitle narrator-script" data-narrator-script="true" aria-hidden="true">
                     Every threshold, hazard classification, and bioaccumulation formula on SoilTrace is mathematically cross-referenced against sovereign environmental gazettes and peer-reviewed supranational literature. We bridge academic science with transparent citizen action.
                 </p>
             </div>
@@ -1176,7 +1172,9 @@
             </div>
 
             <!-- AUTHORITIES 6-CARD GRID -->
-            <div class="authorities-card-deck">
+            <div class="mobile-carousel-wrapper auto-carousel" id="carousel-authorities">
+            <button class="mobile-carousel-btn prev" aria-label="Previous" onclick="scrollCarousel('carousel-authorities', -1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <div class="mobile-carousel carousel-track authorities-card-deck">
                 <!-- Card 1: FAO & UNEP -->
                 <article class="auth-card glass-panel auth-card-sky">
                     <div class="auth-card-header">
@@ -1410,7 +1408,9 @@
                         <span class="auth-module-chip">Soil Organic Carbon</span>
                     </div>
                 </article>
-            </div>
+       </div>
+            <button class="mobile-carousel-btn next" aria-label="Next" onclick="scrollCarousel('carousel-authorities', 1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+        </div>
 
             <!-- OPEN SCIENCE & CITATION TRANSPARENCY BANNER -->
             <div class="citations-transparency-card glass-panel">

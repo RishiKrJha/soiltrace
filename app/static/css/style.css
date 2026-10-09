@@ -248,9 +248,10 @@ body:has(.home-page-master) .navbar-toggler span {
 /* Mobile Toggler */
 .navbar-toggler {
     display: none;
-    background: transparent;
-    border: 1px solid rgba(241, 245, 249, 0.18);
+    background: #ffffff;
+    border: 1px solid rgba(15, 23, 42, 0.16);
     border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
     cursor: pointer;
     padding: 0.5rem;
     width: 42px;
@@ -258,20 +259,21 @@ body:has(.home-page-master) .navbar-toggler span {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    transition: background-color 0.2s ease, border-color 0.2s ease;
+    transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .navbar-toggler:hover {
-    background-color: rgba(241, 245, 249, 0.05);
-    border-color: rgba(241, 245, 249, 0.32);
+    background-color: #f8fafc;
+    border-color: rgba(15, 23, 42, 0.3);
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.12);
 }
 
 .navbar-toggler span {
     display: block;
-    width: 24px;
+    width: 22px;
     height: 2.5px;
-    background: var(--primary-color);
-    margin: 4px 0;
+    background-color: #0f172a;
+    margin: 3.5px 0;
     border-radius: 2px;
     transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -290,7 +292,14 @@ body:has(.home-page-master) .navbar-toggler span {
     }
 
     .navbar-toggler {
-        display: flex;
+        display: flex !important;
+        background: #ffffff;
+        border: 1px solid rgba(15, 23, 42, 0.18);
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+
+    .navbar-toggler span {
+        background-color: #0f172a !important;
     }
 
     .navbar-collapse {
@@ -747,22 +756,42 @@ body:has(.home-page-master) .navbar-toggler span {
 }
 
 /* ==========================================================================
+   HIDDEN NARRATOR SCRIPTS (PREPARED FOR BROWSER TEXT-TO-SPEECH NARRATOR)
+   --------------------------------------------------------------------------
+   These text blocks serve as narrator scripts for sections across the page.
+   They are intentionally completely hidden from visual display (no display at all)
+   so the browser's built-in Web Speech API / TTS narrator can read them aloud
+   when sections become active, without requiring audio file hosting or visual clutter.
+   ========================================================================== */
+.narrator-script,
+[data-narrator-script] {
+    display: none !important;
+}
+
+/* ==========================================================================
    AWARENESS & EDUCATIONAL MODULES
    Plain-language explanations, living superpowers, warning signs, action guide
    ========================================================================== */
 
-/* Superpowers Grid */
+/* Superpowers Grid - 2 cards in a row on desktop for spacious, balanced layout */
 .awareness-superpowers-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
-    margin-bottom: 3.5rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.75rem;
+    margin-bottom: 0;
 }
 
 .superpower-card {
-    padding: 2rem 1.75rem;
+    padding: 2.25rem 2rem;
     display: flex;
     flex-direction: column;
+    border-radius: 16px;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.superpower-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 32px rgba(15, 23, 42, 0.08);
 }
 
 .superpower-icon-box {
@@ -916,17 +945,24 @@ body:has(.home-page-master) .navbar-toggler span {
     border: 1px solid #fecdd3;
 }
 
-/* Everyday Culprits Grid */
+/* Everyday Culprits Grid - 2 cards in a row on desktop for spacious layout and stat clarity */
 .daily-culprits-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.75rem;
 }
 
 .culprit-card {
-    padding: 2rem 1.6rem;
+    padding: 2.25rem 2rem;
     display: flex;
     flex-direction: column;
+    border-radius: 16px;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.culprit-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 32px rgba(15, 23, 42, 0.08);
 }
 
 .culprit-badge {
@@ -946,28 +982,29 @@ body:has(.home-page-master) .navbar-toggler span {
 .badge-ewaste { background: rgba(168, 85, 247, 0.15); border: 1px solid rgba(168, 85, 247, 0.35); color: #c084fc; }
 
 .culprit-card h3 {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: 700;
     color: #0f172a;
-    margin-bottom: 0.65rem;
+    margin-bottom: 0.75rem;
 }
 
 .culprit-card p {
-    font-size: 0.88rem;
-    line-height: 1.6;
+    font-size: 0.92rem;
+    line-height: 1.65;
     color: #1e293b;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
     flex-grow: 1;
 }
 
 .culprit-stat-pill {
-    padding: 0.65rem 0.85rem;
+    padding: 0.75rem 1rem;
     background: #f8fafc;
-    border-radius: 6px;
-    font-size: 0.78rem;
+    border-radius: 8px;
+    font-size: 0.82rem;
     color: #475569;
     border: 1px solid #e2e8f0;
-    border-left: 3px solid #0284c7;
+    border-left: 4px solid #0284c7;
+    margin-top: auto;
 }
 
 .culprit-stat-pill strong {
@@ -4242,5 +4279,199 @@ html {
     
     .observation-panel {
         padding: 1.5rem 1rem;
+    }
+}
+
+/* ==========================================================================
+   NATIVE CSS CAROUSEL FOR MOBILE & DESKTOP (NO EXTERNAL LIBRARIES)
+   ========================================================================== */
+
+/* Wrapper and Buttons (Shared) */
+.mobile-carousel-wrapper {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+}
+
+.mobile-carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    cursor: pointer;
+    color: #1e293b;
+    transition: all 0.2s ease;
+}
+
+.mobile-carousel-btn:hover {
+    background: #fff;
+    transform: translateY(-50%) scale(1.05);
+}
+
+.mobile-carousel-btn.prev { left: 5px; }
+.mobile-carousel-btn.next { right: 5px; }
+
+/* Mobile View (max-width: 1023px) */
+@media (max-width: 1023px) {
+    .mobile-carousel {
+        display: flex !important;
+        flex-direction: row !important;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        flex-wrap: nowrap !important;
+        gap: 1.5rem;
+        padding: 1rem 7.5vw 2rem 7.5vw !important;
+        scroll-padding: 0 7.5vw;
+        scrollbar-width: none; /* Firefox */
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .mobile-carousel::-webkit-scrollbar {
+        display: none; /* Chrome/Safari */
+    }
+
+    .mobile-carousel > * {
+        flex: 0 0 85vw !important; /* 85% width so next card peeks */
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
+        max-width: none !important;
+        box-sizing: border-box;
+    }
+
+    .remediation-methods-grid.mobile-carousel {
+        flex-direction: row !important;
+    }
+}
+
+/* Desktop View Defaults (min-width: 1024px) */
+@media (min-width: 1024px) {
+    /* Hide buttons on desktop for other carousels */
+    .mobile-carousel-wrapper:not(#carousel-field-guide) .mobile-carousel-btn {
+        display: none !important;
+    }
+
+    /* Reset normal grids on desktop so they just display as they used to */
+    .mobile-carousel:not(#carousel-field-guide .carousel-track) > * {
+        flex: auto;
+        scroll-snap-align: none;
+    }
+}
+
+/* ==========================================================================
+   DESKTOP: CITIZEN FIELD GUIDE CENTER-FOCUSED CAROUSEL
+   ========================================================================== */
+@media (min-width: 1024px) {
+    #carousel-field-guide {
+        --field-guide-card-w: clamp(360px, 32vw, 420px);
+        position: relative;
+        width: 100%;
+        overflow: visible;
+        padding: 0.5rem 0;
+    }
+
+    #carousel-field-guide .carousel-track {
+        display: flex !important;
+        flex-direction: row !important;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 2rem;
+        padding: 2.5rem calc(50% - (var(--field-guide-card-w) / 2));
+        scroll-padding: 0 calc(50% - (var(--field-guide-card-w) / 2));
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+        align-items: center;
+    }
+
+    #carousel-field-guide .carousel-track::-webkit-scrollbar {
+        display: none;
+    }
+
+    #carousel-field-guide .warning-card {
+        flex: 0 0 var(--field-guide-card-w) !important;
+        width: var(--field-guide-card-w) !important;
+        max-width: var(--field-guide-card-w) !important;
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        box-sizing: border-box;
+        border-left: 4px solid #0284c7;
+        padding: 2.25rem 2rem;
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+        transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+                    opacity 0.4s ease,
+                    filter 0.4s ease,
+                    box-shadow 0.4s ease;
+        opacity: 0.45;
+        transform: scale(0.9);
+        filter: blur(1.5px);
+        cursor: pointer;
+    }
+
+    #carousel-field-guide .warning-card:not(.is-center-active):hover {
+        opacity: 0.75;
+        filter: blur(0px);
+        transform: scale(0.93);
+    }
+
+    #carousel-field-guide .warning-card.is-center-active {
+        opacity: 1;
+        transform: scale(1.05);
+        filter: blur(0);
+        z-index: 5;
+        box-shadow: 0 20px 44px rgba(15, 23, 42, 0.16), 0 4px 12px rgba(2, 132, 199, 0.14);
+        cursor: default;
+    }
+
+    #carousel-field-guide .warning-card p {
+        flex-grow: 1;
+    }
+
+    #carousel-field-guide .warning-hint {
+        margin-top: auto;
+    }
+
+    #carousel-field-guide .mobile-carousel-btn {
+        display: flex !important;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 48px;
+        height: 48px;
+        background: #ffffff;
+        border: 1px solid rgba(15, 23, 42, 0.12);
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.14);
+        color: #0f172a;
+        z-index: 10;
+        cursor: pointer;
+        transition: all 0.25s ease;
+    }
+
+    #carousel-field-guide .mobile-carousel-btn:hover {
+        background: #0284c7;
+        color: #ffffff;
+        border-color: #0284c7;
+        transform: translateY(-50%) scale(1.08);
+        box-shadow: 0 10px 28px rgba(2, 132, 199, 0.3);
+    }
+
+    #carousel-field-guide .mobile-carousel-btn.prev {
+        left: 1.5rem;
+    }
+
+    #carousel-field-guide .mobile-carousel-btn.next {
+        right: 1.5rem;
     }
 }
