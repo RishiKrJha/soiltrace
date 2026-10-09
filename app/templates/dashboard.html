@@ -10,6 +10,23 @@
 </div>
 
 <main class="home-page-master dashboard-page" id="main-content">
+    {% if is_admin %}
+    <div class="admin-moderation-banner" style="background: rgba(180, 83, 47, 0.1); border: 1px solid rgba(180, 83, 47, 0.35); border-radius: 8px; padding: 12px 18px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+        <div>
+            <strong style="color: #b4532f;">Admin Moderation Guard Active</strong>
+            <span style="font-size: 0.9em; opacity: 0.85; margin-left: 8px;">(Cleanup controls enabled)</span>
+        </div>
+        <div style="display: flex; gap: 14px; align-items: center;">
+            {% if show_all %}
+            <a href="{{ url_for('dashboard', token=admin_token, country_code=filter_country_code if filter_country_code else None, region_code=filter_region_code if filter_region_code else None) }}" style="font-size: 0.88rem; font-weight: 600; text-decoration: underline;">Filter to approved only</a>
+            {% else %}
+            <a href="{{ url_for('dashboard', token=admin_token, show_all=1, country_code=filter_country_code if filter_country_code else None, region_code=filter_region_code if filter_region_code else None) }}" style="font-size: 0.88rem; font-weight: 600; text-decoration: underline;">Show all records (incl. hidden)</a>
+            {% endif %}
+            <a href="{{ url_for('dashboard', country_code=filter_country_code if filter_country_code else None, region_code=filter_region_code if filter_region_code else None) }}" style="font-size: 0.88rem; opacity: 0.75; text-decoration: underline;">Exit admin mode</a>
+        </div>
+    </div>
+    {% endif %}
+
     <section class="dashboard-heading" aria-labelledby="dashboard-title">
         <div>
             <p class="eyebrow">Community signal tracker</p>
@@ -20,9 +37,13 @@
 
     {% if filter_countries %}
     <form class="location-filter" method="get" action="{{ url_for('dashboard') }}" aria-label="Filter by location">
+        {% if is_admin %}
+        <input type="hidden" name="token" value="{{ admin_token }}">
+        {% if show_all %}<input type="hidden" name="show_all" value="1">{% endif %}
+        {% endif %}
         <div class="location-filter-controls">
             <label for="country-filter">Country</label>
-            <select id="country-filter" name="country_code" onchange="this.form.submit()">
+            <select id="country-filter" name="country_code" onchange="const r = document.getElementById('region-filter'); if (r) r.value = ''; this.form.submit();">
                 <option value="">All countries</option>
                 {% for row in filter_countries %}
                     <option value="{{ row['country_code'] }}"{% if row['country_code'] == filter_country_code %} selected{% endif %}>{{ row['country'] }}</option>
@@ -42,7 +63,7 @@
             {% endif %}
 
             {% if filter_country_code %}
-            <a class="filter-clear" href="{{ url_for('dashboard') }}" aria-label="Clear location filter">✕ Clear filter</a>
+            <a class="filter-clear" href="{{ url_for('dashboard', token=admin_token if is_admin else None, show_all=1 if show_all else None) }}" aria-label="Clear location filter">✕ Clear filter</a>
             {% endif %}
         </div>
         {% if active_country_name %}
@@ -110,15 +131,69 @@
             <div class="card-heading"><div><p class="section-kicker">Latest contributions</p><h2 id="recent-title">Recent field notes</h2></div><a href="{{ url_for('report') }}">Add an observation <span aria-hidden="true">→</span></a></div>
             <div class="activity-list">
                 {% for observation in recent_data %}
-                    <article class="activity-item"><span class="activity-category">{{ category_labels.get(observation['category'], observation['category']) }}</span><div><h3>{{ observation['place'] }}</h3><p>{{ observation['description'] }}</p></div><time datetime="{{ observation['observation_date'] }}">Observed {{ observation['observation_date'] }}</time></article>
+                    <article class="activity-item">
+                        <span class="activity-category">{{ category_labels.get(observation['category'], observation['category']) }}</span>
+                        <div>
+                            <h3>{{ observation['place'] }}</h3>
+                            <p>{{ observation['description'] }}</p>
+                            {% if is_admin %}
+                            <div class="admin-controls" style="margin-top: 10px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                                <span style="font-size: 0.75rem; padding: 2px 6px; border-radius: 4px; background: rgba(0, 0, 0, 0.06); font-weight: 600;">ID #{{ observation['id'] }}</span>
+                                {% if observation['status'] == 'approved' %}
+                                <span style="font-size: 0.75rem; padding: 2px 6px; border-radius: 4px; background: rgba(107, 190, 114, 0.2); font-weight: 600;">approved</span>
+                                {% else %}
+                                <span style="font-size: 0.75rem; padding: 2px 6px; border-radius: 4px; background: rgba(173, 93, 104, 0.2); font-weight: 600;">{{ observation['status'] }}</span>
+                                {% endif %}
+                                {% if observation['status'] == 'approved' %}
+                                <form method="post" action="{{ url_for('moderate_observation', obs_id=observation['id']) }}" style="display:inline;">
+                                    <input type="hidden" name="token" value="{{ admin_token }}">
+                                    <input type="hidden" name="action" value="hide">
+                                    <input type="hidden" name="country_code" value="{{ filter_country_code }}">
+                                    <input type="hidden" name="region_code" value="{{ filter_region_code }}">
+                                    {% if show_all %}<input type="hidden" name="show_all" value="1">{% endif %}
+                                    <button type="submit" style="background: none; border: 1px solid rgba(15, 23, 42, 0.2); border-radius: 4px; padding: 2px 8px; font-size: 0.78rem; cursor: pointer; color: inherit;">Hide</button>
+                                </form>
+                                {% else %}
+                                <form method="post" action="{{ url_for('moderate_observation', obs_id=observation['id']) }}" style="display:inline;">
+                                    <input type="hidden" name="token" value="{{ admin_token }}">
+                                    <input type="hidden" name="action" value="approve">
+                                    <input type="hidden" name="country_code" value="{{ filter_country_code }}">
+                                    <input type="hidden" name="region_code" value="{{ filter_region_code }}">
+                                    {% if show_all %}<input type="hidden" name="show_all" value="1">{% endif %}
+                                    <button type="submit" style="background: none; border: 1px solid rgba(107, 190, 114, 0.6); border-radius: 4px; padding: 2px 8px; font-size: 0.78rem; cursor: pointer; color: #2e7d32;">Approve</button>
+                                </form>
+                                {% endif %}
+                                <form method="post" action="{{ url_for('delete_observation', obs_id=observation['id']) }}" style="display:inline;" onsubmit="return confirm('Permanently delete this observation?');">
+                                    <input type="hidden" name="token" value="{{ admin_token }}">
+                                    <input type="hidden" name="country_code" value="{{ filter_country_code }}">
+                                    <input type="hidden" name="region_code" value="{{ filter_region_code }}">
+                                    {% if show_all %}<input type="hidden" name="show_all" value="1">{% endif %}
+                                    <button type="submit" style="background: none; border: 1px solid rgba(173, 93, 104, 0.6); border-radius: 4px; padding: 2px 8px; font-size: 0.78rem; cursor: pointer; color: #ad5d68;">Delete</button>
+                                </form>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <time datetime="{{ observation['observation_date'] }}">Observed {{ observation['observation_date'] }}</time>
+                    </article>
+                {% else %}
+                    <p class="ranking-empty" style="padding: 1.5rem 0;">No field notes recorded yet for this view.</p>
                 {% endfor %}
             </div>
         </section>
     {% else %}
         <section class="dashboard-card empty-state">
-            <h2>No observations yet</h2>
-            <p>The dashboard will begin showing global trends after the first report is submitted.</p>
-            <a class="submit-button" href="{{ url_for('report') }}">Report an observation <span aria-hidden="true">&#8594;</span></a>
+            {% if filter_country_code %}
+                <h2>No observations for this location</h2>
+                <p>No community observations have been recorded for {{ (active_region_name + ', ' + active_country_name) if active_region_name else active_country_name }}.</p>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem;">
+                    <a class="submit-button" href="{{ url_for('dashboard', token=admin_token if is_admin else None) }}">Clear location filter</a>
+                    <a class="submit-button" href="{{ url_for('report') }}">Report an observation <span aria-hidden="true">&#8594;</span></a>
+                </div>
+            {% else %}
+                <h2>No observations yet</h2>
+                <p>The dashboard will begin showing global trends after the first report is submitted.</p>
+                <a class="submit-button" href="{{ url_for('report') }}">Report an observation <span aria-hidden="true">&#8594;</span></a>
+            {% endif %}
         </section>
     {% endif %}
 </main>

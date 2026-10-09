@@ -1,7 +1,7 @@
 from datetime import date, timedelta
 import re
 
-from flask import flash, redirect, render_template, request, url_for
+from flask import current_app, flash, redirect, render_template, request, url_for
 
 from .db import get_db
 
@@ -68,17 +68,17 @@ def init_routes(app):
                 return render_template('report.html', categories=CATEGORIES, form=request.form, today=date.today().isoformat()), 400
 
             db = get_db()
-            db.execute(
-                '''INSERT INTO observations
-                   (name, location, country, country_code, region, region_code,
-                    observation_date, category, description)
-                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)''',
-                (
-                    name or None, location, country, country_code, region, region_code,
-                    observation_date, category, description,
-                ),
-            )
-            db.commit()
+            with db:
+                db.execute(
+                    '''INSERT INTO observations
+                       (name, location, country, country_code, region, region_code,
+                        observation_date, category, description, status)
+                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                    (
+                        name or None, location, country, country_code, region, region_code,
+                        observation_date, category, description, 'approved',
+                    ),
+                )
             return redirect(url_for('report', submitted='1'))
 
         return render_template(
@@ -89,6 +89,12 @@ def init_routes(app):
     def dashboard():
         db = get_db()
 
+        # Check moderation admin mode
+        admin_token = current_app.config.get('ADMIN_TOKEN') or current_app.config.get('SECRET_KEY')
+        token = (request.args.get('token') or '').strip()
+        is_admin = bool(token and admin_token and token == admin_token)
+        show_all = is_admin and (request.args.get('show_all') == '1')
+
         # --- Location filter parameters ---
         filter_country_code = request.args.get('country_code', '').strip().upper()[:2]
         filter_region_code = request.args.get('region_code', '').strip()[:20]
@@ -96,6 +102,8 @@ def init_routes(app):
         # Build WHERE clause fragments used across queries
         where_parts = []
         where_args = []
+        if not show_all:
+            where_parts.append("status = 'approved'")
         if filter_country_code:
             where_parts.append("country_code = ?")
             where_args.append(filter_country_code)
@@ -136,7 +144,7 @@ def init_routes(app):
             where_args,
         ).fetchall()
         recent_observations = db.execute(
-            f'''SELECT country, region, observation_date, category, description, created_at
+            f'''SELECT id, country, region, observation_date, category, description, status, created_at
                FROM observations {where_clause}
                ORDER BY created_at DESC, id DESC LIMIT 10''',
             where_args,
@@ -148,18 +156,20 @@ def init_routes(app):
             where_args,
         ).fetchall()
 
-        # Distinct countries for filter dropdown (always unfiltered)
+        # Distinct countries for filter dropdown
+        countries_where = "" if show_all else "AND status = 'approved'"
         filter_countries = db.execute(
-            """SELECT DISTINCT country, country_code FROM observations
-               WHERE country_code <> '' ORDER BY country ASC"""
+            f"""SELECT DISTINCT country, country_code FROM observations
+               WHERE country_code <> '' {countries_where} ORDER BY country ASC"""
         ).fetchall()
 
         # Distinct regions for the selected country (for the region sub-filter)
         filter_regions = []
         if filter_country_code:
+            regions_where = "" if show_all else "AND status = 'approved'"
             filter_regions = db.execute(
-                """SELECT DISTINCT region, region_code FROM observations
-                   WHERE country_code = ? AND region <> ''
+                f"""SELECT DISTINCT region, region_code FROM observations
+                   WHERE country_code = ? AND region <> '' {regions_where}
                    ORDER BY region ASC""",
                 (filter_country_code,),
             ).fetchall()
@@ -217,6 +227,7 @@ def init_routes(app):
         ]
         recent_data = [
             {
+                'id': item['id'],
                 'place': (
                     f"{item['region']}, {item['country']}"
                     if item['region'] else item['country'] or 'Country not provided'
@@ -224,6 +235,7 @@ def init_routes(app):
                 'observation_date': item['observation_date'],
                 'category': item['category'],
                 'description': item['description'],
+                'status': item['status'],
             }
             for item in recent_observations
         ]
@@ -237,10 +249,14 @@ def init_routes(app):
         trend_max = max((item['total'] for item in trend_data), default=1)
         for item in trend_data:
             item['height'] = round(item['total'] / trend_max * 100)
-        donut_background = 'conic-gradient({})'.format(', '.join(
-            f"{item['color']} {item['start']:.2f}% {item['end']:.2f}%"
-            for item in category_data
-        ))
+        donut_background = (
+            'conic-gradient({})'.format(', '.join(
+                f"{item['color']} {item['start']:.2f}% {item['end']:.2f}%"
+                for item in category_data
+            ))
+            if category_data
+            else 'conic-gradient(#8a8c86 0% 100%)'
+        )
         trend_summary = ', '.join(
             f"{item['label']} {item['total']}" for item in trend_data
         )
@@ -264,7 +280,66 @@ def init_routes(app):
             filter_region_code=filter_region_code,
             active_country_name=active_country_name,
             active_region_name=active_region_name,
+            is_admin=is_admin,
+            admin_token=token if is_admin else '',
+            show_all=show_all,
         )
+
+    def _is_admin_authorized(req):
+        admin_token = current_app.config.get('ADMIN_TOKEN') or current_app.config.get('SECRET_KEY')
+        token = req.args.get('token') or req.form.get('token') or req.headers.get('X-Admin-Token')
+        return bool(token and admin_token and token == admin_token), token
+
+    @app.route('/admin/delete/<int:obs_id>', methods=('GET', 'POST'))
+    def delete_observation(obs_id):
+        authorized, token = _is_admin_authorized(request)
+        if not authorized:
+            return 'Unauthorized', 403
+
+        db = get_db()
+        with db:
+            db.execute('DELETE FROM observations WHERE id = ?', (obs_id,))
+        flash(f'Observation #{obs_id} was deleted.', 'info')
+        show_all = '1' if request.values.get('show_all') == '1' else None
+        country_code = request.values.get('country_code', '').strip().upper()[:2]
+        region_code = request.values.get('region_code', '').strip()[:20]
+        return redirect(url_for(
+            'dashboard',
+            token=token,
+            show_all=show_all,
+            country_code=country_code if country_code else None,
+            region_code=region_code if region_code else None,
+        ))
+
+    @app.route('/admin/moderate/<int:obs_id>', methods=('GET', 'POST'))
+    def moderate_observation(obs_id):
+        authorized, token = _is_admin_authorized(request)
+        if not authorized:
+            return 'Unauthorized', 403
+
+        action = request.values.get('action', 'hide').lower()
+        db = get_db()
+        with db:
+            if action == 'delete':
+                db.execute('DELETE FROM observations WHERE id = ?', (obs_id,))
+                flash(f'Observation #{obs_id} was deleted.', 'info')
+            elif action == 'approve':
+                db.execute("UPDATE observations SET status = 'approved' WHERE id = ?", (obs_id,))
+                flash(f'Observation #{obs_id} approved and made public.', 'info')
+            else:
+                db.execute("UPDATE observations SET status = 'hidden' WHERE id = ?", (obs_id,))
+                flash(f'Observation #{obs_id} hidden from public dashboard.', 'info')
+
+        show_all = '1' if request.values.get('show_all') == '1' else None
+        country_code = request.values.get('country_code', '').strip().upper()[:2]
+        region_code = request.values.get('region_code', '').strip()[:20]
+        return redirect(url_for(
+            'dashboard',
+            token=token,
+            show_all=show_all,
+            country_code=country_code if country_code else None,
+            region_code=region_code if region_code else None,
+        ))
 
     @app.errorhandler(404)
     def page_not_found(e):

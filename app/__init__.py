@@ -13,6 +13,7 @@ def create_app(test_config=None):
 
     app.config.from_mapping(
         SECRET_KEY=os.environ.get('SECRET_KEY'),
+        ADMIN_TOKEN=os.environ.get('ADMIN_TOKEN', os.environ.get('SECRET_KEY')),
         DATABASE=os.path.join(app.instance_path, 'soiltrace.sqlite'),
     )
 
