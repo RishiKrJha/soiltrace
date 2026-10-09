@@ -3426,7 +3426,7 @@ body:has(.home-page-master) .navbar-toggler span {
     display: flex;
     gap: 0.7rem;
     align-items: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
     color: #0f172a;
     font-family: var(--font-heading);
     font-size: 1.35rem;
@@ -4217,4 +4217,30 @@ html {
     flex-direction: column;
     justify-content: center;
     scroll-snap-align: end;
+}
+
+/* Mobile responsiveness fixes for grids and forms */
+@media (max-width: 1024px) {
+    .awareness-superpowers-grid,
+    .daily-culprits-grid,
+    .citizen-actions-grid,
+    .warning-signs-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 768px) {
+    .awareness-superpowers-grid,
+    .daily-culprits-grid,
+    .warning-signs-grid,
+    .citizen-actions-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .observation-form fieldset {
+        padding: 1rem 0;
+    }
+    
+    .observation-panel {
+        padding: 1.5rem 1rem;
+    }
 }
