@@ -4359,13 +4359,15 @@ html {
 }
 
 /* ==========================================================================
-   DESKTOP: CITIZEN FIELD GUIDE CARD SCROLLING FORMAT
+   DESKTOP: CITIZEN FIELD GUIDE CENTER-FOCUSED CAROUSEL
    ========================================================================== */
 @media (min-width: 1024px) {
     #carousel-field-guide {
+        --field-guide-card-w: clamp(360px, 32vw, 420px);
         position: relative;
         width: 100%;
         overflow: visible;
+        padding: 0.5rem 0;
     }
 
     #carousel-field-guide .carousel-track {
@@ -4373,10 +4375,12 @@ html {
         flex-direction: row !important;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
-        gap: 1.5rem;
-        padding: 0.75rem 0 1.25rem 0;
+        gap: 2rem;
+        padding: 2.5rem calc(50% - (var(--field-guide-card-w) / 2));
+        scroll-padding: 0 calc(50% - (var(--field-guide-card-w) / 2));
         scrollbar-width: none;
         -webkit-overflow-scrolling: touch;
+        align-items: center;
     }
 
     #carousel-field-guide .carousel-track::-webkit-scrollbar {
@@ -4384,41 +4388,81 @@ html {
     }
 
     #carousel-field-guide .warning-card {
-        flex: 0 0 calc((100% - 3rem) / 3) !important;
-        max-width: calc((100% - 3rem) / 3) !important;
-        min-width: calc((100% - 3rem) / 3) !important;
-        scroll-snap-align: start;
+        flex: 0 0 var(--field-guide-card-w) !important;
+        width: var(--field-guide-card-w) !important;
+        max-width: var(--field-guide-card-w) !important;
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         box-sizing: border-box;
+        border-left: 4px solid #0284c7;
+        padding: 2.25rem 2rem;
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+        transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+                    opacity 0.4s ease,
+                    filter 0.4s ease,
+                    box-shadow 0.4s ease;
+        opacity: 0.45;
+        transform: scale(0.9);
+        filter: blur(1.5px);
+        cursor: pointer;
+    }
+
+    #carousel-field-guide .warning-card:not(.is-center-active):hover {
+        opacity: 0.75;
+        filter: blur(0px);
+        transform: scale(0.93);
+    }
+
+    #carousel-field-guide .warning-card.is-center-active {
+        opacity: 1;
+        transform: scale(1.05);
+        filter: blur(0);
+        z-index: 5;
+        box-shadow: 0 20px 44px rgba(15, 23, 42, 0.16), 0 4px 12px rgba(2, 132, 199, 0.14);
+        cursor: default;
+    }
+
+    #carousel-field-guide .warning-card p {
+        flex-grow: 1;
+    }
+
+    #carousel-field-guide .warning-hint {
+        margin-top: auto;
     }
 
     #carousel-field-guide .mobile-carousel-btn {
         display: flex !important;
         top: 50%;
         transform: translateY(-50%);
-        width: 44px;
-        height: 44px;
+        width: 48px;
+        height: 48px;
         background: #ffffff;
-        border: 1px solid rgba(0, 0, 0, 0.12);
-        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
-        color: #1e293b;
+        border: 1px solid rgba(15, 23, 42, 0.12);
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.14);
+        color: #0f172a;
         z-index: 10;
         cursor: pointer;
+        transition: all 0.25s ease;
     }
 
     #carousel-field-guide .mobile-carousel-btn:hover {
-        background: #ffffff;
+        background: #0284c7;
+        color: #ffffff;
+        border-color: #0284c7;
         transform: translateY(-50%) scale(1.08);
-        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 10px 28px rgba(2, 132, 199, 0.3);
     }
 
     #carousel-field-guide .mobile-carousel-btn.prev {
-        left: -22px;
+        left: 1.5rem;
     }
 
     #carousel-field-guide .mobile-carousel-btn.next {
-        right: -22px;
+        right: 1.5rem;
     }
 }

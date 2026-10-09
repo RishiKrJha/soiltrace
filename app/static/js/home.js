@@ -1100,26 +1100,7 @@
             window.carouselTimers[wrapperId] = null;
         }
 
-        // Desktop handling for multi-card scrolling carousels
-        if (window.innerWidth >= 1024) {
-            const gap = parseFloat(window.getComputedStyle(track).gap) || 0;
-            const cardWidth = cards[0].offsetWidth + gap;
-            const isAtEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 15;
-            const isAtStart = track.scrollLeft <= 15;
-
-            if (direction > 0 && isAtEnd) {
-                track.scrollTo({ left: 0, behavior: 'smooth' });
-                return;
-            }
-            if (direction < 0 && isAtStart) {
-                track.scrollTo({ left: track.scrollWidth, behavior: 'smooth' });
-                return;
-            }
-            track.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
-            return;
-        }
-
-        // Mobile: determine currently active card based on track center
+        // Determine currently active card based on track center
         const trackCenter = track.scrollLeft + (track.clientWidth / 2);
         let currentIndex = 0;
         let minDistance = Infinity;
@@ -1159,8 +1140,65 @@
             const wrapper = track.closest('.mobile-carousel-wrapper');
             if (!wrapper) return;
             const wrapperId = wrapper.id;
+            const cards = Array.from(track.children);
             
-            // 1. Pause auto-scroll on direct user interaction (swipe, touch, drag, wheel, mouseenter)
+            // 1. Center card tracking for desktop Citizen Field Guide
+            if (wrapperId === 'carousel-field-guide') {
+                const updateActiveCard = () => {
+                    if (window.innerWidth < 1024) {
+                        cards.forEach(c => c.classList.remove('is-center-active'));
+                        return;
+                    }
+                    const trackCenter = track.scrollLeft + (track.clientWidth / 2);
+                    let closestCard = null;
+                    let minDistance = Infinity;
+
+                    cards.forEach(card => {
+                        const cardCenter = card.offsetLeft + (card.offsetWidth / 2);
+                        const distance = Math.abs(cardCenter - trackCenter);
+                        if (distance < minDistance) {
+                            minDistance = distance;
+                            closestCard = card;
+                        }
+                    });
+
+                    cards.forEach(card => {
+                        if (card === closestCard) {
+                            card.classList.add('is-center-active');
+                        } else {
+                            card.classList.remove('is-center-active');
+                        }
+                    });
+                };
+
+                let isScrolling = false;
+                track.addEventListener('scroll', () => {
+                    if (!isScrolling) {
+                        window.requestAnimationFrame(() => {
+                            updateActiveCard();
+                            isScrolling = false;
+                        });
+                        isScrolling = true;
+                    }
+                }, { passive: true });
+
+                cards.forEach(card => {
+                    card.addEventListener('click', () => {
+                        if (window.innerWidth >= 1024) {
+                            const targetScrollLeft = card.offsetLeft - (track.clientWidth - card.offsetWidth) / 2;
+                            track.scrollTo({
+                                left: Math.max(0, targetScrollLeft),
+                                behavior: 'smooth'
+                            });
+                        }
+                    });
+                });
+
+                window.addEventListener('resize', updateActiveCard, { passive: true });
+                setTimeout(updateActiveCard, 100);
+            }
+
+            // 2. Pause auto-scroll on direct user interaction (swipe, touch, drag, wheel, mouseenter)
             const pauseAuto = () => {
                 if (window.carouselTimers && window.carouselTimers[wrapperId]) {
                     clearInterval(window.carouselTimers[wrapperId]);
@@ -1174,7 +1212,7 @@
             track.addEventListener('pointerdown', pauseAuto, { passive: true });
             track.addEventListener('wheel', pauseAuto, { passive: true });
 
-            // 2. Auto-scroll Logic (Mobile Only, plus carousel-field-guide on desktop)
+            // 3. Auto-scroll Logic (Mobile Only, plus carousel-field-guide on desktop)
             if (wrapper.classList.contains('auto-carousel')) {
                 const startAutoScroll = () => {
                     window.carouselTimers[wrapperId] = setInterval(() => {
