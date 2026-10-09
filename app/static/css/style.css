@@ -747,6 +747,19 @@ body:has(.home-page-master) .navbar-toggler span {
 }
 
 /* ==========================================================================
+   HIDDEN NARRATOR SCRIPTS (PREPARED FOR BROWSER TEXT-TO-SPEECH NARRATOR)
+   --------------------------------------------------------------------------
+   These text blocks serve as narrator scripts for sections across the page.
+   They are intentionally completely hidden from visual display (no display at all)
+   so the browser's built-in Web Speech API / TTS narrator can read them aloud
+   when sections become active, without requiring audio file hosting or visual clutter.
+   ========================================================================== */
+.narrator-script,
+[data-narrator-script] {
+    display: none !important;
+}
+
+/* ==========================================================================
    AWARENESS & EDUCATIONAL MODULES
    Plain-language explanations, living superpowers, warning signs, action guide
    ========================================================================== */
