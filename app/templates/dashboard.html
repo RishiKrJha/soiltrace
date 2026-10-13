@@ -74,6 +74,50 @@
     </form>
     {% endif %}
 
+    <!-- AI OVERVIEW SECTION (Placed below country filter) -->
+    <section class="dashboard-card ai-overview-card" id="ai-overview-section" aria-labelledby="ai-overview-title">
+        <div class="card-heading ai-overview-header">
+            <div>
+                <p class="section-kicker" id="ai-overview-kicker">{{ (active_country_name + ' pulse') if active_country_name else 'Community pulse' }}</p>
+                <h2 id="ai-overview-title">AI Overview</h2>
+            </div>
+            <div class="ai-overview-controls">
+                <button type="button" class="ai-update-btn" id="ai-update-btn"
+                        data-current-scope="{{ filter_country_code or 'global' }}"
+                        data-scope-name="{{ active_country_name }}"
+                        aria-label="Update AI Overview">
+                    <span class="ai-btn-icon" aria-hidden="true">⟳</span>
+                    <span class="ai-btn-text" id="ai-btn-text">
+                        {{ ('Generate ' + active_country_name + ' Overview') if active_country_name else 'Update Overview' }}
+                    </span>
+                </button>
+            </div>
+        </div>
+
+        <div class="ai-overview-body">
+            <div class="ai-overview-loading" id="ai-overview-loading" style="display: none;" aria-live="polite">
+                <span class="ai-spinner" aria-hidden="true"></span>
+                <span>Synthesizing community observations...</span>
+            </div>
+            <p class="ai-overview-text is-collapsed" id="ai-overview-text">
+                {{ ai_overview.summary }}
+            </p>
+            <button type="button" class="ai-expand-btn" id="ai-expand-btn" aria-expanded="false" aria-controls="ai-overview-text">
+                <span class="ai-expand-text">Read more</span>
+                <span class="ai-expand-icon" aria-hidden="true">↓</span>
+            </button>
+        </div>
+
+        <div class="ai-overview-footer">
+            <div class="ai-overview-meta">
+                <span class="ai-meta-tag" id="ai-meta-model">{{ ai_overview.model_used or 'Automated Synthesis' }}</span>
+                <span class="ai-meta-tag" id="ai-meta-reports">{{ ai_overview.report_count }} observations</span>
+                <span class="ai-meta-tag" id="ai-meta-time">{{ ai_overview.updated_label }}</span>
+            </div>
+            <p class="ai-overview-disclaimer">* Public community observations, not certified laboratory tests.</p>
+        </div>
+    </section>
+
     <section class="metric-grid" aria-label="Observation summary">
         <article class="metric-card"><span class="metric-label">All observations</span><strong>{{ total }}</strong><small>Community reports on record</small></article>
         <article class="metric-card"><span class="metric-label">Last 30 days</span><strong>{{ recent_total }}</strong><small>Observed in the past month</small></article>
@@ -198,4 +242,5 @@
     {% endif %}
 </main>
 {% include "footer.html" %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 {% endblock %}

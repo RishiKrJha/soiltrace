@@ -3759,6 +3759,7 @@ body:has(.home-page-master) .navbar-toggler span {
 .metric-grid,
 .dashboard-grid,
 .location-filter,
+.ai-overview-card,
 .trend-card,
 .recent-card {
     max-width: 1180px;
@@ -4473,5 +4474,216 @@ html {
 
     #carousel-field-guide .mobile-carousel-btn.next {
         right: 1.5rem;
+    }
+}
+
+/* ==========================================================================
+   AI OVERVIEW SECTION (DASHBOARD)
+   ========================================================================== */
+.ai-overview-card {
+    margin-bottom: 1.25rem;
+    background: #ffffff;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.ai-overview-header {
+    margin-bottom: 0.95rem;
+}
+
+.ai-overview-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ai-update-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.45rem 0.95rem;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    background: #f8fafc;
+    color: #0f172a;
+    border: 1px solid rgba(15, 23, 42, 0.12);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ai-update-btn:hover:not(:disabled) {
+    background: #0f172a;
+    color: #ffffff;
+    border-color: #0f172a;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
+}
+
+.ai-update-btn:disabled,
+.ai-update-btn.ai-btn-cooldown {
+    background: #f1f5f9;
+    color: #94a3b8;
+    border-color: rgba(15, 23, 42, 0.08);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.ai-update-btn.ai-btn-loading {
+    background: #0f172a;
+    color: #ffffff;
+    opacity: 0.85;
+    cursor: wait;
+}
+
+.ai-btn-icon {
+    font-size: 0.95rem;
+    line-height: 1;
+    display: inline-block;
+    transition: transform 0.4s ease;
+}
+
+.ai-update-btn:hover:not(:disabled) .ai-btn-icon {
+    transform: rotate(180deg);
+}
+
+.ai-overview-body {
+    position: relative;
+}
+
+.ai-overview-loading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: #0284c7;
+    font-weight: 600;
+    margin-bottom: 0.65rem;
+}
+
+.ai-spinner {
+    width: 13px;
+    height: 13px;
+    border: 2px solid rgba(2, 132, 199, 0.25);
+    border-top-color: #0284c7;
+    border-radius: 50%;
+    animation: aiSpin 0.75s linear infinite;
+    display: inline-block;
+}
+
+@keyframes aiSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.ai-overview-text {
+    font-size: 1.02rem;
+    line-height: 1.72;
+    color: #334155;
+    margin: 0 0 1.15rem 0;
+    transition: opacity 0.25s ease;
+}
+
+.ai-overview-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    border-top: 1px solid rgba(15, 23, 42, 0.06);
+    padding-top: 0.85rem;
+}
+
+.ai-overview-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.ai-meta-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: 5px;
+    background: rgba(15, 23, 42, 0.04);
+    color: #475569;
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+
+.ai-overview-disclaimer {
+    margin: 0;
+    font-size: 0.76rem;
+    color: #94a3b8;
+    font-style: italic;
+}
+
+.ai-expand-btn {
+    display: none;
+    align-items: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0 0 0.9rem 0;
+    color: #0284c7;
+    font-size: 0.84rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.ai-expand-btn:hover {
+    color: #0369a1;
+    text-decoration: underline;
+}
+
+.ai-expand-icon {
+    font-size: 0.8rem;
+    display: inline-block;
+}
+
+@media (max-width: 640px) {
+    .ai-overview-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .ai-overview-controls {
+        width: 100%;
+    }
+
+    .ai-update-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .ai-overview-text.is-collapsed {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin-bottom: 0.45rem;
+    }
+
+    .ai-overview-text.is-expanded {
+        display: block;
+        -webkit-line-clamp: unset;
+        margin-bottom: 0.85rem;
+    }
+
+    .ai-expand-btn {
+        display: inline-flex;
+    }
+
+    .ai-overview-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
     }
 }

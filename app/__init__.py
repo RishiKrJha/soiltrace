@@ -15,6 +15,8 @@ def create_app(test_config=None):
         SECRET_KEY=os.environ.get('SECRET_KEY'),
         ADMIN_TOKEN=os.environ.get('ADMIN_TOKEN', os.environ.get('SECRET_KEY')),
         DATABASE=os.path.join(app.instance_path, 'soiltrace.sqlite'),
+        GEMINI_API_KEY=os.environ.get('GEMINI_API_KEY', '').strip(),
+        GEMINI_MODELS=[m.strip() for m in os.environ.get('GEMINI_MODELS', '').split(',') if m.strip()] or None,
     )
 
     # Load the instance config, if it exists, when not testing

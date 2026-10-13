@@ -3,6 +3,12 @@ import re
 
 from flask import current_app, flash, redirect, render_template, request, url_for
 
+from .ai import (
+    compute_stats_hash,
+    generate_overview,
+    get_cached_overview,
+    set_cached_overview,
+)
 from .db import get_db
 
 
@@ -20,6 +26,176 @@ CATEGORY_LABELS = dict(CATEGORIES)
 
 def clean_field(name, maximum):
     return request.form.get(name, "").strip()[:maximum]
+
+
+def get_aggregated_stats(db, country_code='', region_code='', show_all=False):
+    where_parts = []
+    where_args = []
+    if not show_all:
+        where_parts.append("status = 'approved'")
+    if country_code:
+        where_parts.append("country_code = ?")
+        where_args.append(country_code)
+        if region_code:
+            where_parts.append("region_code = ?")
+            where_args.append(region_code)
+    where_clause = ("WHERE " + " AND ".join(where_parts)) if where_parts else ""
+
+    total = db.execute(
+        f'SELECT COUNT(*) FROM observations {where_clause}', where_args
+    ).fetchone()[0]
+
+    recent_total = db.execute(
+        f'SELECT COUNT(*) FROM observations {where_clause}'
+        + (' AND ' if where_clause else ' WHERE ')
+        + 'observation_date >= ?',
+        where_args + [(date.today() - timedelta(days=30)).isoformat()],
+    ).fetchone()[0]
+
+    country_total = db.execute(
+        f"SELECT COUNT(DISTINCT country_code) FROM observations {where_clause}"
+        + (' AND ' if where_clause else ' WHERE ')
+        + "country_code <> ''",
+        where_args,
+    ).fetchone()[0]
+
+    category_counts = db.execute(
+        f'''SELECT category, COUNT(*) AS total
+           FROM observations {where_clause}
+           GROUP BY category ORDER BY total DESC, category ASC''',
+        where_args,
+    ).fetchall()
+
+    regional_counts = db.execute(
+        f'''SELECT CASE WHEN region <> '' THEN region || ', ' || country ELSE country END AS label,
+                  COUNT(*) AS total
+           FROM observations
+           {where_clause}
+           {('AND' if where_clause else 'WHERE')} country_code <> ''
+           GROUP BY country_code, country, region
+           ORDER BY total DESC, label ASC LIMIT 5''',
+        where_args,
+    ).fetchall()
+
+    recent_observations = db.execute(
+        f'''SELECT id, country, region, observation_date, category, description, status, created_at
+           FROM observations {where_clause}
+           ORDER BY created_at DESC, id DESC LIMIT 10''',
+        where_args,
+    ).fetchall()
+
+    trend_rows = db.execute(
+        f'''SELECT substr(observation_date, 1, 7) AS month, COUNT(*) AS total
+           FROM observations {where_clause}
+           GROUP BY month ORDER BY month DESC LIMIT 12''',
+        where_args,
+    ).fetchall()
+
+    active_country_name = ''
+    active_region_name = ''
+    if country_code:
+        row = db.execute(
+            'SELECT country FROM observations WHERE country_code = ? LIMIT 1',
+            (country_code,),
+        ).fetchone()
+        active_country_name = row['country'] if row else country_code
+    if region_code and country_code:
+        row = db.execute(
+            'SELECT region FROM observations WHERE country_code = ? AND region_code = ? LIMIT 1',
+            (country_code, region_code),
+        ).fetchone()
+        active_region_name = row['region'] if row else region_code
+
+    category_colors = {
+        'plastic-waste': '#d66f45',
+        'agricultural-waste': '#bb993e',
+        'industrial-waste': '#697b68',
+        'chemical-waste': '#ad5d68',
+        'e-waste': '#607d92',
+        'construction-waste': '#9a765e',
+        'other': '#8a8c86',
+    }
+    category_data = []
+    running_total = 0
+    for item in category_counts:
+        item_total = item['total']
+        percentage = round((item_total / total) * 100) if total else 0
+        segment_end = running_total + (item_total / total * 100) if total else 0
+        category_data.append({
+            'category': item['category'],
+            'label': CATEGORY_LABELS.get(item['category'], item['category'].replace('-', ' ').title()),
+            'total': item_total,
+            'percentage': percentage,
+            'color': category_colors.get(item['category'], '#8a8c86'),
+            'start': running_total,
+            'end': segment_end,
+        })
+        running_total = segment_end
+
+    regional_top = regional_counts[0]['total'] if regional_counts else 1
+    regional_data = [
+        {
+            'label': item['label'],
+            'total': item['total'],
+            'percentage': round((item['total'] / regional_top) * 100),
+        }
+        for item in regional_counts
+    ]
+    recent_data = [
+        {
+            'id': item['id'],
+            'place': (
+                f"{item['region']}, {item['country']}"
+                if item['region'] else item['country'] or 'Country not provided'
+            ),
+            'observation_date': item['observation_date'],
+            'category': item['category'],
+            'description': item['description'],
+            'status': item['status'],
+        }
+        for item in recent_observations
+    ]
+    trend_data = [
+        {
+            'label': date.fromisoformat(f"{item['month']}-01").strftime("%b %y"),
+            'total': item['total'],
+        }
+        for item in reversed(trend_rows)
+    ]
+    trend_max = max((item['total'] for item in trend_data), default=1)
+    for item in trend_data:
+        item['height'] = round(item['total'] / trend_max * 100)
+
+    donut_background = (
+        'conic-gradient({})'.format(', '.join(
+            f"{item['color']} {item['start']:.2f}% {item['end']:.2f}%"
+            for item in category_data
+        ))
+        if category_data
+        else 'conic-gradient(#8a8c86 0% 100%)'
+    )
+    trend_summary = ', '.join(
+        f"{item['label']} {item['total']}" for item in trend_data
+    )
+
+    scope_label = (active_region_name + ', ' + active_country_name) if active_region_name else (active_country_name or 'Global')
+
+    return {
+        'total': total,
+        'recent_total': recent_total,
+        'country_total': country_total,
+        'category_data': category_data,
+        'top_category': category_data[0] if category_data else None,
+        'regional_data': regional_data,
+        'recent_data': recent_data,
+        'trend_data': trend_data,
+        'trend_max': trend_max,
+        'trend_summary': trend_summary,
+        'donut_background': donut_background,
+        'active_country_name': active_country_name,
+        'active_region_name': active_region_name,
+        'scope_label': scope_label,
+    }
 
 
 def init_routes(app):
@@ -99,62 +275,12 @@ def init_routes(app):
         filter_country_code = request.args.get('country_code', '').strip().upper()[:2]
         filter_region_code = request.args.get('region_code', '').strip()[:20]
 
-        # Build WHERE clause fragments used across queries
-        where_parts = []
-        where_args = []
-        if not show_all:
-            where_parts.append("status = 'approved'")
-        if filter_country_code:
-            where_parts.append("country_code = ?")
-            where_args.append(filter_country_code)
-            if filter_region_code:
-                where_parts.append("region_code = ?")
-                where_args.append(filter_region_code)
-        where_clause = ("WHERE " + " AND ".join(where_parts)) if where_parts else ""
-
-        total = db.execute(
-            f'SELECT COUNT(*) FROM observations {where_clause}', where_args
-        ).fetchone()[0]
-        recent_total = db.execute(
-            f'SELECT COUNT(*) FROM observations {where_clause}'
-            + (' AND ' if where_clause else ' WHERE ')
-            + 'observation_date >= ?',
-            where_args + [(date.today() - timedelta(days=30)).isoformat()],
-        ).fetchone()[0]
-        country_total = db.execute(
-            f"SELECT COUNT(DISTINCT country_code) FROM observations {where_clause}"
-            + (' AND ' if where_clause else ' WHERE ')
-            + "country_code <> ''",
-            where_args,
-        ).fetchone()[0]
-        category_counts = db.execute(
-            f'''SELECT category, COUNT(*) AS total
-               FROM observations {where_clause}
-               GROUP BY category ORDER BY total DESC, category ASC''',
-            where_args,
-        ).fetchall()
-        regional_counts = db.execute(
-            f'''SELECT CASE WHEN region <> '' THEN region || ', ' || country ELSE country END AS label,
-                      COUNT(*) AS total
-               FROM observations
-               {where_clause}
-               {('AND' if where_clause else 'WHERE')} country_code <> ''
-               GROUP BY country_code, country, region
-               ORDER BY total DESC, label ASC LIMIT 5''',
-            where_args,
-        ).fetchall()
-        recent_observations = db.execute(
-            f'''SELECT id, country, region, observation_date, category, description, status, created_at
-               FROM observations {where_clause}
-               ORDER BY created_at DESC, id DESC LIMIT 10''',
-            where_args,
-        ).fetchall()
-        trend_rows = db.execute(
-            f'''SELECT substr(observation_date, 1, 7) AS month, COUNT(*) AS total
-               FROM observations {where_clause}
-               GROUP BY month ORDER BY month DESC LIMIT 12''',
-            where_args,
-        ).fetchall()
+        stats = get_aggregated_stats(
+            db,
+            country_code=filter_country_code,
+            region_code=filter_region_code,
+            show_all=show_all,
+        )
 
         # Distinct countries for filter dropdown
         countries_where = "" if show_all else "AND status = 'approved'"
@@ -174,116 +300,139 @@ def init_routes(app):
                 (filter_country_code,),
             ).fetchall()
 
-        # Active filter labels for display
-        active_country_name = ''
-        active_region_name = ''
-        if filter_country_code:
-            row = db.execute(
-                'SELECT country FROM observations WHERE country_code = ? LIMIT 1',
-                (filter_country_code,),
-            ).fetchone()
-            active_country_name = row['country'] if row else filter_country_code
-        if filter_region_code and filter_country_code:
-            row = db.execute(
-                'SELECT region FROM observations WHERE country_code = ? AND region_code = ? LIMIT 1',
-                (filter_country_code, filter_region_code),
-            ).fetchone()
-            active_region_name = row['region'] if row else filter_region_code
+        # Persistent Global AI Overview
+        global_stats = stats if not filter_country_code and not show_all else get_aggregated_stats(db, '', '', False)
+        global_stats_hash = compute_stats_hash(global_stats)
+        cached_ai = get_cached_overview(db, 'global')
 
-        category_colors = {
-            'plastic-waste': '#d66f45',
-            'agricultural-waste': '#bb993e',
-            'industrial-waste': '#697b68',
-            'chemical-waste': '#ad5d68',
-            'e-waste': '#607d92',
-            'construction-waste': '#9a765e',
-            'other': '#8a8c86',
-        }
-        category_data = []
-        running_total = 0
-        for item in category_counts:
-            item_total = item['total']
-            percentage = round((item_total / total) * 100) if total else 0
-            segment_end = running_total + (item_total / total * 100) if total else 0
-            category_data.append({
-                'category': item['category'],
-                'label': CATEGORY_LABELS.get(item['category'], item['category'].replace('-', ' ').title()),
-                'total': item_total,
-                'percentage': percentage,
-                'color': category_colors.get(item['category'], '#8a8c86'),
-                'start': running_total,
-                'end': segment_end,
-            })
-            running_total = segment_end
+        if cached_ai and cached_ai.get('stats_hash') == global_stats_hash:
+            ai_overview = {
+                'summary': cached_ai['summary'],
+                'model_used': cached_ai.get('model_used', 'Automated Synthesis'),
+                'report_count': cached_ai.get('report_count', global_stats['total']),
+                'updated_label': 'Up to date with community data',
+                'is_ephemeral': False,
+            }
+        else:
+            summary_text, model_used = generate_overview(
+                global_stats,
+                api_key=current_app.config.get('GEMINI_API_KEY'),
+                custom_models=current_app.config.get('GEMINI_MODELS'),
+            )
+            set_cached_overview(
+                db,
+                'global',
+                summary_text,
+                model_used,
+                global_stats_hash,
+                global_stats['total'],
+            )
+            ai_overview = {
+                'summary': summary_text,
+                'model_used': model_used,
+                'report_count': global_stats['total'],
+                'updated_label': 'Generated on latest data',
+                'is_ephemeral': False,
+            }
 
-        regional_top = regional_counts[0]['total'] if regional_counts else 1
-        regional_data = [
-            {
-                'label': item['label'],
-                'total': item['total'],
-                'percentage': round((item['total'] / regional_top) * 100),
-            }
-            for item in regional_counts
-        ]
-        recent_data = [
-            {
-                'id': item['id'],
-                'place': (
-                    f"{item['region']}, {item['country']}"
-                    if item['region'] else item['country'] or 'Country not provided'
-                ),
-                'observation_date': item['observation_date'],
-                'category': item['category'],
-                'description': item['description'],
-                'status': item['status'],
-            }
-            for item in recent_observations
-        ]
-        trend_data = [
-            {
-                'label': date.fromisoformat(f"{item['month']}-01").strftime("%b %y"),
-                'total': item['total'],
-            }
-            for item in reversed(trend_rows)
-        ]
-        trend_max = max((item['total'] for item in trend_data), default=1)
-        for item in trend_data:
-            item['height'] = round(item['total'] / trend_max * 100)
-        donut_background = (
-            'conic-gradient({})'.format(', '.join(
-                f"{item['color']} {item['start']:.2f}% {item['end']:.2f}%"
-                for item in category_data
-            ))
-            if category_data
-            else 'conic-gradient(#8a8c86 0% 100%)'
-        )
-        trend_summary = ', '.join(
-            f"{item['label']} {item['total']}" for item in trend_data
-        )
         return render_template(
             'dashboard.html',
-            total=total,
-            recent_total=recent_total,
-            country_total=country_total,
-            category_data=category_data,
-            top_category=category_data[0] if category_data else None,
-            regional_data=regional_data,
-            recent_data=recent_data,
-            trend_data=trend_data,
-            trend_max=trend_max,
-            trend_summary=trend_summary,
-            donut_background=donut_background,
+            total=stats['total'],
+            recent_total=stats['recent_total'],
+            country_total=stats['country_total'],
+            category_data=stats['category_data'],
+            top_category=stats['top_category'],
+            regional_data=stats['regional_data'],
+            recent_data=stats['recent_data'],
+            trend_data=stats['trend_data'],
+            trend_max=stats['trend_max'],
+            trend_summary=stats['trend_summary'],
+            donut_background=stats['donut_background'],
             category_labels=CATEGORY_LABELS,
             filter_countries=filter_countries,
             filter_regions=filter_regions,
             filter_country_code=filter_country_code,
             filter_region_code=filter_region_code,
-            active_country_name=active_country_name,
-            active_region_name=active_region_name,
+            active_country_name=stats['active_country_name'],
+            active_region_name=stats['active_region_name'],
             is_admin=is_admin,
             admin_token=token if is_admin else '',
             show_all=show_all,
+            ai_overview=ai_overview,
         )
+
+    @app.route('/api/ai-overview', methods=('GET', 'POST'))
+    def api_ai_overview():
+        db = get_db()
+        if request.method == 'POST' and request.is_json:
+            req_data = request.get_json() or {}
+            country_code = req_data.get('country_code', '').strip().upper()[:2]
+            region_code = req_data.get('region_code', '').strip()[:20]
+            force = bool(req_data.get('force'))
+        else:
+            country_code = (request.args.get('country_code') or request.form.get('country_code') or '').strip().upper()[:2]
+            region_code = (request.args.get('region_code') or request.form.get('region_code') or '').strip()[:20]
+            force = (request.args.get('force') or request.form.get('force')) in ('1', 'true', True)
+
+        # On-demand Country Overview (ephemeral: NOT stored in SQLite)
+        if country_code:
+            stats = get_aggregated_stats(db, country_code=country_code, region_code=region_code, show_all=False)
+            summary_text, model_used = generate_overview(
+                stats,
+                api_key=current_app.config.get('GEMINI_API_KEY'),
+                custom_models=current_app.config.get('GEMINI_MODELS'),
+            )
+            return {
+                'success': True,
+                'summary': summary_text,
+                'model_used': model_used,
+                'scope': country_code,
+                'scope_label': stats['scope_label'],
+                'report_count': stats['total'],
+                'is_ephemeral': True,
+                'updated_label': 'Generated on demand',
+            }
+
+        # Global Overview (persistent SQLite cache)
+        global_stats = get_aggregated_stats(db, '', '', show_all=False)
+        stats_hash = compute_stats_hash(global_stats)
+        cached_ai = get_cached_overview(db, 'global')
+
+        if cached_ai and cached_ai.get('stats_hash') == stats_hash and not force:
+            return {
+                'success': True,
+                'summary': cached_ai['summary'],
+                'model_used': cached_ai.get('model_used', 'Cached Synthesis'),
+                'scope': 'global',
+                'scope_label': 'Global',
+                'report_count': cached_ai.get('report_count', global_stats['total']),
+                'is_ephemeral': False,
+                'updated_label': 'Cached overview',
+            }
+
+        summary_text, model_used = generate_overview(
+            global_stats,
+            api_key=current_app.config.get('GEMINI_API_KEY'),
+            custom_models=current_app.config.get('GEMINI_MODELS'),
+        )
+        set_cached_overview(
+            db,
+            'global',
+            summary_text,
+            model_used,
+            stats_hash,
+            global_stats['total'],
+        )
+        return {
+            'success': True,
+            'summary': summary_text,
+            'model_used': model_used,
+            'scope': 'global',
+            'scope_label': 'Global',
+            'report_count': global_stats['total'],
+            'is_ephemeral': False,
+            'updated_label': 'Just updated',
+        }
 
     def _is_admin_authorized(req):
         admin_token = current_app.config.get('ADMIN_TOKEN') or current_app.config.get('SECRET_KEY')

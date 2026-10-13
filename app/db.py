@@ -59,6 +59,18 @@ def init_db():
             '''CREATE INDEX IF NOT EXISTS observations_status_idx
                ON observations (status)'''
         )
+        db.execute(
+            """
+            CREATE TABLE IF NOT EXISTS ai_summary_cache (
+                cache_key TEXT PRIMARY KEY,
+                summary TEXT NOT NULL,
+                model_used TEXT NOT NULL DEFAULT '',
+                stats_hash TEXT NOT NULL DEFAULT '',
+                report_count INTEGER NOT NULL DEFAULT 0,
+                updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+            )
+            """
+        )
 
 
 def init_app(app):
