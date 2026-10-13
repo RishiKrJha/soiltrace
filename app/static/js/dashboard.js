@@ -166,20 +166,17 @@
         expandBtn.addEventListener('click', function () {
             const isCurrentlyCollapsed = overviewText.classList.contains('is-collapsed');
             const expandText = expandBtn.querySelector('.ai-expand-text');
-            const expandIcon = expandBtn.querySelector('.ai-expand-icon');
 
             if (isCurrentlyCollapsed) {
                 overviewText.classList.remove('is-collapsed');
                 overviewText.classList.add('is-expanded');
                 expandBtn.setAttribute('aria-expanded', 'true');
                 if (expandText) expandText.textContent = 'Show less';
-                if (expandIcon) expandIcon.textContent = '↑';
             } else {
                 overviewText.classList.remove('is-expanded');
                 overviewText.classList.add('is-collapsed');
                 expandBtn.setAttribute('aria-expanded', 'false');
                 if (expandText) expandText.textContent = 'Read more';
-                if (expandIcon) expandIcon.textContent = '↓';
             }
         });
     }

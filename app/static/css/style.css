@@ -4539,9 +4539,10 @@ html {
 }
 
 .ai-btn-icon {
-    font-size: 0.95rem;
-    line-height: 1;
+    width: 14px;
+    height: 14px;
     display: inline-block;
+    vertical-align: middle;
     transition: transform 0.4s ease;
 }
 
@@ -4644,8 +4645,14 @@ html {
 }
 
 .ai-expand-icon {
-    font-size: 0.8rem;
+    width: 13px;
+    height: 13px;
     display: inline-block;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ai-expand-btn[aria-expanded="true"] .ai-expand-icon {
+    transform: rotate(180deg);
 }
 
 @media (max-width: 640px) {
@@ -4666,6 +4673,7 @@ html {
     .ai-overview-text.is-collapsed {
         display: -webkit-box;
         -webkit-line-clamp: 3;
+        line-clamp: 3;
         -webkit-box-orient: vertical;
         overflow: hidden;
         margin-bottom: 0.45rem;
@@ -4674,6 +4682,7 @@ html {
     .ai-overview-text.is-expanded {
         display: block;
         -webkit-line-clamp: unset;
+        line-clamp: unset;
         margin-bottom: 0.85rem;
     }
 

@@ -86,7 +86,12 @@
                         data-current-scope="{{ filter_country_code or 'global' }}"
                         data-scope-name="{{ active_country_name }}"
                         aria-label="Update AI Overview">
-                    <span class="ai-btn-icon" aria-hidden="true">⟳</span>
+                    <svg class="ai-btn-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                        <path d="M3 3v5h5"/>
+                        <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/>
+                        <path d="M16 21h5v-5"/>
+                    </svg>
                     <span class="ai-btn-text" id="ai-btn-text">
                         {{ ('Generate ' + active_country_name + ' Overview') if active_country_name else 'Update Overview' }}
                     </span>
@@ -104,7 +109,9 @@
             </p>
             <button type="button" class="ai-expand-btn" id="ai-expand-btn" aria-expanded="false" aria-controls="ai-overview-text">
                 <span class="ai-expand-text">Read more</span>
-                <span class="ai-expand-icon" aria-hidden="true">↓</span>
+                <svg class="ai-expand-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
             </button>
         </div>
 
@@ -242,5 +249,5 @@
     {% endif %}
 </main>
 {% include "footer.html" %}
-<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}?v=0.5.1"></script>
 {% endblock %}
